@@ -32,6 +32,9 @@
 .env.test
 .env*.local
 
+# secrets
+firebase-service-account.json
+
 # logs
 *_log.txt
 *.log
@@ -46,3 +49,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# firebase
+.firebase/
