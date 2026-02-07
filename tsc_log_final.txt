@@ -1,0 +1,6 @@
+src/app/admin/products/new/actions.ts(25,13): error TS2322: Type '{ stock: number; images: string; name: string; slug: string; price: number; category: string; status: "AVAILABLE" | "OUT_OF_STOCK" | "HIDDEN"; description?: string | undefined; metadata?: string | undefined; }' is not assignable to type '(Without<ProductCreateInput, ProductUncheckedCreateInput> & ProductUncheckedCreateInput) | (Without<...> & ProductCreateInput)'.
+  Type '{ stock: number; images: string; name: string; slug: string; price: number; category: string; status: "AVAILABLE" | "OUT_OF_STOCK" | "HIDDEN"; description?: string | undefined; metadata?: string | undefined; }' is not assignable to type 'Without<ProductUncheckedCreateInput, ProductCreateInput> & ProductCreateInput'.
+    Type '{ stock: number; images: string; name: string; slug: string; price: number; category: string; status: "AVAILABLE" | "OUT_OF_STOCK" | "HIDDEN"; description?: string | undefined; metadata?: string | undefined; }' is not assignable to type 'ProductCreateInput'.
+      Types of property 'description' are incompatible.
+        Type 'string | undefined' is not assignable to type 'string'.
+          Type 'undefined' is not assignable to type 'string'.
