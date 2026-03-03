@@ -24,17 +24,17 @@ const mainSocials = [
         url: "https://instagram.com/beetrus_gg",
         icon: Instagram,
         color: "var(--neon-red)",
-        description: "Studio logs & aesthetic captures.",
-        count: "2.5K+"
+        description: "Studio logs, aesthetic captures, and lifestyle signals.",
+        count: "792"
     },
     {
-        name: "Twitter",
-        handle: "beetrus_g",
-        url: "https://twitter.com/beetrus_g",
-        icon: Twitter,
-        color: "var(--neon-cyan)",
-        description: "Hot takes & tech thoughts.",
-        count: "1.2K+"
+        name: "TikTok",
+        handle: "beetrus_gg",
+        url: "https://www.tiktok.com/@beetrus_gg",
+        icon: Music,
+        color: "var(--neon-red)",
+        description: "Gritty snippets and viral frequency modulations.",
+        count: "203"
     },
     {
         name: "YouTube",
@@ -42,16 +42,16 @@ const mainSocials = [
         url: "https://youtube.com/@beetrus",
         icon: Youtube,
         color: "var(--neon-red)",
-        description: "Box Sessions & Music Videos.",
-        count: "1K+"
+        description: "Box Sessions, Music Videos, and high-fidelity VODs.",
+        count: "50"
     },
 ];
 
 const subSocials = [
-    { name: "GitHub", url: "https://github.com/beetrus", icon: Github },
-    { name: "Audiomack", url: "https://audiomack.com/beetrus", icon: Music },
+    { name: "GitHub", url: "https://github.com/bibi231", icon: Github },
+    { name: "SoundCloud", url: "https://soundcloud.com/beetrus", icon: Music },
+    { name: "Audiomack", url: "https://audiomack.com/beetrus", icon: Share2 },
     { name: "LinkedIn", url: "https://linkedin.com/in/bitrus-gadzama", icon: Linkedin },
-    { name: "Discord", url: "#", icon: MessageCircle },
 ];
 
 export default function SocialsPage() {

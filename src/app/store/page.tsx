@@ -2,57 +2,81 @@
 
 import { useCart } from "@/context/cart-context";
 import { motion, AnimatePresence } from "framer-motion";
-import { ShoppingBag, X, Ticket, Terminal } from "lucide-react";
+import { ShoppingBag, X, Ticket, Terminal, ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 
 const products = [
     {
-        id: "DROP_001",
-        name: "NO_TIME_4_LUV_TEE",
-        price: 45,
-        description: "HEAVYWEIGHT COTTON. OVERSIZED FIT. SCREEN PRINT FRONT & BACK.",
+        id: "DROP_26_001",
+        name: "GOJO_ULTRA_HOODIE",
+        price: 120,
+        description: "500GSM HEAVYWEIGHT COTTON. FEATURES THE 'GOJO' (2026) COLLAB COVER ART. ARCHIVAL QUALITY SCREEN PRINT.",
         category: "01_APPAREL",
         sizes: ["S", "M", "L", "XL"],
         status: "LIVE",
-        stock: 156,
-        image: "/images/store/tee-black.jpg",
-        color: "NOIR"
+        stock: 50,
+        image: "/images/store/gojo-hoodie.jpg",
+        color: "PHANTOM_BLACK"
     },
     {
-        id: "DROP_002",
-        name: "SYSTEM_ERROR_HOODIE",
-        price: 95,
-        description: "FRENCH TERRY. 450GSM. DISTRESSED HEM. PUFF PRINT.",
+        id: "DROP_25_002",
+        name: "LIGHTS_NEON_TEE",
+        price: 55,
+        description: "OVERSIZED LUXURY FIT. FEATURING THE 'LIGHTS' (2025) CINEMATIC ARTWORK. NEON RED ACCENT STITCHING.",
         category: "01_APPAREL",
         sizes: ["S", "M", "L", "XL"],
+        status: "LIVE",
+        stock: 120,
+        image: "/images/store/lights-tee.jpg",
+        color: "OBSIDIAN"
+    },
+    {
+        id: "DROP_25_003",
+        name: "BLUETOOTH_TECH_CAP",
+        price: 45,
+        description: "5-PANEL TECH NYLON. EMBROIDERED 'BLUETOOTH' LOGISTICS SYMBOL. ADJUSTABLE PARACORD.",
+        category: "03_ACCESSORIES",
         status: "LOW_STOCK",
-        stock: 14,
-        image: "/images/store/hoodie-red.jpg",
+        stock: 12,
+        image: "/images/store/bluetooth-cap.jpg",
+        color: "CYBER_RED"
+    },
+    {
+        id: "DROP_20_004",
+        name: "AFRO_STATE_VINYL",
+        price: 85,
+        description: "LIMITED EDITION 12\" TRANSPARENT RED VINYL. INCLUDES TRACKS 'DO ME' & 'YOUR LOVIN'. SIGNED BY BEETRUS.",
+        category: "02_OBJECTS",
+        status: "LIVE",
+        stock: 25,
+        image: "/images/store/vinyl-red.jpg",
         color: "CRIMSON"
     },
     {
-        id: "DROP_003",
-        name: "ARCHIVE_POSTER_V1",
-        price: 35,
-        description: "A2 FORMAT. HOLOGRAPHIC FINISH. SIGNED.",
-        category: "02_OBJECTS",
-        status: "LIVE",
-        stock: 50,
-        image: "/images/store/poster.jpg",
-        color: "SILVER"
-    },
-    {
-        id: "DROP_004",
-        name: "ACCESS_CAP_001",
-        price: 40,
-        description: "5-PANEL. EMBROIDERED LOGO. ADJUSTABLE.",
-        category: "03_ACCESSORIES",
+        id: "DROP_24_005",
+        name: "KINFXLK_ESSENTIAL_TEE",
+        price: 50,
+        description: "OFFICIAL KINFXLK COLLECTIVE APPAREL. EMBROIDERED CHEST LOGO. PREMIUM CARDED COTTON.",
+        category: "01_APPAREL",
+        sizes: ["S", "M", "L", "XL"],
         status: "SOLD_OUT",
         stock: 0,
-        image: "/images/store/cap.jpg",
-        color: "STEALTH"
+        image: "/images/store/kinfxlk-tee.jpg",
+        color: "CORE_WHITE"
+    },
+    {
+        id: "DROP_25_006",
+        name: "STEADY_GRAPED_HOODIE",
+        price: 110,
+        description: "RELAXED FIT. 'STEADY' ARTWORK SCREEN PRINTED ON BACK. DISTRESSED EDGES.",
+        category: "01_APPAREL",
+        sizes: ["S", "M", "L", "XL", "XXL"],
+        status: "LIVE",
+        stock: 38,
+        image: "/images/store/steady-hoodie.jpg",
+        color: "DEEP_GRAPE"
     },
 ];
 
@@ -72,7 +96,7 @@ export default function StorePage() {
     const handleAddToCart = (product: typeof products[0]) => {
         const size = selectedSize[product.id];
         if (!size && product.sizes) {
-            alert("SELECT_SIZE");
+            alert("PROTOCOL_ERROR: SELECT_SIZE_REQUIRED");
             return;
         }
 
@@ -91,7 +115,7 @@ export default function StorePage() {
             <div className="h-screen w-full bg-black flex flex-col items-center justify-center font-mono text-neon-red p-4">
                 <Terminal size={48} className="mb-6 animate-pulse" />
                 <div className="w-full max-w-sm space-y-4 text-center">
-                    <h1 className="text-2xl font-black tracking-tighter mb-8">INITIATING_DROP_PROTOCOL</h1>
+                    <h1 className="text-2xl font-black tracking-tighter mb-8">SYNCING_MERCH_PROTOCOLS</h1>
                     <div className="h-[2px] w-full bg-white/10 overflow-hidden">
                         <motion.div
                             className="h-full bg-neon-red"
@@ -107,103 +131,101 @@ export default function StorePage() {
 
     return (
         <div className="min-h-screen bg-black text-white pb-32 font-mono selection:bg-neon-red selection:text-black pt-[var(--page-top-padding)]">
-            {/* Explicit Spacer for vertical hierarchy consistency - increased for extra dramatic black space */}
-            <div className="h-64 w-full" />
+            <div className="h-48 w-full" />
 
             {/* Supreme-style Minimalist Header */}
-            <div className="fixed top-8 left-0 w-full z-elevated px-8 flex justify-between items-start pointer-events-none">
+            <div className="fixed top-24 left-0 w-full z-elevated px-8 flex justify-between items-start pointer-events-none md:top-32">
                 <div className="flex flex-col gap-1 pointer-events-auto">
-                    <h1 className="text-lg font-black tracking-widest bg-black px-2 py-1">MERCH STORE</h1>
-                    <span className="text-[10px] text-neon-red px-2">ABJ_NG_CORE_RESERVE</span>
+                    <h1 className="text-xl md:text-3xl font-black tracking-widest bg-black px-4 py-2 border border-white/10 uppercase">
+                        Beetrus <span className="text-neon-red">Collection</span>
+                    </h1>
+                    <span className="text-[10px] text-neon-red px-4 font-bold tracking-[0.4em]">SEASON_2026_DROP_01</span>
                 </div>
-                <div className="text-right flex flex-col items-end gap-1 pointer-events-auto">
+                <div className="text-right flex flex-col items-end gap-2 pointer-events-auto">
                     <button
                         onClick={() => setIsMobileInfoOpen(true)}
-                        className="text-[10px] tracking-widest bg-white text-black font-bold px-2 py-1 hover:bg-neon-red hover:text-black transition-colors"
+                        className="text-[10px] tracking-[0.5em] bg-white text-black font-black px-4 py-2 hover:bg-neon-red transition-all"
                     >
-                        [ INFO ]
+                        [ LOGISTICS ]
                     </button>
-                    <span className="text-[10px] tracking-widest text-neutral-500 uppercase mt-1">Status: LIVE</span>
+                    <div className="flex items-center gap-2 mt-1">
+                        <span className="h-1.5 w-1.5 rounded-full bg-green-500 animate-pulse" />
+                        <span className="text-[10px] tracking-widest text-neutral-500 uppercase">Status: ONLINE</span>
+                    </div>
                 </div>
             </div>
 
-            {/* Mobile Info Modal */}
-            <AnimatePresence>
-                {isMobileInfoOpen && (
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-xl flex items-center justify-center p-8"
-                    >
-                        <div className="max-w-md w-full border border-white/20 bg-black p-12 text-center relative">
-                            <button onClick={() => setIsMobileInfoOpen(false)} className="absolute top-4 right-4 text-neon-red">
-                                <X size={24} />
-                            </button>
-                            <h2 className="text-3xl font-black mb-6 uppercase tracking-tight">Supply_Terms</h2>
-                            <div className="space-y-6 text-[11px] tracking-widest text-neutral-400 uppercase leading-relaxed">
-                                <p>All sales are final. No returns. No exchanges.</p>
-                                <p>Standard shipping: 5-7 business days.</p>
-                                <p>International duties not included.</p>
-                                <div className="pt-8 border-t border-white/10">
-                                    <p className="text-neon-red">Encrypted checkout via SHA-256</p>
-                                </div>
-                            </div>
-                        </div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
-
-            <div className="container-custom px-4 md:px-12 mt-16">
+            <div className="container-custom px-4 md:px-12 mt-40 md:mt-64">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-32">
                     {products.map((product) => (
                         <div key={product.id} className="flex flex-col group">
                             {/* RAW Product Visual */}
-                            <div className="relative aspect-[3/4] bg-[#0a0a0a] border border-white/5 overflow-hidden mb-8 p-8 flex items-center justify-center">
-                                <div className="w-full h-full flex items-center justify-center opacity-40 group-hover:opacity-100 transition-opacity duration-700">
-                                    <ShoppingBag size={80} strokeWidth={0.5} className="text-neutral-700 group-hover:text-neon-red transition-colors" />
+                            <div className="relative aspect-[3/4] bg-[#050505] border border-white/5 overflow-hidden mb-10 p-4 transition-all duration-700 group-hover:border-neon-red/30">
+                                <div className="absolute inset-0 bg-gradient-to-t from-neon-red/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+
+                                <div className="w-full h-full relative z-10 flex flex-col items-center justify-center">
+                                    <div className="relative w-full h-full flex items-center justify-center opacity-40 group-hover:opacity-100 transition-all duration-700 group-hover:scale-110">
+                                        <ShoppingBag size={100} strokeWidth={0.3} className="text-neutral-800 group-hover:text-neon-red" />
+                                        <div className="absolute inset-x-8 top-1/2 -translate-y-1/2 border-y border-white/5 py-4 flex items-center justify-center text-[10px] text-white/10 font-black tracking-[1em] uppercase">
+                                            BEETRUS
+                                        </div>
+                                    </div>
                                 </div>
 
-                                <div className="absolute top-0 right-0 p-4">
-                                    <span className="text-[10px] font-bold text-neutral-500">{product.id}</span>
+                                <div className="absolute top-6 left-6 z-20">
+                                    <span className="text-[10px] font-black text-neutral-600 font-mono tracking-widest bg-black/40 px-2 py-1">{product.id}</span>
                                 </div>
 
                                 {product.status === "SOLD_OUT" && (
-                                    <div className="absolute inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-10">
-                                        <span className="text-xl font-black text-white border-2 border-white px-6 py-2 uppercase transform -rotate-12">Sold Out</span>
+                                    <div className="absolute inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-30">
+                                        <div className="border-2 border-neon-red px-10 py-3 transform -rotate-6">
+                                            <span className="text-2xl font-black text-neon-red uppercase tracking-widest">OUT_OF_STOCK</span>
+                                        </div>
+                                    </div>
+                                )}
+
+                                {product.status === "LOW_STOCK" && (
+                                    <div className="absolute bottom-6 right-6 z-20">
+                                        <span className="text-[9px] font-black text-white bg-neon-red px-3 py-1 animate-pulse">LOW_SUPPLY: {product.stock}</span>
                                     </div>
                                 )}
                             </div>
 
-                            {/* Minimal Label System - No overlaps */}
-                            <div className="space-y-6">
-                                <div className="flex justify-between items-baseline border-b border-white/10 pb-4">
-                                    <h3 className="text-xl font-black tracking-tight uppercase leading-none">
+                            {/* Minimal Label System */}
+                            <div className="space-y-8 px-2">
+                                <div className="flex justify-between items-start gap-4">
+                                    <h3 className="text-2xl font-[900] tracking-tighter uppercase leading-none group-hover:text-neon-red transition-colors">
                                         {product.name}
                                     </h3>
-                                    <span className="text-lg font-bold text-neon-red font-mono">${product.price}</span>
+                                    <div className="text-right">
+                                        <span className="text-2xl font-black text-white font-mono leading-none">${product.price}</span>
+                                    </div>
                                 </div>
 
-                                <div className="flex justify-between text-[10px] text-neutral-500 font-bold tracking-widest uppercase">
-                                    <span>Col: {product.color}</span>
-                                    <span>Cat: {product.category}</span>
+                                <div className="flex items-center gap-6 text-[10px] text-neutral-500 font-black tracking-[0.3em] uppercase">
+                                    <div className="flex items-center gap-2">
+                                        <div className="h-2 w-2 rounded-full border border-white/20" style={{ backgroundColor: product.color.includes('PHANTOM') ? '#0a0a0a' : product.color.includes('CRIMSON') ? '#ff1744' : '#222' }} />
+                                        {product.color}
+                                    </div>
+                                    <span className="h-1 w-1 bg-white/10 rounded-full" />
+                                    <span>CAT: {product.category}</span>
                                 </div>
 
-                                <p className="text-[11px] text-neutral-400 uppercase leading-relaxed min-h-[3.5em]">
+                                <p className="text-[12px] text-neutral-400 uppercase leading-relaxed font-light tracking-wide border-l border-neon-red/20 pl-4">
                                     {product.description}
                                 </p>
 
                                 {product.sizes && product.status !== "SOLD_OUT" && (
-                                    <div className="flex gap-2 flex-wrap">
+                                    <div className="flex gap-3 flex-wrap pt-4">
                                         {product.sizes.map(size => (
                                             <button
                                                 key={size}
                                                 onClick={() => setSelectedSize(prev => ({ ...prev, [product.id]: size }))}
                                                 className={cn(
-                                                    "h-10 w-10 flex items-center justify-center border text-xs font-bold transition-all",
+                                                    "h-12 w-12 flex items-center justify-center border font-black transition-all text-[11px]",
                                                     selectedSize[product.id] === size
-                                                        ? "bg-neon-red border-neon-red text-black"
-                                                        : "border-white/10 hover:border-white text-neutral-500 hover:text-white"
+                                                        ? "bg-neon-red border-neon-red text-black shadow-glow-red"
+                                                        : "border-white/5 hover:border-white text-neutral-500 hover:text-white"
                                                 )}
                                             >
                                                 {size}
@@ -215,35 +237,44 @@ export default function StorePage() {
                                 <button
                                     onClick={() => handleAddToCart(product)}
                                     disabled={product.status === "SOLD_OUT"}
-                                    className="w-full py-4 bg-white text-black text-xs font-black uppercase tracking-[0.2em] hover:bg-neon-red transition-colors disabled:opacity-20 disabled:cursor-not-allowed"
+                                    className="w-full mt-4 py-5 bg-white text-black text-xs font-[900] uppercase tracking-[0.4em] hover:bg-neon-red hover:shadow-glow-red transition-all transform active:scale-95 disabled:opacity-10 disabled:grayscale"
                                 >
-                                    {product.status === "SOLD_OUT" ? "Inventory_Empty" : "Add_to_Cart"}
+                                    {product.status === "SOLD_OUT" ? "SYSTEM_EMPTY" : "COMMIT_ORDER"}
                                 </button>
                             </div>
                         </div>
                     ))}
                 </div>
 
-                {/* Spreadsheet-style Footer */}
-                <div className="mt-64 border-t border-white/20 pt-12 grid grid-cols-1 md:grid-cols-3 gap-12 text-[10px] text-neutral-500 font-bold tracking-widest uppercase pb-20">
-                    <div>
-                        <p className="text-white mb-4">© BEETRUS_OS_SYSTEMS_2026</p>
-                        <p className="leading-loose">
-                            Design & Engineering by Beetrus.<br />
-                            Abuja, Nigeria. High Performance Apparel.
+                {/* Industrial Grid Footer */}
+                <div className="mt-80 border-t border-white/10 pt-20 grid grid-cols-1 md:grid-cols-4 gap-12 text-[10px] text-neutral-500 font-bold tracking-[0.3em] uppercase pb-32">
+                    <div className="md:col-span-2">
+                        <p className="text-white text-xl font-black mb-6 tracking-tighter">© BEETRUS_OS_SYSTEMS_2026</p>
+                        <p className="leading-loose max-w-sm">
+                            High-Integrity apparel engineered for the creative collective. Designed and deployed in Abuja, Nigeria. All assets authenticated via Beetrus OS Core.
                         </p>
                     </div>
                     <div>
-                        <p className="text-white mb-4">Logistics</p>
-                        <p className="leading-loose">
-                            Worldwide shipping available.<br />
-                            Taxes and duties calculated at exit.
-                        </p>
+                        <p className="text-white mb-6 font-black tracking-widest">Network</p>
+                        <nav className="flex flex-col gap-3">
+                            <span className="hover:text-neon-red cursor-pointer transition-colors flex items-center gap-2">
+                                <ArrowUpRight size={10} /> Instagram
+                            </span>
+                            <span className="hover:text-neon-red cursor-pointer transition-colors flex items-center gap-2">
+                                <ArrowUpRight size={10} /> Twitter
+                            </span>
+                            <span className="hover:text-neon-red cursor-pointer transition-colors flex items-center gap-2 text-neon-red">
+                                <ArrowUpRight size={10} /> Soundcloud
+                            </span>
+                        </nav>
                     </div>
-                    <div className="md:text-right flex flex-col gap-2">
-                        <span className="hover:text-neon-red cursor-pointer transition-colors">Shipping_Policy</span>
-                        <span className="hover:text-neon-red cursor-pointer transition-colors">Terms_Usage</span>
-                        <span className="hover:text-neon-red cursor-pointer transition-colors text-neon-red">SECURE_SSL_ACTIVE</span>
+                    <div>
+                        <p className="text-white mb-6 font-black tracking-widest">Compliance</p>
+                        <nav className="flex flex-col gap-3">
+                            <span className="hover:text-neon-red cursor-pointer transition-colors">T_O_S</span>
+                            <span className="hover:text-neon-red cursor-pointer transition-colors">Privacy_Protocol</span>
+                            <span className="hover:text-neon-red cursor-pointer transition-colors">Shipping_Logistics</span>
+                        </nav>
                     </div>
                 </div>
             </div>

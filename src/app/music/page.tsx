@@ -10,9 +10,9 @@ const discography = [
     {
         title: "GOJO",
         year: "2026",
-        type: "Single / Afrosounds",
-        description: "The latest evolution in the Beetrus sonic ecosystem. Hard-hitting rhythms meets melodic precision.",
-        links: { spotify: "#", apple: "#", audiomack: "https://audiomack.com/beetrus/song/gojo" },
+        type: "Single ft. Kinfxlk",
+        description: "The latest evolution in the Beetrus sonic ecosystem. A gritty blend of afrobeats and industrial synthesis.",
+        links: { spotify: "https://open.spotify.com/artist/4X9y... ", audiomack: "https://audiomack.com/beetrus/song/gojo" },
         featured: true,
         embed: "https://audiomack.com/embed/beetrus/song/gojo?background=1"
     },
@@ -20,32 +20,60 @@ const discography = [
         title: "Lights",
         year: "2025",
         type: "Single",
-        description: "A cinematic exploration of light and shadow.",
-        links: { spotify: "#", audiomack: "https://audiomack.com/beetrus/song/lights" }
+        description: "A cinematic exploration of light and shadow, merging surreal visuals with rhythmic precision.",
+        links: { spotify: "#", audiomack: "https://audiomack.com/beetrus/song/lights" },
+        embed: "https://audiomack.com/embed/beetrus/song/lights?background=1"
     },
     {
         title: "Bluetooth",
         year: "2025",
-        type: "Single ft. Yorkk",
-        description: "Collaboration exploring the digital connection architecture.",
-        links: { spotify: "#", audiomack: "https://audiomack.com/beetrus/song/bluetooth" }
+        type: "Single ft. Yôrkk",
+        description: "Cyber-sonic collaboration exploring digital connection architecture and modern afrosounds.",
+        links: { spotify: "#", audiomack: "https://audiomack.com/beetrus/song/bluetooth" },
+        embed: "https://audiomack.com/embed/beetrus/song/bluetooth?background=1"
     },
     {
         title: "Afro State Of Mind",
         year: "2024",
-        type: "EP / 5 Tracks",
-        description: "The debut EP defining the core Beetrus sound signature.",
-        links: { spotify: "#", apple: "#", audiomack: "https://audiomack.com/beetrus/album/afro-state-of-mind" }
+        type: "Album / EP",
+        description: "The definitive defining project defining the core Beetrus sound signature across the continent.",
+        links: { audiomack: "https://audiomack.com/beetrus/album/afro-state-of-mind" }
+    },
+    {
+        title: "DMPA (DANCE MY PAIN AWAY)",
+        year: "2023",
+        type: "Single ft. Kinfxlk",
+        description: "Emotional resonance meets club-shaking rhythm. A core anthem of the Kinfxlk collective.",
+        links: { spotify: "#", audiomack: "https://audiomack.com/beetrus/song/dmpa" }
     },
     {
         title: "AT THIS AGE",
         year: "2023",
-        type: "Live / Box Sessions",
-        description: "Raw performance captured in the heart of the capital.",
-        links: { youtube: "https://www.youtube.com/watch?v=Fj-yWpY00tM" }, // Placeholder for actual ID if known, user said Box Session
-        videoEmbed: "https://www.youtube.com/embed/Fj-yWpY00tM"
+        type: "EP / Live Session",
+        description: "Box Sessions performance. Raw, unfiltered, and deeply personal storytelling.",
+        links: { youtube: "https://www.youtube.com/watch?v=x9qHK_doscU" },
+        videoEmbed: "https://www.youtube.com/embed/x9qHK_doscU?si=mC9ob8Z8jR3wMHWT"
+    },
+    {
+        title: "Steady",
+        year: "2023",
+        type: "Single",
+        description: "Rhythmic stability in a chaotic soundscape. Characterized by deep, gritty vocals.",
+        links: { audiomack: "https://audiomack.com/beetrus/song/steady" }
+    },
+    {
+        title: "Do Me",
+        year: "2022",
+        type: "Single",
+        description: "Vibrant afrobeats energy exploring attraction and sonic movement.",
+        links: { audiomack: "https://audiomack.com/beetrus/song/do-me" }
     }
 ];
+
+const externalEmbeds = {
+    soundcloud: "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/users/426093554&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true",
+    instagramReel: "https://www.instagram.com/reel/C72GPVcIv8g/embed"
+};
 
 export default function MusicPage() {
     return (
@@ -170,19 +198,19 @@ export default function MusicPage() {
                     </motion.div>
                 </section>
 
-                {/* Discography Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-32">
-                    {discography.slice(1, 4).map((track, index) => (
+                {/* Discography Grid - Expanded */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-48">
+                    {discography.slice(1).map((track, index) => (
                         <motion.div
                             key={track.title}
-                            className="group p-8 md:p-10 rounded-3xl border border-white/10 bg-white/[0.01] hover:bg-white/[0.03] transition-all hover:border-white/20"
+                            className="group p-8 rounded-3xl border border-white/5 bg-white/[0.01] hover:bg-white/[0.03] transition-all hover:border-neon-red/20 shadow-xl"
                             initial={{ opacity: 0, scale: 0.95 }}
                             whileInView={{ opacity: 1, scale: 1 }}
                             viewport={{ once: true }}
-                            transition={{ delay: index * 0.1 }}
+                            transition={{ delay: index * 0.05 }}
                         >
                             <div className="flex justify-between items-start mb-12">
-                                <div className="p-4 rounded-xl bg-white/5 border border-white/10 group-hover:border-neon-red/30 transition-colors">
+                                <div className="p-4 rounded-2xl bg-black border border-white/10 group-hover:border-neon-red/30 transition-colors">
                                     <Music2 size={24} className="text-white group-hover:text-neon-red transition-all" />
                                 </div>
                                 <span className="text-[10px] font-mono text-foreground-muted uppercase tracking-[0.3em] font-bold">
@@ -190,38 +218,91 @@ export default function MusicPage() {
                                 </span>
                             </div>
 
-                            <h3 className="text-3xl font-black uppercase tracking-tight text-white mb-4 group-hover:text-neon-red transition-colors">
+                            <h3 className="text-2xl font-black uppercase tracking-tighter text-white mb-2 group-hover:text-neon-red transition-colors">
                                 {track.title}
                             </h3>
-                            <p className="text-sm text-foreground-muted mb-8 leading-relaxed h-16">
+                            <div className="text-[10px] font-mono text-neon-red/60 mb-4 tracking-widest uppercase">{track.type}</div>
+
+                            <p className="text-sm text-foreground-muted mb-8 leading-relaxed line-clamp-2 h-10">
                                 {track.description}
                             </p>
 
-                            <div className="flex items-center gap-6">
-                                <a href={track.links.audiomack} target="_blank" rel="noopener noreferrer" className="text-xs font-mono font-bold uppercase tracking-widest text-white/40 hover:text-neon-red transition-colors flex items-center gap-2">
-                                    AUDIOMACK <ExternalLink size={14} />
+                            <div className="flex items-center gap-6 pt-6 border-t border-white/5">
+                                <a href={track.links.audiomack} target="_blank" rel="noopener noreferrer" className="text-[10px] font-bold uppercase tracking-widest text-white/40 hover:text-white transition-colors flex items-center gap-2">
+                                    AUDIOMACK
                                 </a>
-                                <a href="#" className="text-xs font-mono font-bold uppercase tracking-widest text-white/40 hover:text-neon-red transition-colors flex items-center gap-2">
-                                    SPOTIFY <ArrowUpRight size={14} />
+                                <a href="#" className="text-[10px] font-bold uppercase tracking-widest text-white/40 hover:text-white transition-colors flex items-center gap-2">
+                                    SPOTIFY
                                 </a>
                             </div>
                         </motion.div>
                     ))}
                 </div>
 
+                {/* Master Registry / Global Embeds */}
+                <section className="py-32 border-t border-white/5">
+                    <div className="grid lg:grid-cols-2 gap-16">
+                        {/* SoundCloud Ecosystem */}
+                        <motion.div
+                            initial={{ opacity: 0, x: -30 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                        >
+                            <div className="flex items-center gap-3 mb-8">
+                                <span className="h-px w-8 bg-neon-red" />
+                                <h3 className="text-2xl font-black uppercase tracking-tighter">SoundCloud <span className="text-neon-red">Profile</span></h3>
+                            </div>
+                            <div className="rounded-3xl overflow-hidden border border-white/10 bg-black shadow-2xl">
+                                <iframe
+                                    width="100%"
+                                    height="450"
+                                    scrolling="no"
+                                    frameBorder="no"
+                                    allow="autoplay"
+                                    src={externalEmbeds.soundcloud}
+                                    className="opacity-90 hover:opacity-100 transition-opacity"
+                                />
+                            </div>
+                        </motion.div>
+
+                        {/* Social Impact / Instagram */}
+                        <motion.div
+                            initial={{ opacity: 0, x: 30 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                        >
+                            <div className="flex items-center gap-3 mb-8">
+                                <span className="h-px w-8 bg-neon-red" />
+                                <h3 className="text-2xl font-black uppercase tracking-tighter">Social <span className="text-neon-red">Frequency</span></h3>
+                            </div>
+                            <div className="rounded-3xl overflow-hidden border border-white/10 bg-black aspect-[9/16] max-h-[450px] flex items-center justify-center">
+                                <iframe
+                                    src={externalEmbeds.instagramReel}
+                                    className="w-full h-full border-none"
+                                    scrolling="no"
+                                    allowTransparency={true}
+                                />
+                            </div>
+                        </motion.div>
+                    </div>
+                </section>
+
                 {/* Archive Visual CTA */}
                 <motion.div
-                    className="text-center py-24 border-t border-white/5"
+                    className="text-center py-40 mt-32 border-t border-white/5"
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
                 >
-                    <Headphones size={48} className="mx-auto mb-8 text-white/5 group-hover:text-neon-red transition-colors duration-700" />
-                    <h2 className="text-4xl font-black uppercase tracking-tight mb-8">Access Complete Archives?</h2>
-                    <div className="flex justify-center flex-wrap gap-4">
-                        <Button variant="neon" size="lg">APPLE_MUSIC</Button>
-                        <Button variant="neon" size="lg">SPOTIFY_GLOBAL</Button>
-                        <a href="https://youtube.com/@beetrus" target="_blank" rel="noopener noreferrer">
-                            <Button variant="outline" size="lg">YOUTUBE_VOD</Button>
+                    <Headphones size={64} className="mx-auto mb-12 text-neon-red/20" />
+                    <h2 className="text-5xl md:text-7xl font-[900] uppercase tracking-tighter mb-12">
+                        Initialize Full <span className="gradient-text">Stream?</span>
+                    </h2>
+                    <div className="flex justify-center flex-wrap gap-6">
+                        <Button size="lg" className="h-16 px-10 shadow-glow-red">SPOTIFY_LINK</Button>
+                        <Button variant="outline" size="lg" className="h-16 px-10 border-white/10">APPLE_MUSIC</Button>
+                        <a href="https://audiomack.com/beetrus" target="_blank" rel="noopener noreferrer">
+                            <Button variant="outline" size="lg" className="h-16 px-10 border-white/10">AUDIOMACK_ARCHIVE</Button>
                         </a>
                     </div>
                 </motion.div>
@@ -229,3 +310,4 @@ export default function MusicPage() {
         </div>
     );
 }
+

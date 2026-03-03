@@ -12,7 +12,7 @@ const projects = [
         id: "01",
         title: "Naijamation",
         scope: "Full-Stack / Streaming",
-        description: "A Nollywood-focused streaming platform with adaptive HLS video, curated collections, and a sleek dark-mode interface inspired by premium media services.",
+        description: "A high-performance Nollywood streaming platform featuring adaptive HLS video, personalized collections, and a cinematic dark-mode UI. Engineered for the next generation of African media consumption.",
         tech: ["Next.js", "TypeScript", "Prisma", "HLS"],
         link: "https://naijamation.vercel.app",
         github: "https://github.com/bibi231/nollywood-media-main",
@@ -42,12 +42,13 @@ const projects = [
     {
         id: "04",
         title: "Star Ranker",
-        scope: "Interactive App / Gamification",
-        description: "A dynamic rating and ranking application with leaderboards, star-based scoring, and competitive comparison features.",
+        scope: "Consensus Market / Gamification",
+        description: "An algorithm-driven reputation and ranking platform. Features server-authoritative scoring protected by specialized velocity detection, ensuring high-integrity leaderboards.",
         tech: ["JavaScript", "CSS", "Node.js"],
+        link: "https://star-ranker.web.app",
         github: "https://github.com/bibi231/star-ranker",
         type: "Engineering",
-        image: "/images/work/starranker.png"
+        image: "/images/work/star-ranker.png"
     },
     {
         id: "05",
@@ -64,9 +65,10 @@ const projects = [
         id: "06",
         title: "Regal Portfolio",
         scope: "Law Firm / Portfolio",
-        description: "A high-end, professional portfolio for JK Gadzama LLP, showcasing legal expertise with a focus on trust and authority.",
+        description: "A professional, high-authority digital presence for JK Gadzama LLP. Showcases top-tier legal expertise with a focus on trust, tradition, and global reach in the legal landscape.",
         tech: ["React", "Custom CSS", "Framer"],
-        github: "https://github.com/bibi231/jk-gadzama-regal-portfolio",
+        link: "https://regalportfoliocms.web.app/",
+        github: "https://github.com/bibi231/regal-portfolio",
         type: "Engineering",
         image: "/images/work/regal-portfolio.png"
     },
@@ -250,6 +252,70 @@ export default function WorkPage() {
                         </motion.div>
                     ))}
                 </div>
+
+                {/* ================================= */}
+                {/* TECH STACK - Categorized */}
+                {/* ================================= */}
+                <section className="mt-40 mb-40 border-t border-white/5 pt-24">
+                    <motion.div
+                        className="mb-16"
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                    >
+                        <div className="flex items-center gap-3 mb-4">
+                            <Cpu size={16} className="text-neon-red" />
+                            <span className="text-xs font-mono font-bold uppercase tracking-[0.5em] text-neon-red">Tech_Core_Stack</span>
+                        </div>
+                        <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-white">Logic <span className="gradient-text">Systems</span></h2>
+                    </motion.div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+                        {[
+                            {
+                                cat: "Languages",
+                                items: ["Java", "JavaScript", "TypeScript", "Python", "C", "C++", "PowerShell", "Bash", "Kotlin", "PHP", "HTML5"]
+                            },
+                            {
+                                cat: "Cloud & Ops",
+                                items: ["AWS", "Google Cloud", "Oracle Cloud", "OpenStack", "Kubernetes", "Firebase", "Supabase", "Git", "GitHub Actions", "Apache"]
+                            },
+                            {
+                                cat: "Frameworks & Logic",
+                                items: ["React", "Next JS", "Vue.js", "Angular", "NodeJS", "Quarkus", "Socket.io", "MongoDB", "MySQL", "Prisma"]
+                            },
+                            {
+                                cat: "Design & UX",
+                                items: ["Adobe Photoshop", "Adobe Premiere Pro", "Affinity Photo", "Figma", "Canva", "Tailwind CSS", "Framer Motion"]
+                            },
+                            {
+                                cat: "OS & Hardware",
+                                items: ["Windows Terminal", "nVIDIA", "Xbox"]
+                            }
+                        ].map((category, i) => (
+                            <motion.div
+                                key={category.cat}
+                                className="p-8 rounded-2xl border border-white/5 bg-white/[0.01] hover:border-neon-red/20 transition-all group"
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: i * 0.1 }}
+                            >
+                                <h4 className="text-xs font-mono text-neon-red uppercase tracking-widest font-bold mb-6 flex items-center gap-2">
+                                    <span className="h-1 w-1 bg-neon-red" />
+                                    {category.cat}
+                                </h4>
+                                <div className="flex flex-wrap gap-2">
+                                    {category.items.map(skill => (
+                                        <span key={skill} className="px-3 py-1.5 rounded-sm border border-white/5 bg-white/[0.02] text-[10px] text-foreground-muted font-mono group-hover:text-white transition-colors">
+                                            {skill}
+                                        </span>
+                                    ))}
+                                </div>
+                            </motion.div>
+                        ))}
+                    </div>
+                </section>
 
                 {/* ================================= */}
                 {/* REQUEST A SITE - CTA Section */}

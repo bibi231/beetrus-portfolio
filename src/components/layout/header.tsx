@@ -183,7 +183,7 @@ export function Header() {
                 {isMobileMenuOpen && (
                     <>
                         <motion.div
-                            className="fixed inset-0 z-overlay bg-background/90 backdrop-blur-md md:hidden"
+                            className="fixed inset-0 z-overlay bg-background/80 backdrop-blur-md md:hidden"
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
@@ -191,11 +191,11 @@ export function Header() {
                         />
 
                         <motion.div
-                            className="fixed inset-y-0 right-0 z-modal w-full max-w-[280px] border-l border-white/10 bg-black/95 p-6 backdrop-blur-2xl md:hidden shadow-[-10px_0_30px_rgba(0,0,0,0.5)]"
+                            className="fixed inset-y-0 right-0 z-modal w-full max-w-[280px] border-l border-white/10 bg-black/95 p-6 backdrop-blur-3xl md:hidden shadow-[-10px_0_40px_rgba(0,0,0,0.8)]"
                             initial={{ x: "100%" }}
                             animate={{ x: 0 }}
                             exit={{ x: "100%" }}
-                            transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                            transition={{ type: "spring", damping: 30, stiffness: 250 }}
                         >
                             <nav className="mt-20 flex flex-col gap-2">
                                 {navItems.map((item, index) => (
