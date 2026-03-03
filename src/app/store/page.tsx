@@ -4,6 +4,8 @@ import { useCart } from "@/context/cart-context";
 import { motion, AnimatePresence } from "framer-motion";
 import { ShoppingBag, X, Ticket, Terminal, ArrowUpRight } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 
@@ -246,8 +248,31 @@ export default function StorePage() {
                     ))}
                 </div>
 
+                {/* Custom Site Request CTA */}
+                <motion.div
+                    className="mt-64 border border-neon-red/20 bg-neon-red/5 p-8 md:p-16 text-center rounded-2xl relative overflow-hidden"
+                    initial={{ opacity: 0, scale: 0.98 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                >
+                    <div className="absolute top-0 left-0 w-24 h-px bg-neon-red/50" />
+                    <div className="absolute top-0 left-0 h-24 w-px bg-neon-red/50" />
+
+                    <h3 className="text-3xl md:text-5xl font-black uppercase tracking-tighter mb-6 leading-none">
+                        WANT_A_<span className="text-neon-red">SITE</span>_LIKE_THIS?
+                    </h3>
+                    <p className="text-neutral-400 max-w-xl mx-auto mb-10 text-sm leading-relaxed tracking-wide">
+                        I ARCHITECT PREMIUM DIGITAL ECOSYSTEMS FROM THE GROUND UP. SELECT YOUR BLUEPRINT AND INITIATE YOUR CUSTOM BUILD PROTOCOL TODAY.
+                    </p>
+                    <Link href="/request">
+                        <Button size="lg" className="bg-white text-black font-black uppercase tracking-[0.4em] px-12 h-16 hover:bg-neon-red hover:shadow-glow-red transition-all">
+                            REQUEST_BUILD
+                        </Button>
+                    </Link>
+                </motion.div>
+
                 {/* Industrial Grid Footer */}
-                <div className="mt-80 border-t border-white/10 pt-20 grid grid-cols-1 md:grid-cols-4 gap-12 text-[10px] text-neutral-500 font-bold tracking-[0.3em] uppercase pb-32">
+                <div className="mt-40 border-t border-white/10 pt-20 grid grid-cols-1 md:grid-cols-4 gap-12 text-[10px] text-neutral-500 font-bold tracking-[0.3em] uppercase pb-32">
                     <div className="md:col-span-2">
                         <p className="text-white text-xl font-black mb-6 tracking-tighter">© BEETRUS_OS_SYSTEMS_2026</p>
                         <p className="leading-loose max-w-sm">

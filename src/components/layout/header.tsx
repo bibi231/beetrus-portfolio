@@ -46,7 +46,7 @@ export function Header() {
         <>
             <motion.header
                 className={cn(
-                    "fixed left-0 top-0 z-[100] w-full transition-all duration-500",
+                    "fixed left-0 top-0 z-header w-full transition-all duration-500",
                     isScrolled
                         ? "bg-black/90 backdrop-blur-xl border-b border-white/10 h-[var(--header-height)]"
                         : "bg-transparent h-[calc(var(--header-height)+2rem)]"
@@ -136,7 +136,10 @@ export function Header() {
 
                     {/* Mobile Menu Toggle */}
                     <motion.button
-                        className="relative z-50 flex h-10 w-10 items-center justify-center rounded-xl border border-border/50 bg-card/50 backdrop-blur-sm md:hidden"
+                        className={cn(
+                            "relative flex h-10 w-10 items-center justify-center rounded-xl border border-border/50 bg-card/50 backdrop-blur-sm md:hidden",
+                            isMobileMenuOpen ? "z-[210]" : "z-50"
+                        )}
                         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                         whileTap={{ scale: 0.95 }}
                         aria-label="Toggle menu"

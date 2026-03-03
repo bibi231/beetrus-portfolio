@@ -642,15 +642,15 @@ export function RequestCTA() {
                             </span>
                         </motion.div>
                         <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-none mb-8">
-                            Need a <span className="gradient-text">Site</span> <br />
-                            Built?
+                            Architect <br />
+                            <span className="gradient-text">Your Vision</span>
                         </h2>
                         <p className="text-foreground-muted text-lg md:text-xl mb-12 max-w-lg mx-auto leading-relaxed">
-                            I architect high-performance, premium digital experiences. Request your custom build today.
+                            Select a blueprint and build a premium digital experience. Request your custom architected site today.
                         </p>
                         <Link href="/request">
                             <Button size="lg" magnetic className="h-16 px-12 text-lg shadow-glow-red" rightIcon={<ArrowRight size={20} />}>
-                                REQUEST_PROTOCOL
+                                START_PROJECT
                             </Button>
                         </Link>
                     </div>

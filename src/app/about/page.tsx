@@ -266,14 +266,14 @@ export default function AboutPage() {
                         I am currently accepting select creative collaborations and engineering contracts for 2026. Let&apos;s build something that matters.
                     </p>
                     <div className="flex flex-col sm:flex-row gap-6 justify-center">
-                        <Link href="/contact">
+                        <Link href="/request">
                             <Button size="lg" className="h-16 px-12 text-lg uppercase tracking-widest shadow-glow-red">
-                                Contact_Core
+                                Request_Site
                             </Button>
                         </Link>
-                        <Link href="/work">
+                        <Link href="/contact">
                             <Button variant="outline" size="lg" className="h-16 px-12 text-lg uppercase tracking-widest border-white/10">
-                                Systems_Inventory
+                                Contact_Core
                             </Button>
                         </Link>
                     </div>

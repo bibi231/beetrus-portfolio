@@ -19,6 +19,7 @@ import {
     Zap,
     ArrowRight
 } from "lucide-react";
+import { MockupGallery } from "@/components/sections/MockupGallery";
 
 const projectTypes = [
     { value: "landing", label: "Landing Page", icon: Layout },
@@ -57,6 +58,7 @@ export default function RequestPage() {
         description: "",
         referenceUrls: "",
         features: [] as string[],
+        selectedStyle: "",
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
@@ -67,7 +69,7 @@ export default function RequestPage() {
         await new Promise((resolve) => setTimeout(resolve, 2000));
         setIsSubmitting(false);
         setIsSubmitted(true);
-        toast.success("Request submitted! I'll review your project and get back to you within 24 hours.");
+        toast.success(`Request submitted for ${formData.selectedStyle || 'custom'} architecture! I'll review your project and get back to you within 24 hours.`);
     };
 
     const handleChange = (
@@ -131,7 +133,7 @@ export default function RequestPage() {
             {/* Form Section */}
             <section className="py-16 md:py-24">
                 <div className="container-custom">
-                    <div className="mx-auto max-w-3xl">
+                    <div className="mx-auto max-w-5xl">
                         <AnimatePresence mode="wait">
                             {isSubmitted ? (
                                 <motion.div
@@ -167,166 +169,172 @@ export default function RequestPage() {
                                     </Button>
                                 </motion.div>
                             ) : (
-                                <motion.form
-                                    key="form"
-                                    onSubmit={handleSubmit}
-                                    className="space-y-12"
+                                <motion.div
+                                    key="form-container"
                                     initial={{ opacity: 0, y: 20 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, y: -20 }}
+                                    className="space-y-24"
                                 >
-                                    {/* Section 1: Contact */}
-                                    <div className="rounded-2xl border border-white/5 bg-black/60 p-6 md:p-10 shadow-2xl relative overflow-hidden group">
-                                        <div className="absolute top-0 right-0 h-24 w-px bg-gradient-to-b from-neon-red/50 to-transparent" />
-                                        <div className="absolute top-0 right-0 w-24 h-px bg-gradient-to-l from-neon-red/50 to-transparent" />
+                                    {/* Architectural Selection */}
+                                    <MockupGallery
+                                        selectedStyle={formData.selectedStyle}
+                                        onSelect={(id) => setFormData(prev => ({ ...prev, selectedStyle: id }))}
+                                    />
 
-                                        <h2 className="text-xl font-bold font-mono uppercase tracking-widest text-neon-red mb-8">
-                                            01 // Contact_Info
-                                        </h2>
+                                    <form onSubmit={handleSubmit} className="space-y-12">
+                                        {/* Section 1: Contact */}
+                                        <div className="rounded-2xl border border-white/5 bg-black/60 p-6 md:p-10 shadow-2xl relative overflow-hidden group">
+                                            <div className="absolute top-0 right-0 h-24 w-px bg-gradient-to-b from-neon-red/50 to-transparent" />
+                                            <div className="absolute top-0 right-0 w-24 h-px bg-gradient-to-l from-neon-red/50 to-transparent" />
 
-                                        <div className="grid gap-6 sm:grid-cols-2">
-                                            <div className="space-y-3">
-                                                <label htmlFor="name" className="text-[10px] font-mono uppercase tracking-[0.3em] text-foreground-muted pl-1">
-                                                    Your_Name
-                                                </label>
-                                                <input
-                                                    type="text" id="name" name="name"
-                                                    value={formData.name} onChange={handleChange} required
-                                                    className="h-14 w-full rounded-lg border border-white/5 bg-black/60 px-5 text-foreground placeholder:text-foreground-muted/30 focus:border-neon-red/50 focus:outline-none focus:ring-1 focus:ring-neon-red/20 transition-all font-mono text-sm"
-                                                    placeholder="ENTER_NAME"
-                                                />
-                                            </div>
-                                            <div className="space-y-3">
-                                                <label htmlFor="email" className="text-[10px] font-mono uppercase tracking-[0.3em] text-foreground-muted pl-1">
-                                                    Email_Address
-                                                </label>
-                                                <input
-                                                    type="email" id="email" name="email"
-                                                    value={formData.email} onChange={handleChange} required
-                                                    className="h-14 w-full rounded-lg border border-white/5 bg-black/60 px-5 text-foreground placeholder:text-foreground-muted/30 focus:border-neon-red/50 focus:outline-none focus:ring-1 focus:ring-neon-red/20 transition-all font-mono text-sm"
-                                                    placeholder="YOUR@EMAIL.COM"
-                                                />
+                                            <h2 className="text-xl font-bold font-mono uppercase tracking-widest text-neon-red mb-8">
+                                                01 // Contact_Info
+                                            </h2>
+
+                                            <div className="grid gap-6 sm:grid-cols-2">
+                                                <div className="space-y-3">
+                                                    <label htmlFor="name" className="text-[10px] font-mono uppercase tracking-[0.3em] text-foreground-muted pl-1">
+                                                        Your_Name
+                                                    </label>
+                                                    <input
+                                                        type="text" id="name" name="name"
+                                                        value={formData.name} onChange={handleChange} required
+                                                        className="h-14 w-full rounded-lg border border-white/5 bg-black/60 px-5 text-foreground placeholder:text-foreground-muted/30 focus:border-neon-red/50 focus:outline-none focus:ring-1 focus:ring-neon-red/20 transition-all font-mono text-sm"
+                                                        placeholder="ENTER_NAME"
+                                                    />
+                                                </div>
+                                                <div className="space-y-3">
+                                                    <label htmlFor="email" className="text-[10px] font-mono uppercase tracking-[0.3em] text-foreground-muted pl-1">
+                                                        Email_Address
+                                                    </label>
+                                                    <input
+                                                        type="email" id="email" name="email"
+                                                        value={formData.email} onChange={handleChange} required
+                                                        className="h-14 w-full rounded-lg border border-white/5 bg-black/60 px-5 text-foreground placeholder:text-foreground-muted/30 focus:border-neon-red/50 focus:outline-none focus:ring-1 focus:ring-neon-red/20 transition-all font-mono text-sm"
+                                                        placeholder="YOUR@EMAIL.COM"
+                                                    />
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
 
-                                    {/* Section 2: Project Type */}
-                                    <div className="rounded-2xl border border-white/5 bg-black/60 p-6 md:p-10 shadow-2xl relative overflow-hidden">
-                                        <div className="absolute bottom-0 left-0 w-24 h-px bg-gradient-to-r from-neon-red/50 to-transparent" />
+                                        {/* Section 2: Project Type */}
+                                        <div className="rounded-2xl border border-white/5 bg-black/60 p-6 md:p-10 shadow-2xl relative overflow-hidden">
+                                            <div className="absolute bottom-0 left-0 w-24 h-px bg-gradient-to-r from-neon-red/50 to-transparent" />
 
-                                        <h2 className="text-xl font-bold font-mono uppercase tracking-widest text-neon-red mb-8">
-                                            02 // Project_Type
-                                        </h2>
+                                            <h2 className="text-xl font-bold font-mono uppercase tracking-widest text-neon-red mb-8">
+                                                02 // Project_Type
+                                            </h2>
 
-                                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                                            {projectTypes.map((type) => (
-                                                <motion.button
-                                                    key={type.value}
-                                                    type="button"
-                                                    onClick={() => setFormData(prev => ({ ...prev, projectType: type.value }))}
-                                                    className={`relative flex flex-col items-center gap-3 rounded-xl p-4 md:p-6 border transition-all text-center ${formData.projectType === type.value
+                                            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                                                {projectTypes.map((type) => (
+                                                    <motion.button
+                                                        key={type.value}
+                                                        type="button"
+                                                        onClick={() => setFormData(prev => ({ ...prev, projectType: type.value }))}
+                                                        className={`relative flex flex-col items-center gap-3 rounded-xl p-4 md:p-6 border transition-all text-center ${formData.projectType === type.value
                                                             ? "border-neon-red/50 bg-neon-red/10 text-white shadow-[0_0_20px_-5px_rgba(255,45,45,0.3)]"
                                                             : "border-white/5 bg-white/[0.02] text-foreground-muted hover:border-white/20 hover:bg-white/[0.04]"
-                                                        }`}
-                                                    whileTap={{ scale: 0.97 }}
-                                                >
-                                                    <type.icon size={24} className={formData.projectType === type.value ? "text-neon-red" : ""} />
-                                                    <span className="text-[10px] md:text-xs font-mono uppercase tracking-widest font-bold">{type.label}</span>
-                                                </motion.button>
-                                            ))}
+                                                            }`}
+                                                        whileTap={{ scale: 0.97 }}
+                                                    >
+                                                        <type.icon size={24} className={formData.projectType === type.value ? "text-neon-red" : ""} />
+                                                        <span className="text-[10px] md:text-xs font-mono uppercase tracking-widest font-bold">{type.label}</span>
+                                                    </motion.button>
+                                                ))}
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    {/* Section 3: Features */}
-                                    <div className="rounded-2xl border border-white/5 bg-black/60 p-6 md:p-10 shadow-2xl relative overflow-hidden">
-                                        <h2 className="text-xl font-bold font-mono uppercase tracking-widest text-neon-red mb-2">
-                                            03 // Feature_Set
-                                        </h2>
-                                        <p className="text-foreground-muted text-sm mb-8">Select all features you need</p>
+                                        {/* Section 3: Features */}
+                                        <div className="rounded-2xl border border-white/5 bg-black/60 p-6 md:p-10 shadow-2xl relative overflow-hidden">
+                                            <h2 className="text-xl font-bold font-mono uppercase tracking-widest text-neon-red mb-2">
+                                                03 // Feature_Set
+                                            </h2>
+                                            <p className="text-foreground-muted text-sm mb-8">Select all features you need</p>
 
-                                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                                            {features.map((feature) => (
-                                                <motion.button
-                                                    key={feature.id}
-                                                    type="button"
-                                                    onClick={() => toggleFeature(feature.id)}
-                                                    className={`flex items-center gap-3 rounded-xl p-3 md:p-4 border transition-all ${formData.features.includes(feature.id)
+                                            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                                                {features.map((feature) => (
+                                                    <motion.button
+                                                        key={feature.id}
+                                                        type="button"
+                                                        onClick={() => toggleFeature(feature.id)}
+                                                        className={`flex items-center gap-3 rounded-xl p-3 md:p-4 border transition-all ${formData.features.includes(feature.id)
                                                             ? "border-neon-red/50 bg-neon-red/10 text-white"
                                                             : "border-white/5 bg-white/[0.02] text-foreground-muted hover:border-white/20"
-                                                        }`}
-                                                    whileTap={{ scale: 0.97 }}
-                                                >
-                                                    <feature.icon size={16} className={formData.features.includes(feature.id) ? "text-neon-red" : ""} />
-                                                    <span className="text-[10px] md:text-xs font-mono uppercase tracking-wider font-bold">{feature.label}</span>
-                                                </motion.button>
-                                            ))}
-                                        </div>
-                                    </div>
-
-                                    {/* Section 4: Details */}
-                                    <div className="rounded-2xl border border-white/5 bg-black/60 p-6 md:p-10 shadow-2xl relative overflow-hidden group">
-                                        <div className="absolute inset-0 bg-gradient-to-br from-neon-red/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-
-                                        <h2 className="text-xl font-bold font-mono uppercase tracking-widest text-neon-red mb-8 relative z-10">
-                                            04 // Project_Details
-                                        </h2>
-
-                                        <div className="space-y-6 relative z-10">
-                                            <div className="space-y-3">
-                                                <label htmlFor="budget" className="text-[10px] font-mono uppercase tracking-[0.3em] text-foreground-muted pl-1">
-                                                    Budget_Range
-                                                </label>
-                                                <select
-                                                    id="budget" name="budget"
-                                                    value={formData.budget} onChange={handleChange}
-                                                    className="h-14 w-full rounded-lg border border-white/5 bg-black/60 px-5 text-foreground focus:border-neon-red/50 focus:outline-none focus:ring-1 focus:ring-neon-red/20 transition-all font-mono text-sm appearance-none"
-                                                >
-                                                    {budgetRanges.map((range) => (
-                                                        <option key={range.value} value={range.value} className="bg-black" disabled={range.value === ""}>
-                                                            {range.label}
-                                                        </option>
-                                                    ))}
-                                                </select>
-                                            </div>
-
-                                            <div className="space-y-3">
-                                                <label htmlFor="description" className="text-[10px] font-mono uppercase tracking-[0.3em] text-foreground-muted pl-1">
-                                                    Project_Description
-                                                </label>
-                                                <textarea
-                                                    id="description" name="description"
-                                                    value={formData.description} onChange={handleChange} required
-                                                    rows={5}
-                                                    className="w-full rounded-lg border border-white/5 bg-black/60 px-5 py-4 text-foreground placeholder:text-foreground-muted/30 focus:border-neon-red/50 focus:outline-none focus:ring-1 focus:ring-neon-red/20 transition-all font-mono text-sm resize-none"
-                                                    placeholder="DESCRIBE_YOUR_PROJECT..."
-                                                />
-                                            </div>
-
-                                            <div className="space-y-3">
-                                                <label htmlFor="referenceUrls" className="text-[10px] font-mono uppercase tracking-[0.3em] text-foreground-muted pl-1">
-                                                    Reference_URLs [optional]
-                                                </label>
-                                                <input
-                                                    type="text" id="referenceUrls" name="referenceUrls"
-                                                    value={formData.referenceUrls} onChange={handleChange}
-                                                    className="h-14 w-full rounded-lg border border-white/5 bg-black/60 px-5 text-foreground placeholder:text-foreground-muted/30 focus:border-neon-red/50 focus:outline-none focus:ring-1 focus:ring-neon-red/20 transition-all font-mono text-sm"
-                                                    placeholder="HTTPS://INSPIRATION-SITE.COM"
-                                                />
+                                                            }`}
+                                                        whileTap={{ scale: 0.97 }}
+                                                    >
+                                                        <feature.icon size={16} className={formData.features.includes(feature.id) ? "text-neon-red" : ""} />
+                                                        <span className="text-[10px] md:text-xs font-mono uppercase tracking-wider font-bold">{feature.label}</span>
+                                                    </motion.button>
+                                                ))}
                                             </div>
                                         </div>
-                                    </div>
 
-                                    {/* Submit */}
-                                    <Button
-                                        type="submit"
-                                        size="lg"
-                                        className="w-full h-16 bg-black border border-neon-red/50 text-white shadow-[0_0_20px_-10px_rgba(255,45,45,0.4)] hover:bg-neon-red hover:shadow-[0_0_30px_rgba(255,45,45,0.3)] transition-all duration-500 font-bold uppercase tracking-widest"
-                                        isLoading={isSubmitting}
-                                        rightIcon={<Send size={20} />}
-                                    >
-                                        SUBMIT_REQUEST
-                                    </Button>
-                                </motion.form>
+                                        {/* Section 4: Details */}
+                                        <div className="rounded-2xl border border-white/5 bg-black/60 p-6 md:p-10 shadow-2xl relative overflow-hidden group">
+                                            <div className="absolute inset-0 bg-gradient-to-br from-neon-red/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+
+                                            <h2 className="text-xl font-bold font-mono uppercase tracking-widest text-neon-red mb-8 relative z-10">
+                                                04 // Project_Details
+                                            </h2>
+
+                                            <div className="space-y-6 relative z-10">
+                                                <div className="space-y-3">
+                                                    <label htmlFor="budget" className="text-[10px] font-mono uppercase tracking-[0.3em] text-foreground-muted pl-1">
+                                                        Budget_Range
+                                                    </label>
+                                                    <select
+                                                        id="budget" name="budget"
+                                                        value={formData.budget} onChange={handleChange}
+                                                        className="h-14 w-full rounded-lg border border-white/5 bg-black/60 px-5 text-foreground focus:border-neon-red/50 focus:outline-none focus:ring-1 focus:ring-neon-red/20 transition-all font-mono text-sm appearance-none"
+                                                    >
+                                                        {budgetRanges.map((range) => (
+                                                            <option key={range.value} value={range.value} className="bg-black" disabled={range.value === ""}>
+                                                                {range.label}
+                                                            </option>
+                                                        ))}
+                                                    </select>
+                                                </div>
+
+                                                <div className="space-y-3">
+                                                    <label htmlFor="description" className="text-[10px] font-mono uppercase tracking-[0.3em] text-foreground-muted pl-1">
+                                                        Project_Description
+                                                    </label>
+                                                    <textarea
+                                                        id="description" name="description"
+                                                        value={formData.description} onChange={handleChange} required
+                                                        rows={5}
+                                                        className="w-full rounded-lg border border-white/5 bg-black/60 px-5 py-4 text-foreground placeholder:text-foreground-muted/30 focus:border-neon-red/50 focus:outline-none focus:ring-1 focus:ring-neon-red/20 transition-all font-mono text-sm resize-none"
+                                                        placeholder="DESCRIBE_YOUR_PROJECT..."
+                                                    />
+                                                </div>
+
+                                                <div className="space-y-3">
+                                                    <label htmlFor="referenceUrls" className="text-[10px] font-mono uppercase tracking-[0.3em] text-foreground-muted pl-1">
+                                                        Reference_URLs [optional]
+                                                    </label>
+                                                    <input
+                                                        type="text" id="referenceUrls" name="referenceUrls"
+                                                        value={formData.referenceUrls} onChange={handleChange}
+                                                        className="h-14 w-full rounded-lg border border-white/5 bg-black/60 px-5 text-foreground placeholder:text-foreground-muted/30 focus:border-neon-red/50 focus:outline-none focus:ring-1 focus:ring-neon-red/20 transition-all font-mono text-sm"
+                                                        placeholder="HTTPS://INSPIRATION-SITE.COM"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {/* Submit */}
+                                        <Button
+                                            type="submit"
+                                            size="lg"
+                                            className="w-full h-16 bg-black border border-neon-red/50 text-white shadow-[0_0_20px_-10px_rgba(255,45,45,0.4)] hover:bg-neon-red hover:shadow-[0_0_30px_rgba(255,45,45,0.3)] transition-all duration-500 font-bold uppercase tracking-widest"
+                                            isLoading={isSubmitting}
+                                            rightIcon={<Send size={20} />}
+                                        >
+                                        </Button>
+                                    </form>
+                                </motion.div>
                             )}
                         </AnimatePresence>
                     </div>
