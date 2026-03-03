@@ -276,45 +276,46 @@ export default function AboutPage() {
                     </motion.div>
 
                     {/* Timeline */}
-                    <div className="relative mx-auto max-w-2xl">
-                        {/* Center line */}
-                        <div className="absolute left-1/2 top-0 bottom-0 w-px -translate-x-1/2 bg-border/50" />
+                    <div className="relative mx-auto max-w-4xl">
+                        {/* Vertical Line */}
+                        <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px -translate-x-1/2 bg-white/10" />
 
-                        {journey.map((item, index) => (
-                            <motion.div
-                                key={index}
-                                className="relative flex items-center gap-8 py-6"
-                                initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
-                                whileInView={{ opacity: 1, x: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: index * 0.1 }}
-                            >
-                                {/* Year - Left side */}
-                                <div className="w-1/2 text-right pr-8">
-                                    {index % 2 === 0 && (
-                                        <>
-                                            <span className="font-mono text-sm text-neon-red">{item.year}</span>
-                                            <h4 className="font-semibold text-white">{item.title}</h4>
-                                            <p className="text-sm text-foreground-muted">{item.place}</p>
-                                        </>
+                        <div className="space-y-12">
+                            {journey.map((item, index) => (
+                                <motion.div
+                                    key={index}
+                                    className={cn(
+                                        "relative flex items-center w-full",
+                                        index % 2 === 0 ? "md:flex-row-reverse" : "md:flex-row"
                                     )}
-                                </div>
+                                    initial={{ opacity: 0, y: 20 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ delay: index * 0.1 }}
+                                >
+                                    {/* Content Card */}
+                                    <div className="w-full md:w-1/2 pl-10 md:pl-0">
+                                        <div className={cn(
+                                            "relative p-6 rounded-2xl border border-white/5 bg-black/40 backdrop-blur-sm group hover:border-neon-red/30 transition-all",
+                                            index % 2 === 0 ? "md:mr-12 text-left" : "md:ml-12 text-left"
+                                        )}>
+                                            <div className="absolute top-1/2 -translate-y-1/2 h-px w-6 bg-white/10 hidden md:block"
+                                                style={{ [index % 2 === 0 ? 'right' : 'left']: '-24px' }} />
 
-                                {/* Center dot */}
-                                <div className="absolute left-1/2 -translate-x-1/2 h-3 w-3 rounded-full border-2 border-neon-red bg-background" />
+                                            <span className="font-mono text-[10px] text-neon-red font-bold uppercase tracking-widest mb-1 block">{item.year}</span>
+                                            <h4 className="font-bold text-white text-lg mb-1">{item.title}</h4>
+                                            <p className="text-sm text-foreground-muted uppercase tracking-wider font-mono text-[10px]">{item.place}</p>
+                                        </div>
+                                    </div>
 
-                                {/* Content - Right side */}
-                                <div className="w-1/2 pl-8">
-                                    {index % 2 !== 0 && (
-                                        <>
-                                            <span className="font-mono text-sm text-neon-red">{item.year}</span>
-                                            <h4 className="font-semibold text-white">{item.title}</h4>
-                                            <p className="text-sm text-foreground-muted">{item.place}</p>
-                                        </>
-                                    )}
-                                </div>
-                            </motion.div>
-                        ))}
+                                    {/* Center Dot */}
+                                    <div className="absolute left-4 md:left-1/2 -translate-x-1/2 h-3 w-3 rounded-full border-2 border-neon-red bg-background z-20 shadow-glow-red" />
+
+                                    {/* Empty Space for Desktop Alternating */}
+                                    <div className="hidden md:block md:w-1/2" />
+                                </motion.div>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </section>

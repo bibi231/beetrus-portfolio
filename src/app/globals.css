@@ -28,7 +28,7 @@
   --header-height: 5rem;
   /* 80px */
   --header-offset: var(--header-height);
-  --page-top-padding: 12rem;
+  --page-top-padding: clamp(8rem, 15vw, 12rem);
   /* Standardized breathing room for all subpages */
 
   --card: 0 0% 5%;
@@ -69,11 +69,11 @@
   --ease-elastic: cubic-bezier(0.68, -0.6, 0.32, 1.6);
   --ease-cinematic: cubic-bezier(0.22, 1, 0.36, 1);
 
-  /* FLUID TYPOGRAPHY (REVERTED TO STABLE) */
-  --text-hero: 8rem;
-  --text-h1: 4.5rem;
-  --text-h2: 3rem;
-  --text-h3: 2rem;
+  /* FLUID TYPOGRAPHY (Responsive) */
+  --text-hero: clamp(4rem, 15vw, 8rem);
+  --text-h1: clamp(2.5rem, 8vw, 4.5rem);
+  --text-h2: clamp(2rem, 6vw, 3rem);
+  --text-h3: clamp(1.5rem, 4vw, 2rem);
   --text-body: 1.125rem;
   --text-mono: 0.875rem;
 }
@@ -397,12 +397,12 @@ a {
 
 /* Section spacing */
 .section {
-  padding: 12rem 0;
+  padding: clamp(6rem, 15vw, 12rem) 0;
 }
 
 @media (min-width: 768px) {
   .section {
-    padding: 14rem 0;
+    padding: clamp(8rem, 20vw, 14rem) 0;
   }
 }
 

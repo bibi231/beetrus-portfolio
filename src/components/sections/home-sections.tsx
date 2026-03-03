@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { ArrowDown, Play, Github, Music2, ChevronRight } from "lucide-react";
+import { ArrowDown, Play, Github, Music2, ChevronRight, ArrowRight, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { HeroFallback } from "@/components/three/hero-scene";
 import { usePrefersReducedMotion } from "@/hooks/use-animations";
@@ -523,3 +523,145 @@ export function MusicPreviewSection() {
         </section>
     );
 }
+
+/**
+ * Work Preview Section - Horizontal showcase of top projects
+ */
+export function WorkPreviewSection() {
+    const featuredProjects = [
+        {
+            title: "Naijamation",
+            desc: "Full-stack Nollywood streaming platform.",
+            tech: ["Next.js", "HLS"],
+            image: "/images/work/naijamation.png",
+            href: "/work"
+        },
+        {
+            title: "MVMNT",
+            desc: "Social fitness tracking architecture.",
+            tech: ["React", "PostgreSQL"],
+            image: "/images/work/mvmnt.png",
+            href: "/work"
+        },
+        {
+            title: "Beetrus Portfolio",
+            desc: "This current Tron-inspired OS environment.",
+            tech: ["Next.js", "Framer", "Tailwind"],
+            image: "/images/work/beetrus-portfolio.png",
+            href: "/work"
+        }
+    ];
+
+    return (
+        <section className="section bg-black overflow-hidden">
+            <div className="container-custom">
+                <motion.div
+                    className="mb-16 flex flex-col md:flex-row items-start md:items-end justify-between gap-6"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                >
+                    <div>
+                        <span className="mb-4 inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.2em] text-neon-red">
+                            <span className="h-px w-8 bg-neon-red" />
+                            Project Showcase
+                        </span>
+                        <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter">Work <span className="gradient-text">Preview</span></h2>
+                    </div>
+                    <Link href="/work" className="group flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-widest text-foreground-muted hover:text-white transition-colors">
+                        V_ALL_SYSTEMS <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                    </Link>
+                </motion.div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+                    {featuredProjects.map((project, i) => (
+                        <motion.div
+                            key={project.title}
+                            className="group relative rounded-2xl md:rounded-3xl border border-white/5 bg-white/[0.02] overflow-hidden"
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: i * 0.1 }}
+                        >
+                            <Link href={project.href} className="block aspect-[16/10] relative overflow-hidden">
+                                <Image
+                                    src={project.image}
+                                    alt={project.title}
+                                    fill
+                                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
+
+                                <div className="absolute bottom-4 left-4 right-4 z-20">
+                                    <div className="flex gap-2 mb-2">
+                                        {project.tech.map(t => (
+                                            <span key={t} className="px-2 py-0.5 rounded-sm bg-black/80 border border-white/10 text-[8px] font-mono text-white/60">
+                                                {t}
+                                            </span>
+                                        ))}
+                                    </div>
+                                    <h3 className="text-xl font-black text-white group-hover:text-neon-red transition-colors uppercase tracking-tight">{project.title}</h3>
+                                </div>
+                            </Link>
+                        </motion.div>
+                    ))}
+                </div>
+            </div>
+        </section>
+    );
+}
+
+/**
+ * Request CTA Section - High impact banner
+ */
+export function RequestCTA() {
+    return (
+        <section className="py-24 md:py-48 relative overflow-hidden">
+            {/* Animated background highlights */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-5xl h-64 bg-neon-red/5 blur-[120px] rounded-full pointer-events-none" />
+
+            <div className="container-custom">
+                <motion.div
+                    className="relative rounded-3xl md:rounded-[4rem] border border-neon-red/20 bg-black/40 p-10 md:p-24 text-center overflow-hidden"
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                >
+                    {/* Decorative grid */}
+                    <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{
+                        backgroundImage: `linear-gradient(var(--neon-red-glow) 1px, transparent 1px),
+                                            linear-gradient(90deg, var(--neon-red-glow) 1px, transparent 1px)`,
+                        backgroundSize: '40px 40px',
+                    }} />
+
+                    <div className="relative z-10 max-w-2xl mx-auto">
+                        <motion.div className="flex items-center justify-center gap-3 mb-8" variants={fadeInUp}>
+                            <Zap size={16} className="text-neon-red" />
+                            <span className="text-[10px] font-mono font-bold uppercase tracking-[0.5em] text-neon-red animate-pulse">
+                                INITIATE_PROTOCOL
+                            </span>
+                        </motion.div>
+                        <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-none mb-8">
+                            Need a <span className="gradient-text">Site</span> <br />
+                            Built?
+                        </h2>
+                        <p className="text-foreground-muted text-lg md:text-xl mb-12 max-w-lg mx-auto leading-relaxed">
+                            I architect high-performance, premium digital experiences. Request your custom build today.
+                        </p>
+                        <Link href="/request">
+                            <Button size="lg" magnetic className="h-16 px-12 text-lg shadow-glow-red" rightIcon={<ArrowRight size={20} />}>
+                                REQUEST_PROTOCOL
+                            </Button>
+                        </Link>
+                    </div>
+                </motion.div>
+            </div>
+        </section>
+    );
+}
+
+const Image = ({ src, alt, fill, className }: any) => (
+    // Simple helper since Image is from next/image but we're in a client component
+    // In next.js 13+ it's fine as long as imported
+    <img src={src} alt={alt} className={className} style={fill ? { position: 'absolute', height: '100%', width: '100%', left: 0, top: 0, objectFit: 'cover' } : {}} />
+);
