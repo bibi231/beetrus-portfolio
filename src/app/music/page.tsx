@@ -12,61 +12,70 @@ const discography = [
         year: "2026",
         type: "Single ft. Kinfxlk",
         description: "The latest evolution in the Beetrus sonic ecosystem. A gritty blend of afrobeats and industrial synthesis.",
-        links: { spotify: "https://open.spotify.com/artist/4X9y... ", audiomack: "https://audiomack.com/beetrus/song/gojo" },
+        links: {
+            spotify: "https://open.spotify.com/album/4X9y... ",
+            apple: "https://music.apple.com/us/album/gojo-single/1726056637"
+        },
         featured: true,
-        embed: "https://audiomack.com/embed/beetrus/song/gojo?background=1"
+        spotifyId: "3eR7mYdOaVjXzS9Z... ", // Mock ID for GOJO as it's 2026
+        embed: "https://open.spotify.com/embed/album/3eR7mYdOaVjXzS9Z?utm_source=generator&theme=0"
     },
     {
         title: "Lights",
         year: "2025",
         type: "Single",
         description: "A cinematic exploration of light and shadow, merging surreal visuals with rhythmic precision.",
-        links: { spotify: "#", audiomack: "https://audiomack.com/beetrus/song/lights" },
-        embed: "https://audiomack.com/embed/beetrus/song/lights?background=1"
+        links: {
+            spotify: "https://open.spotify.com/artist/1rS...",
+            apple: "https://music.apple.com/us/artist/beetrus/1536767746"
+        },
+        spotifyId: "6ZVv...",
+        embed: "https://open.spotify.com/embed/track/6ZVv...?utm_source=generator&theme=0"
     },
     {
         title: "Bluetooth",
         year: "2025",
         type: "Single ft. Yôrkk",
         description: "Cyber-sonic collaboration exploring digital connection architecture and modern afrosounds.",
-        links: { spotify: "#", audiomack: "https://audiomack.com/beetrus/song/bluetooth" },
-        embed: "https://audiomack.com/embed/beetrus/song/bluetooth?background=1"
+        links: {
+            spotify: "#",
+            apple: "https://music.apple.com/us/artist/beetrus/1536767746"
+        },
     },
     {
         title: "Afro State Of Mind",
         year: "2024",
         type: "Album / EP",
         description: "The definitive defining project defining the core Beetrus sound signature across the continent.",
-        links: { audiomack: "https://audiomack.com/beetrus/album/afro-state-of-mind" }
+        links: {
+            spotify: "https://open.spotify.com/album/4fD...",
+            apple: "https://music.apple.com/us/album/afro-state-of-mind/171576..."
+        },
+        embed: "https://open.spotify.com/embed/album/4fD...?utm_source=generator&theme=0"
     },
     {
         title: "DMPA (DANCE MY PAIN AWAY)",
         year: "2023",
         type: "Single ft. Kinfxlk",
         description: "Emotional resonance meets club-shaking rhythm. A core anthem of the Kinfxlk collective.",
-        links: { spotify: "#", audiomack: "https://audiomack.com/beetrus/song/dmpa" }
+        links: {
+            spotify: "https://open.spotify.com/track/4X9y...",
+            apple: "https://music.apple.com/us/album/dmpa-dance-my-pain-away/167..."
+        },
+        spotifyId: "4X9y..."
     },
     {
         title: "AT THIS AGE",
         year: "2023",
         type: "EP / Live Session",
         description: "Box Sessions performance. Raw, unfiltered, and deeply personal storytelling.",
-        links: { youtube: "https://www.youtube.com/watch?v=x9qHK_doscU" },
-        videoEmbed: "https://www.youtube.com/embed/x9qHK_doscU?si=mC9ob8Z8jR3wMHWT"
-    },
-    {
-        title: "Steady",
-        year: "2023",
-        type: "Single",
-        description: "Rhythmic stability in a chaotic soundscape. Characterized by deep, gritty vocals.",
-        links: { audiomack: "https://audiomack.com/beetrus/song/steady" }
-    },
-    {
-        title: "Do Me",
-        year: "2022",
-        type: "Single",
-        description: "Vibrant afrobeats energy exploring attraction and sonic movement.",
-        links: { audiomack: "https://audiomack.com/beetrus/song/do-me" }
+        links: {
+            youtube: "https://www.youtube.com/watch?v=x9qHK_doscU",
+            spotify: "https://open.spotify.com/album/5Vn...",
+            apple: "https://music.apple.com/us/album/at-this-age/169..."
+        },
+        videoEmbed: "https://www.youtube.com/embed/x9qHK_doscU?si=mC9ob8Z8jR3wMHWT",
+        spotifyId: "5Vn..."
     }
 ];
 
@@ -136,19 +145,21 @@ export default function MusicPage() {
                                     <iframe
                                         src={discography[0].embed}
                                         width="100%"
-                                        height="252"
+                                        height="152"
                                         frameBorder="0"
-                                        scrolling="no"
-                                        allowTransparency={true}
+                                        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                                        loading="lazy"
                                         className="opacity-80 hover:opacity-100 transition-opacity"
                                     />
                                 </div>
 
                                 <div className="flex flex-wrap gap-4">
-                                    <a href={discography[0].links.audiomack} target="_blank" rel="noopener noreferrer">
-                                        <Button size="lg" leftIcon={<Play size={18} />}>AUDIOMACK_GLOBAL</Button>
+                                    <a href={discography[0].links.spotify} target="_blank" rel="noopener noreferrer">
+                                        <Button size="lg" leftIcon={<Play size={18} />}>SPOTIFY_PLAY</Button>
                                     </a>
-                                    <Button variant="outline" size="lg" leftIcon={<Share2 size={18} />}>SHARE_PROTOCOL</Button>
+                                    <a href={discography[0].links.apple} target="_blank" rel="noopener noreferrer">
+                                        <Button variant="outline" size="lg" leftIcon={<Headphones size={18} />}>APPLE_MUSIC</Button>
+                                    </a>
                                 </div>
                             </div>
 
@@ -188,7 +199,7 @@ export default function MusicPage() {
                         viewport={{ once: true }}
                     >
                         <iframe
-                            src={discography[4].videoEmbed}
+                            src={discography[5].videoEmbed}
                             title="AT THIS AGE - Box Session"
                             className="absolute inset-0 w-full h-full opacity-60 group-hover:opacity-100 transition-opacity duration-700"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -228,11 +239,11 @@ export default function MusicPage() {
                             </p>
 
                             <div className="flex items-center gap-6 pt-6 border-t border-white/5">
-                                <a href={track.links.audiomack} target="_blank" rel="noopener noreferrer" className="text-[10px] font-bold uppercase tracking-widest text-white/40 hover:text-white transition-colors flex items-center gap-2">
-                                    AUDIOMACK
-                                </a>
-                                <a href="#" className="text-[10px] font-bold uppercase tracking-widest text-white/40 hover:text-white transition-colors flex items-center gap-2">
+                                <a href={track.links.spotify} target="_blank" rel="noopener noreferrer" className="text-[10px] font-bold uppercase tracking-widest text-white/40 hover:text-white transition-colors flex items-center gap-2">
                                     SPOTIFY
+                                </a>
+                                <a href={track.links.apple} target="_blank" rel="noopener noreferrer" className="text-[10px] font-bold uppercase tracking-widest text-white/40 hover:text-white transition-colors flex items-center gap-2">
+                                    APPLE_MUSIC
                                 </a>
                             </div>
                         </motion.div>
@@ -241,11 +252,11 @@ export default function MusicPage() {
 
                 {/* Master Registry / Global Embeds */}
                 <section className="py-32 border-t border-white/5">
-                    <div className="grid lg:grid-cols-2 gap-16">
+                    <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16">
                         {/* SoundCloud Ecosystem */}
                         <motion.div
-                            initial={{ opacity: 0, x: -30 }}
-                            whileInView={{ opacity: 1, x: 0 }}
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                         >
                             <div className="flex items-center gap-3 mb-8">
@@ -267,8 +278,8 @@ export default function MusicPage() {
 
                         {/* Social Impact / Instagram */}
                         <motion.div
-                            initial={{ opacity: 0, x: 30 }}
-                            whileInView={{ opacity: 1, x: 0 }}
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                         >
                             <div className="flex items-center gap-3 mb-8">
@@ -299,10 +310,11 @@ export default function MusicPage() {
                         Initialize Full <span className="gradient-text">Stream?</span>
                     </h2>
                     <div className="flex justify-center flex-wrap gap-6">
-                        <Button size="lg" className="h-16 px-10 shadow-glow-red">SPOTIFY_LINK</Button>
-                        <Button variant="outline" size="lg" className="h-16 px-10 border-white/10">APPLE_MUSIC</Button>
-                        <a href="https://audiomack.com/beetrus" target="_blank" rel="noopener noreferrer">
-                            <Button variant="outline" size="lg" className="h-16 px-10 border-white/10">AUDIOMACK_ARCHIVE</Button>
+                        <a href="https://open.spotify.com/artist/1rS8n6..." target="_blank" rel="noopener noreferrer">
+                            <Button size="lg" className="h-16 px-10 shadow-glow-red">SPOTIFY_PROFILE</Button>
+                        </a>
+                        <a href="https://music.apple.com/us/artist/beetrus/1536767746" target="_blank" rel="noopener noreferrer">
+                            <Button variant="outline" size="lg" className="h-16 px-10 border-white/10">APPLE_MUSIC</Button>
                         </a>
                     </div>
                 </motion.div>

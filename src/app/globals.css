@@ -1,5 +1,28 @@
 @import "tailwindcss";
 
+@theme {
+  --color-neon-red: var(--neon-red);
+  --color-neon-red-glow: var(--neon-red-glow);
+  --color-neon-cyan: var(--neon-cyan);
+  --color-neon-cyan-glow: var(--neon-cyan-glow);
+
+  --font-display: var(--font-outfit), var(--font-inter), sans-serif;
+  --font-mono: var(--font-jetbrains), Menlo, monospace;
+
+  --z-index-negative: -1;
+  --z-index-base: 0;
+  --z-index-elevated: 10;
+  --z-index-sticky: 40;
+  --z-index-header: 500;
+  --z-index-overlay: 600;
+  --z-index-modal: 700;
+  --z-index-toast: 800;
+  --z-index-cursor: 9999;
+
+  --shadow-glow-red: 0 0 30px -5px #ff3333;
+  --shadow-glow-cyan: 0 0 30px -5px #00f0ff;
+}
+
 /* ============================================
    BEETRUS PORTFOLIO - DESIGN SYSTEM
    Tron/Cyber-Noir Aesthetic

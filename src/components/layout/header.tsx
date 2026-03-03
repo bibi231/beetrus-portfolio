@@ -29,13 +29,35 @@ export function Header() {
     const scrollY = useScrollPosition();
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+    const [isVisible, setIsVisible] = useState(true);
+    const [lastScrollY, setLastScrollY] = useState(0);
+
+    // Scroll direction detection for Hide-on-Scroll
+    useEffect(() => {
+        const handleScroll = () => {
+            const currentScrollY = window.scrollY;
+            if (currentScrollY > lastScrollY && currentScrollY > 100) {
+                // Scrolling down & not at the very top
+                setIsVisible(false);
+            } else {
+                // Scrolling up
+                setIsVisible(true);
+            }
+            setLastScrollY(currentScrollY);
+        };
+
+        window.addEventListener("scroll", handleScroll, { passive: true });
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, [lastScrollY]);
 
     // Find active nav index
     const activeIndex = navItems.findIndex((item) => item.href === pathname);
 
-    // Close mobile menu on route change
+    // Close mobile menu and reset visibility on route change
     useEffect(() => {
         setIsMobileMenuOpen(false);
+        setIsVisible(true);
+        setLastScrollY(0);
     }, [pathname]);
 
     // Header states based on scroll
@@ -46,17 +68,22 @@ export function Header() {
         <>
             <motion.header
                 className={cn(
-                    "fixed left-0 top-0 z-header w-full transition-all duration-500",
+                    "fixed left-0 top-0 z-[500] w-full transition-all duration-500 pointer-events-auto",
                     isScrolled
                         ? "bg-black/90 backdrop-blur-xl border-b border-white/10 h-[var(--header-height)]"
-                        : "bg-transparent h-[calc(var(--header-height)+2rem)]"
+                        : "bg-transparent h-[calc(var(--header-height)+2rem)]",
+                    // Mobile overlay style
+                    isMobileMenuOpen && "md:bg-transparent bg-black"
                 )}
-                initial={{ y: -100, opacity: 0 }}
+                initial={{ y: 0, opacity: 1 }}
                 animate={{
-                    y: 0,
-                    opacity: 1,
+                    y: isVisible || isMobileMenuOpen ? 0 : -100,
+                    opacity: isVisible || isMobileMenuOpen ? 1 : 0,
                 }}
-                transition={{ duration: 0.8, ease: ease.cinematic }}
+                transition={{
+                    y: { duration: 0.4, ease: ease.smooth },
+                    opacity: { duration: 0.3 }
+                }}
             >
                 <motion.div
                     className="flex items-center justify-between px-6"

@@ -22,14 +22,14 @@ const footerLinks = {
         { label: "Work", href: "/work" },
         { label: "Music", href: "/music" },
         { label: "Store", href: "/store" },
+        { label: "Socials", href: "/socials" },
         { label: "Contact", href: "/contact" },
     ],
     socials: [
-        { label: "Instagram", href: "https://instagram.com/beetrus_gg", icon: Instagram },
-        { label: "Twitter", href: "https://twitter.com/beetrus_g", icon: Twitter },
-        { label: "YouTube", href: "https://youtube.com/@beetrus", icon: Youtube },
-        { label: "GitHub", href: "https://github.com/beetrus", icon: Github },
-        { label: "Audiomack", href: "https://audiomack.com/beetrus", icon: Music2 },
+        { label: "Instagram", href: "https://instagram.com/beetrus_gg", icon: Instagram, color: "#E4405F" },
+        { label: "TikTok", href: "https://www.tiktok.com/@beetrus_gg", icon: Music2, color: "#00F2EA" },
+        { label: "YouTube", href: "https://youtube.com/@beetrus", icon: Youtube, color: "#FF0000" },
+        { label: "GitHub", href: "https://github.com/bibi231", icon: Github, color: "#FFFFFF" },
     ],
     legal: [
         { label: "Privacy", href: "/privacy" },
@@ -157,7 +157,11 @@ export function Footer() {
                                         rel="noopener noreferrer"
                                         className="group inline-flex items-center gap-3 text-foreground-muted transition-colors hover:text-white"
                                     >
-                                        <link.icon size={16} className="transition-colors group-hover:text-neon-red" />
+                                        <link.icon
+                                            size={16}
+                                            className="transition-colors"
+                                            style={{ color: link.color }}
+                                        />
                                         {link.label}
                                         <ArrowUpRight
                                             size={12}

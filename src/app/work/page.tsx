@@ -202,7 +202,31 @@ export default function WorkPage() {
                                     </div>
 
                                     {/* Project Screenshot or Placeholder */}
-                                    {project.image ? (
+                                    {project.link ? (
+                                        <a
+                                            href={project.link}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="relative block h-full w-full rounded-[1rem] md:rounded-[1.4rem] overflow-hidden group/img-link"
+                                        >
+                                            <Image
+                                                src={project.image}
+                                                alt={`${project.title} screenshot`}
+                                                fill
+                                                className="object-cover object-top group-hover:scale-[1.03] transition-transform duration-700"
+                                                sizes="(max-width: 768px) 100vw, 75vw"
+                                            />
+                                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+
+                                            {/* Hover View Indicator */}
+                                            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/img-link:opacity-100 transition-opacity duration-300">
+                                                <div className="px-6 py-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white font-mono text-xs tracking-widest flex items-center gap-2">
+                                                    <Globe size={14} className="text-neon-red" />
+                                                    VIEW_LIVE
+                                                </div>
+                                            </div>
+                                        </a>
+                                    ) : project.image ? (
                                         <div className="relative h-full w-full rounded-[1rem] md:rounded-[1.4rem] overflow-hidden">
                                             <Image
                                                 src={project.image}

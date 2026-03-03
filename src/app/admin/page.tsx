@@ -1,6 +1,7 @@
 "use client";
 
 import { AdminLayout } from "@/components/admin/admin-layout";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import {
     Users,
@@ -12,8 +13,42 @@ import {
     Database,
     Zap
 } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export default function AdminDashboard() {
+    const [data, setData] = useState<any>(null);
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchStats = async () => {
+            try {
+                const res = await fetch("/api/admin/stats");
+                if (!res.ok) throw new Error("FETCH_FAILED");
+                const result = await res.json();
+                setData(result);
+            } catch (error) {
+                console.error(error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        fetchStats();
+    }, []);
+
+    const stats = data?.stats || {
+        totalOrders: 0,
+        activeLeads: 0,
+        totalProducts: 0,
+        totalRevenue: 0
+    };
+
+    const dashboardStats = [
+        { label: "Active Project Leads", value: stats.activeLeads, icon: Users, trend: "Live", color: "text-neon-red" },
+        { label: "Total Orders", value: stats.totalOrders, icon: ShoppingBag, trend: "Capture", color: "text-cyan-400" },
+        { label: "Inventory SKUs", value: stats.totalProducts, icon: Database, trend: "Sync", color: "text-purple-500" },
+        { label: "Gross Revenue", value: `$${stats.totalRevenue.toFixed(2)}`, icon: TrendingUp, trend: "Est.", color: "text-green-500" },
+    ];
+
     return (
         <AdminLayout>
             <div className="space-y-8">
@@ -25,12 +60,7 @@ export default function AdminDashboard() {
 
                 {/* Stats Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    {[
-                        { label: "Active Nodes", value: "1.2k+", icon: Activity, trend: "+12.5%", color: "text-neon-red" },
-                        { label: "System Load", value: "34.2%", icon: Zap, trend: "-2.4%", color: "text-cyan-400" },
-                        { label: "Data Harvested", value: "84.1 GB", icon: Database, trend: "+4.1%", color: "text-purple-500" },
-                        { label: "Core Uptime", value: "99.9%", icon: TrendingUp, trend: "Stable", color: "text-green-500" },
-                    ].map((stat, i) => (
+                    {dashboardStats.map((stat, i) => (
                         <motion.div
                             key={i}
                             initial={{ opacity: 0, y: 20 }}
@@ -48,7 +78,7 @@ export default function AdminDashboard() {
                                 <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-foreground-muted">{stat.label}</span>
                             </div>
                             <div className="flex items-end justify-between">
-                                <h3 className="text-3xl font-black tabular-nums">{stat.value}</h3>
+                                <h3 className="text-3xl font-black tabular-nums">{isLoading ? "..." : stat.value}</h3>
                                 <div className="flex items-center gap-1 text-[10px] font-mono text-green-500 pb-1">
                                     <span>{stat.trend}</span>
                                 </div>
@@ -67,17 +97,23 @@ export default function AdminDashboard() {
                                 <button className="text-[10px] font-mono text-neon-red hover:underline">ACCESS_LOGS</button>
                             </div>
                             <div className="p-6 space-y-6">
-                                {[1, 2, 3, 4, 5].map((_, i) => (
-                                    <div key={i} className="flex items-center gap-4 group">
+                                {isLoading ? (
+                                    <div className="text-center font-mono text-xs text-neon-red animate-pulse py-12">DECRYPTING_ACTIVITY_LOGS...</div>
+                                ) : (data?.recentLeads || []).length === 0 ? (
+                                    <div className="text-center font-mono text-xs text-neutral-600 py-12">NO_RECENT_COMMUNICATIONS</div>
+                                ) : (data.recentLeads).map((activity: any, i: number) => (
+                                    <div key={activity.id} className="flex items-center gap-4 group">
                                         <div className="h-10 w-10 rounded-full bg-white/5 flex items-center justify-center font-mono text-[10px] text-white/40 group-hover:text-neon-red transition-all">
                                             0{i + 1}
                                         </div>
                                         <div className="flex-1">
-                                            <p className="text-sm font-bold uppercase tracking-tight">System Update #432{i}</p>
-                                            <p className="text-[10px] font-mono text-foreground-muted">Node authorization successful // Abuja_Cluster</p>
+                                            <p className="text-sm font-bold uppercase tracking-tight">{activity.title}</p>
+                                            <p className="text-[10px] font-mono text-foreground-muted">{activity.description}</p>
                                         </div>
                                         <div className="text-right">
-                                            <p className="text-[10px] font-mono text-white/60">12:0{i} AM</p>
+                                            <p className="text-[10px] font-mono text-white/60">
+                                                {new Date(activity.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                            </p>
                                         </div>
                                     </div>
                                 ))}
@@ -100,9 +136,4 @@ export default function AdminDashboard() {
             </div>
         </AdminLayout>
     );
-}
-
-// Utility function to merge classes
-function cn(...inputs: any[]) {
-    return inputs.filter(Boolean).join(' ');
 }

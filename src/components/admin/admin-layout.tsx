@@ -22,7 +22,8 @@ const sidebarLinks = [
     { label: "Dashboard", href: "/admin", icon: LayoutDashboard },
     { label: "Products", href: "/admin/products", icon: ShoppingBag },
     { label: "Music", href: "/admin/music", icon: Music2 },
-    { label: "Orders", href: "/admin/orders", icon: Users },
+    { label: "Orders", href: "/admin/orders", icon: ShoppingBag },
+    { label: "Service Leads", href: "/admin/leads", icon: Users },
     { label: "Settings", href: "/admin/settings", icon: Settings },
 ];
 

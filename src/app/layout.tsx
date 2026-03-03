@@ -114,10 +114,13 @@ export default function RootLayout({
       >
         <Providers>
           <Header />
-          <main className="flex-1">
+          <main className="relative z-base flex-1">
             {children}
           </main>
           <Footer />
+
+          <CustomCursor />
+          <MouseGlow />
 
           <Toaster
             position="top-right"

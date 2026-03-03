@@ -11,13 +11,15 @@ import { GlitchText } from "@/components/ui/glitch-text";
 
 // Timeline data
 const journey = [
-    { year: "2024", title: "Software Engineering Student", place: "Nile University", type: "edu" },
+    { year: "2026", title: "GOJO Release", place: "Spotify / Apple Music", type: "music" },
+    { year: "2025", title: "LIGHTS Release", place: "Spotify / Apple Music", type: "music" },
+    { year: "2025", title: "BLUETOOTH Release", place: "with Yôrkk", type: "music" },
     { year: "2024", title: "SME / Engineering Intern", place: "Miva Open University", type: "work" },
-    { year: "2023", title: "At This Age EP Released", place: "Independent", type: "music" },
+    { year: "2024", title: "AFRO STATE OF MIND", place: "Major EP", type: "music" },
+    { year: "2023", title: "AT THIS AGE EP", place: "Box Session Performance", type: "music" },
     { year: "2022", title: "Web Developer", place: "JK Gadzama LLP", type: "work" },
-    { year: "2021", title: "Music Career Launch", place: "NORTHSIDE", type: "music" },
-    { year: "2020", title: "Embassy Liaison", place: "South Korean Embassy", type: "work" },
-    { year: "2018", title: "Foundation Year", place: "University of Birmingham", type: "edu" },
+    { year: "2021", title: "Music Career Launch", place: "Northside", type: "music" },
+    { year: "2019", title: "Career Shift: Alpha Phase", place: "Nigeria", type: "work" },
 ];
 
 // Skills organized for display
@@ -33,7 +35,7 @@ export default function AboutPage() {
     });
 
     return (
-        <div ref={containerRef} className="relative overflow-hidden bg-black">
+        <div ref={containerRef} className="relative bg-black">
 
             {/* ======================================== */}
             {/* SECTION 1: High-Fidelity Hero */}
@@ -107,6 +109,60 @@ export default function AboutPage() {
                         </div>
                     </motion.div>
                 </div>
+
+                {/* ======================================== */}
+                {/* NEW: AT THIS AGE BOX SESSION SEGMENT */}
+                {/* ======================================== */}
+                <motion.div
+                    className="w-full max-w-6xl mt-24 px-6"
+                    initial={{ opacity: 0, y: 40 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                >
+                    <div className="relative aspect-video rounded-[2.5rem] overflow-hidden border border-white/10 shadow-glow-red/10 group">
+                        <iframe
+                            src="https://www.youtube.com/embed/x9qHK_doscU?si=mC9ob8Z8jR3wMHWT&autoplay=1&mute=1&controls=0&loop=1&playlist=x9qHK_doscU"
+                            title="AT THIS AGE - Box Session"
+                            className="absolute inset-0 w-full h-full grayscale hover:grayscale-0 transition-all duration-1000 opacity-40 group-hover:opacity-100 pointer-events-none"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80" />
+
+                        <div className="absolute inset-0 flex flex-col items-center justify-center p-12 text-center">
+                            <motion.div
+                                initial={{ scale: 0.8, opacity: 0 }}
+                                whileInView={{ scale: 1, opacity: 1 }}
+                                transition={{ delay: 0.3 }}
+                            >
+                                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-[10px] font-mono mb-6 backdrop-blur-md">
+                                    <span className="h-1.5 w-1.5 rounded-full bg-neon-red animate-pulse" />
+                                    LIVE_VOL_01: BOX_SESSIONS
+                                </div>
+                                <h2 className="text-4xl md:text-7xl font-black uppercase tracking-tighter mb-4">
+                                    At This <span className="text-neon-red">Age</span>
+                                </h2>
+                                <p className="text-foreground-muted max-w-lg mx-auto mb-8 font-mono text-xs uppercase tracking-widest">
+                                    // raw_performance // neural_sync // abuja_vibrations
+                                </p>
+                                <a
+                                    href="https://www.youtube.com/watch?v=x9qHK_doscU"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    <Button variant="neon" size="lg" className="shadow-glow-red">
+                                        VIEW_FULL_SESSION
+                                    </Button>
+                                </a>
+                            </motion.div>
+                        </div>
+
+                        {/* HUD Decoration */}
+                        <div className="absolute top-8 left-8 flex gap-4 pointer-events-none">
+                            <div className="h-1 w-12 bg-neon-red animate-pulse" />
+                            <div className="h-1 w-6 bg-white/20" />
+                        </div>
+                    </div>
+                </motion.div>
 
                 {/* Scroll Indicator */}
                 <motion.div

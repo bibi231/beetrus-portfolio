@@ -23,7 +23,7 @@ const mainSocials = [
         handle: "beetrus_gg",
         url: "https://instagram.com/beetrus_gg",
         icon: Instagram,
-        color: "var(--neon-red)",
+        color: "#E4405F",
         description: "Studio logs, aesthetic captures, and lifestyle signals.",
         count: "792"
     },
@@ -32,7 +32,7 @@ const mainSocials = [
         handle: "beetrus_gg",
         url: "https://www.tiktok.com/@beetrus_gg",
         icon: Music,
-        color: "var(--neon-red)",
+        color: "#00F2EA",
         description: "Gritty snippets and viral frequency modulations.",
         count: "203"
     },
@@ -41,17 +41,17 @@ const mainSocials = [
         handle: "Beetrus",
         url: "https://youtube.com/@beetrus",
         icon: Youtube,
-        color: "var(--neon-red)",
+        color: "#FF0000",
         description: "Box Sessions, Music Videos, and high-fidelity VODs.",
         count: "50"
     },
 ];
 
 const subSocials = [
-    { name: "GitHub", url: "https://github.com/bibi231", icon: Github },
-    { name: "SoundCloud", url: "https://soundcloud.com/beetrus", icon: Music },
-    { name: "Audiomack", url: "https://audiomack.com/beetrus", icon: Share2 },
-    { name: "LinkedIn", url: "https://linkedin.com/in/bitrus-gadzama", icon: Linkedin },
+    { name: "GitHub", url: "https://github.com/bibi231", icon: Github, color: "#FFFFFF" },
+    { name: "SoundCloud", url: "https://soundcloud.com/beetrus", icon: Music, color: "#FF3300" },
+    { name: "Audiomack", url: "https://audiomack.com/beetrus", icon: Share2, color: "#FFA200" },
+    { name: "LinkedIn", url: "https://linkedin.com/in/bitrus-gadzama", icon: Linkedin, color: "#0077B5" },
 ];
 
 export default function SocialsPage() {
@@ -103,8 +103,15 @@ export default function SocialsPage() {
 
                             <div className="relative z-10 flex h-full flex-col justify-between">
                                 <div className="flex items-start justify-between">
-                                    <div className="p-4 rounded-2xl bg-white/5 border border-white/10 group-hover:border-neon-red/50 transition-colors">
-                                        <social.icon size={28} className="text-white group-hover:text-neon-red transition-all" />
+                                    <div
+                                        className="p-4 rounded-2xl bg-white/5 border border-white/10 group-hover:border-opacity-100 transition-colors"
+                                        style={{ borderColor: social.color + '40' }}
+                                    >
+                                        <social.icon
+                                            size={28}
+                                            className="text-white transition-all"
+                                            style={{ color: social.color }}
+                                        />
                                     </div>
                                     <div className="text-right">
                                         <div className="text-2xl font-black text-white">{social.count}</div>
@@ -160,7 +167,11 @@ export default function SocialsPage() {
                                     rel="noopener noreferrer"
                                     className="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/5 p-6 hover:bg-white/10 transition-all group"
                                 >
-                                    <sub.icon size={20} className="text-foreground-muted group-hover:text-neon-red transition-colors" />
+                                    <sub.icon
+                                        size={20}
+                                        className="transition-colors"
+                                        style={{ color: sub.color }}
+                                    />
                                     <span className="font-mono text-xs uppercase tracking-widest font-bold">
                                         {sub.name}
                                     </span>

@@ -66,10 +66,28 @@ export default function RequestPage() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsSubmitting(true);
-        await new Promise((resolve) => setTimeout(resolve, 2000));
-        setIsSubmitting(false);
-        setIsSubmitted(true);
-        toast.success(`Request submitted for ${formData.selectedStyle || 'custom'} architecture! I'll review your project and get back to you within 24 hours.`);
+
+        try {
+            const response = await fetch("/api/leads", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(formData),
+            });
+
+            if (!response.ok) {
+                throw new Error("FAILED_TO_SUBMIT_REQUEST");
+            }
+
+            setIsSubmitted(true);
+            toast.success(`Request submitted for ${formData.selectedStyle || 'custom'} architecture! I'll review your project and get back to you within 24 hours.`);
+        } catch (error) {
+            console.error(error);
+            toast.error("COMMUNICATION_ERROR: PLEASE_TRY_AGAIN_LATER");
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     const handleChange = (
@@ -162,6 +180,7 @@ export default function RequestPage() {
                                             setFormData({
                                                 name: "", email: "", projectType: "", budget: "",
                                                 description: "", referenceUrls: "", features: [],
+                                                selectedStyle: "",
                                             });
                                         }}
                                     >
@@ -332,6 +351,7 @@ export default function RequestPage() {
                                             isLoading={isSubmitting}
                                             rightIcon={<Send size={20} />}
                                         >
+                                            Submit_Architecture_Request
                                         </Button>
                                     </form>
                                 </motion.div>
