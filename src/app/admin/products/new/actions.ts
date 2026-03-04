@@ -2,7 +2,7 @@
 
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
+import { Prisma } from "@prisma/client";
 import { z } from "zod";
 
 const productSchema = z.object({
@@ -21,15 +21,20 @@ export async function createProduct(data: any) {
     try {
         const validated = productSchema.parse(data);
 
+        const productData: Prisma.ProductCreateInput = {
+            name: validated.name,
+            slug: validated.slug,
+            description: validated.description ?? "",
+            price: validated.price,
+            category: validated.category,
+            stock: Math.floor(validated.stock),
+            status: validated.status,
+            images: validated.images ?? "",
+            metadata: validated.metadata ?? "",
+        };
+
         await prisma.product.create({
-            data: {
-                ...validated,
-                // Ensure stock is integer
-                stock: Math.floor(validated.stock),
-                // Schema expects string for images, we keep it as provided or empty
-                images: validated.images || "",
-                description: validated.description || "",
-            },
+            data: productData,
         });
 
         revalidatePath("/admin/products");

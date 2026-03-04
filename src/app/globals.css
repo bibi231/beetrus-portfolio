@@ -420,12 +420,12 @@ a {
 
 /* Section spacing */
 .section {
-  padding: clamp(6rem, 15vw, 12rem) 0;
+  padding: clamp(8rem, 15vw, 14rem) 0;
 }
 
 @media (min-width: 768px) {
   .section {
-    padding: clamp(8rem, 20vw, 14rem) 0;
+    padding: clamp(10rem, 20vw, 16rem) 0;
   }
 }
 

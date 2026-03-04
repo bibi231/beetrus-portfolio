@@ -40,7 +40,7 @@ export default function AboutPage() {
             {/* ======================================== */}
             {/* SECTION 1: High-Fidelity Hero */}
             {/* ======================================== */}
-            <section className="relative min-h-screen flex flex-col items-center justify-center pt-20 px-6">
+            <section className="relative w-full flex flex-col items-center mt-[35vh] md:mt-[45vh] px-6 pb-24">
                 {/* Background Atmosphere */}
                 <div className="absolute inset-0 z-0">
                     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-neon-red/10 blur-[150px] animate-pulse rounded-full" />

@@ -7,7 +7,7 @@ import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion"
 import { cn } from "@/lib/utils";
 import { useScrollPosition } from "@/hooks/use-animations";
 import { spring, ease } from "@/lib/animations";
-import { Menu, X, Music, Code2, User, ShoppingBag, Mail, Home, Users, ShoppingCart } from "lucide-react";
+import { Menu, X, Music, Code2, User, ShoppingBag, Mail, Home, Users, ShoppingCart, FileText } from "lucide-react";
 import { useCart } from "@/context/cart-context";
 
 const navItems = [
@@ -17,6 +17,7 @@ const navItems = [
     { href: "/music", label: "Music", icon: Music },
     { href: "/store", label: "Store", icon: ShoppingBag },
     { href: "/socials", label: "Socials", icon: Users },
+    { href: "/request", label: "Request", icon: FileText },
     { href: "/contact", label: "Contact", icon: Mail },
 ];
 
@@ -97,11 +98,11 @@ export function Header() {
                     <div className="flex items-center gap-4">
                         <Link href="/" className="group relative z-50">
                             <motion.div
-                                className="flex h-10 w-10 items-center justify-center rounded-xl bg-neon-red shadow-glow-red transition-all group-hover:scale-110"
+                                className="flex h-10 w-10 items-center justify-center rounded-xl bg-white shadow-lg transition-all group-hover:scale-110"
                                 whileHover={{ scale: 1.1 }}
                                 whileTap={{ scale: 0.9 }}
                             >
-                                <Home size={20} className="text-white" />
+                                <Home size={20} className="text-black" />
                             </motion.div>
                         </Link>
                         <Link href="/" className="group relative z-10 hidden sm:block">
@@ -115,9 +116,11 @@ export function Header() {
                         </Link>
                     </div>
 
-                    {/* Desktop Navigation with Animated Underline */}
                     <nav
-                        className="hidden items-center gap-2 rounded-full bg-white/5 p-1 px-4 md:flex"
+                        className={cn(
+                            "items-center gap-2 rounded-full bg-white/5 p-1 px-4",
+                            pathname === "/about" ? "hidden" : "hidden md:flex"
+                        )}
                         onMouseLeave={() => setHoveredIndex(null)}
                     >
                         {navItems.map((item, index) => (
@@ -133,9 +136,8 @@ export function Header() {
                         ))}
                     </nav>
 
-                    {/* Cart Button (Desktop) */}
                     <motion.div
-                        className="hidden md:block mr-2"
+                        className={cn("mr-2", pathname === "/about" ? "hidden" : "hidden md:block")}
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                     >
@@ -145,26 +147,25 @@ export function Header() {
                         </Link>
                     </motion.div>
 
-                    {/* CTA Button (Desktop) */}
                     <motion.div
-                        className="hidden md:block"
+                        className={pathname === "/about" ? "hidden" : "hidden md:block"}
                         whileHover={{ scale: 1.03 }}
                         whileTap={{ scale: 0.97 }}
                         transition={spring.magnetic}
                     >
                         <Link
                             href="/contact"
-                            className="inline-flex h-10 items-center gap-2 rounded-full bg-neon-red/90 px-5 text-sm font-medium text-white transition-all hover:bg-neon-red hover:shadow-glow-red"
+                            className="inline-flex h-10 items-center gap-2 rounded-full bg-white px-5 text-sm font-medium text-black transition-all hover:bg-white/90 hover:shadow-lg"
                         >
                             <Mail size={14} />
                             <span>Contact</span>
                         </Link>
                     </motion.div>
 
-                    {/* Mobile Menu Toggle */}
                     <motion.button
                         className={cn(
-                            "relative flex h-10 w-10 items-center justify-center rounded-xl border border-border/50 bg-card/50 backdrop-blur-sm md:hidden",
+                            "relative flex h-10 w-10 items-center justify-center rounded-xl border border-border/50 bg-card/50 backdrop-blur-sm",
+                            pathname === "/about" ? "flex" : "md:hidden",
                             isMobileMenuOpen ? "z-[210]" : "z-50"
                         )}
                         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -213,7 +214,10 @@ export function Header() {
                 {isMobileMenuOpen && (
                     <>
                         <motion.div
-                            className="fixed inset-0 z-overlay bg-background/80 backdrop-blur-md md:hidden"
+                            className={cn(
+                                "fixed inset-0 z-overlay bg-background/80 backdrop-blur-md",
+                                pathname === "/about" ? "block" : "md:hidden"
+                            )}
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
@@ -221,7 +225,10 @@ export function Header() {
                         />
 
                         <motion.div
-                            className="fixed inset-y-0 right-0 z-modal w-full max-w-[280px] border-l border-white/10 bg-black/95 p-6 backdrop-blur-3xl md:hidden shadow-[-10px_0_40px_rgba(0,0,0,0.8)]"
+                            className={cn(
+                                "fixed inset-y-0 right-0 z-modal w-full max-w-[280px] border-l border-white/10 bg-black/95 p-6 backdrop-blur-3xl shadow-[-10px_0_40px_rgba(0,0,0,0.8)]",
+                                pathname === "/about" ? "block" : "md:hidden"
+                            )}
                             initial={{ x: "100%" }}
                             animate={{ x: 0 }}
                             exit={{ x: "100%" }}
@@ -289,7 +296,7 @@ export function Header() {
                             >
                                 <Link
                                     href="/contact"
-                                    className="flex w-full items-center justify-center gap-2 rounded-xl bg-neon-red py-4 font-bold text-white shadow-glow-red transition-transform active:scale-95"
+                                    className="flex w-full items-center justify-center gap-2 rounded-xl bg-white py-4 font-bold text-black shadow-lg transition-transform active:scale-95"
                                     onClick={() => setIsMobileMenuOpen(false)}
                                 >
                                     <Mail size={18} />

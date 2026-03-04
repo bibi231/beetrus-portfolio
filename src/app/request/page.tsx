@@ -211,7 +211,7 @@ export default function RequestPage() {
                                                 01 // Contact_Info
                                             </h2>
 
-                                            <div className="grid gap-6 sm:grid-cols-2">
+                                            <div className="grid gap-12 sm:grid-cols-2">
                                                 <div className="space-y-3">
                                                     <label htmlFor="name" className="text-[10px] font-mono uppercase tracking-[0.3em] text-foreground-muted pl-1">
                                                         Your_Name
@@ -245,7 +245,7 @@ export default function RequestPage() {
                                                 02 // Project_Type
                                             </h2>
 
-                                            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                                            <div className="grid grid-cols-2 sm:grid-cols-3 gap-6">
                                                 {projectTypes.map((type) => (
                                                     <motion.button
                                                         key={type.value}
@@ -271,7 +271,7 @@ export default function RequestPage() {
                                             </h2>
                                             <p className="text-foreground-muted text-sm mb-8">Select all features you need</p>
 
-                                            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                                            <div className="grid grid-cols-2 sm:grid-cols-3 gap-6">
                                                 {features.map((feature) => (
                                                     <motion.button
                                                         key={feature.id}
@@ -298,7 +298,7 @@ export default function RequestPage() {
                                                 04 // Project_Details
                                             </h2>
 
-                                            <div className="space-y-6 relative z-10">
+                                            <div className="space-y-12 relative z-10">
                                                 <div className="space-y-3">
                                                     <label htmlFor="budget" className="text-[10px] font-mono uppercase tracking-[0.3em] text-foreground-muted pl-1">
                                                         Budget_Range
