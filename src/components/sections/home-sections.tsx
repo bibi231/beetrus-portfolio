@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import { ArrowDown, Play, Github, Music2, ChevronRight, ArrowRight, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { HeroFallback } from "@/components/three/hero-scene";
+import { BentoCard } from "@/components/ui-21st/bento-card";
 import { usePrefersReducedMotion } from "@/hooks/use-animations";
 import {
     heroRevealContainer,
@@ -201,38 +202,32 @@ export function QuickLinksSection() {
                     viewport={{ once: true, margin: "-100px" }}
                 >
                     {links.map((link, index) => (
-                        <motion.div key={index} variants={ambientFade}>
-                            <Link
-                                href={link.href}
-                                className="group relative block overflow-hidden rounded-2xl border border-white/5 bg-black/60 p-8 transition-all duration-500 hover:border-neon-red/50 hover:bg-black/80 hover:shadow-[0_0_30px_-10px_rgba(255,45,45,0.3)] shadow-2xl"
-                            >
-                                {/* Background gradient */}
-                                <div
-                                    className={`absolute -right-20 -top-20 h-40 w-40 rounded-full bg-gradient-to-br ${link.gradient} opacity-20 blur-3xl transition-all duration-500 group-hover:opacity-40 group-hover:scale-150`}
-                                />
+                        <motion.div key={index} variants={ambientFade} className="h-full">
+                            <Link href={link.href} className="group block h-full">
+                                <BentoCard className="h-full p-8 transition-transform duration-500 hover:scale-[1.02]">
+                                    {/* Background glow accent specific to card */}
+                                    <div
+                                        className={`absolute -right-20 -top-20 h-40 w-40 rounded-full bg-gradient-to-br ${link.gradient} opacity-20 blur-3xl transition-all duration-500 group-hover:opacity-40 group-hover:scale-150 pointer-events-none`}
+                                    />
 
-                                {/* Red edge glow on hover */}
-                                <div className="absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-                                    style={{ boxShadow: "inset 0 0 0 1px rgba(255, 45, 45, 0.3)" }}
-                                />
+                                    <div className="relative z-10 flex flex-col h-full justify-between">
+                                        <div>
+                                            <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-xl bg-neon-red/10 border border-neon-red/20 transition-all group-hover:scale-110 shadow-glow-sm">
+                                                <link.icon className="h-6 w-6 text-neon-red" />
+                                            </div>
+                                            <h3 className="text-2xl font-bold">{link.title}</h3>
+                                            <p className="mt-1 font-medium text-white">{link.subtitle}</p>
+                                            <p className="mt-4 text-sm text-foreground-muted">{link.description}</p>
+                                        </div>
 
-                                <div className="relative z-10">
-                                    <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-xl bg-neon-red/10 transition-all group-hover:bg-neon-red/20 group-hover:scale-110">
-                                        <link.icon className="h-6 w-6 text-neon-red" />
+                                        {/* Hover arrow */}
+                                        <div className="mt-8 self-end">
+                                            <div className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 transition-all group-hover:border-neon-red group-hover:bg-neon-red/20 group-hover:translate-x-2">
+                                                <ChevronRight className="h-5 w-5 text-neon-red transition-all" />
+                                            </div>
+                                        </div>
                                     </div>
-                                    <h3 className="text-2xl font-bold">{link.title}</h3>
-                                    <p className="mt-1 font-medium text-white">{link.subtitle}</p>
-                                    <p className="mt-2 text-sm text-foreground-muted">{link.description}</p>
-                                </div>
-
-                                {/* Hover arrow */}
-                                <motion.div
-                                    className="absolute bottom-8 right-8"
-                                    initial={{ opacity: 0, x: -10 }}
-                                    whileHover={{ opacity: 1, x: 0 }}
-                                >
-                                    <ChevronRight className="h-6 w-6 text-neon-red opacity-0 transition-all group-hover:opacity-100 group-hover:translate-x-1" />
-                                </motion.div>
+                                </BentoCard>
                             </Link>
                         </motion.div>
                     ))}
@@ -577,31 +572,38 @@ export function WorkPreviewSection() {
                     {featuredProjects.map((project, i) => (
                         <motion.div
                             key={project.title}
-                            className="group relative rounded-2xl md:rounded-3xl border border-white/5 bg-white/[0.02] overflow-hidden"
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: i * 0.1 }}
+                            className="h-full"
                         >
-                            <Link href={project.href} className="block aspect-[16/10] relative overflow-hidden">
-                                <Image
-                                    src={project.image}
-                                    alt={project.title}
-                                    fill
-                                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
+                            <Link href={project.href} className="block h-full">
+                                <BentoCard className="h-full border-white/5 bg-white/[0.02] overflow-hidden p-0 group">
+                                    <div className="aspect-[16/10] relative overflow-hidden w-full">
+                                        <Image
+                                            src={project.image}
+                                            alt={project.title}
+                                            fill
+                                            className="object-cover transition-transform duration-700 group-hover:scale-105"
+                                        />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-80 group-hover:opacity-60 transition-opacity" />
 
-                                <div className="absolute bottom-4 left-4 right-4 z-20">
-                                    <div className="flex gap-2 mb-2">
-                                        {project.tech.map(t => (
-                                            <span key={t} className="px-2 py-0.5 rounded-sm bg-black/80 border border-white/10 text-[8px] font-mono text-white/60">
-                                                {t}
-                                            </span>
-                                        ))}
+                                        <div className="absolute bottom-6 left-6 right-6 z-20 transition-transform duration-500 group-hover:-translate-y-2">
+                                            <div className="flex flex-wrap gap-2 mb-3">
+                                                {project.tech.map(t => (
+                                                    <span key={t} className="px-2.5 py-1 rounded-md bg-black/60 backdrop-blur-md border border-white/10 text-[10px] font-mono text-white">
+                                                        {t}
+                                                    </span>
+                                                ))}
+                                            </div>
+                                            <h3 className="text-2xl font-black text-white group-hover:text-neon-red transition-colors uppercase tracking-tight">{project.title}</h3>
+                                            <p className="mt-2 text-sm text-foreground-muted opacity-0 translate-y-4 transition-all duration-500 group-hover:opacity-100 group-hover:translate-y-0">
+                                                {project.desc}
+                                            </p>
+                                        </div>
                                     </div>
-                                    <h3 className="text-xl font-black text-white group-hover:text-neon-red transition-colors uppercase tracking-tight">{project.title}</h3>
-                                </div>
+                                </BentoCard>
                             </Link>
                         </motion.div>
                     ))}

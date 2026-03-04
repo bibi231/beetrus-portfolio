@@ -3,6 +3,7 @@
 import { AdminLayout } from "@/components/admin/admin-layout";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { AnimatedInput, AnimatedTextarea } from "@/components/ui-21st/animated-input";
 import { Plus, Search, Filter, Edit, Trash, Eye, ShoppingBag, Loader2, Save, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
@@ -209,11 +210,14 @@ export default function AdminProductsPage() {
                         <motion.div
                             initial={{ scale: 0.95, y: 20 }}
                             animate={{ scale: 1, y: 0 }}
-                            className="bg-[#080808] border border-white/10 rounded-3xl p-8 max-w-lg w-full shadow-2xl"
+                            className="bg-black/90 backdrop-blur-2xl border border-white/10 rounded-3xl p-8 max-w-lg w-full shadow-[0_0_50px_rgba(255,45,45,0.05)] relative overflow-hidden group"
                         >
-                            <div className="flex justify-between items-center mb-8">
-                                <h2 className="text-2xl font-black uppercase tracking-tight">Register_New_Item</h2>
-                                <button onClick={() => setIsCreateModalOpen(false)}><X size={20} /></button>
+                            <div className="absolute top-0 right-0 h-24 w-px bg-gradient-to-b from-neon-red/50 to-transparent" />
+                            <div className="absolute top-0 right-0 w-24 h-px bg-gradient-to-l from-neon-red/50 to-transparent" />
+
+                            <div className="flex justify-between items-center mb-8 relative z-10">
+                                <h2 className="text-2xl font-black uppercase tracking-tight text-white">Register_New_Item</h2>
+                                <button onClick={() => setIsCreateModalOpen(false)} className="text-white/40 hover:text-white transition-colors"><X size={20} /></button>
                             </div>
 
                             <form className="space-y-4" onSubmit={async (e) => {
@@ -237,30 +241,30 @@ export default function AdminProductsPage() {
                                     setIsSaving(false);
                                 }
                             }}>
-                                <div className="grid grid-cols-2 gap-4">
+                                <div className="grid grid-cols-2 gap-4 relative z-10">
                                     <div className="col-span-2 space-y-1">
                                         <label className="text-[10px] font-mono text-neutral-500 uppercase">Name</label>
-                                        <input name="name" required className="w-full bg-white/5 border border-white/5 rounded-lg p-3 text-sm font-mono focus:border-neon-red/50 focus:outline-none" />
+                                        <AnimatedInput name="name" required />
                                     </div>
                                     <div className="space-y-1">
                                         <label className="text-[10px] font-mono text-neutral-500 uppercase">Slug_SKU</label>
-                                        <input name="slug" required className="w-full bg-white/5 border border-white/5 rounded-lg p-3 text-sm font-mono focus:border-neon-red/50 focus:outline-none" />
+                                        <AnimatedInput name="slug" required />
                                     </div>
                                     <div className="space-y-1">
                                         <label className="text-[10px] font-mono text-neutral-500 uppercase">Category</label>
-                                        <input name="category" required className="w-full bg-white/5 border border-white/5 rounded-lg p-3 text-sm font-mono focus:border-neon-red/50 focus:outline-none" />
+                                        <AnimatedInput name="category" required />
                                     </div>
                                     <div className="space-y-1">
                                         <label className="text-[10px] font-mono text-neutral-500 uppercase">Price_USD</label>
-                                        <input name="price" type="number" step="0.01" required className="w-full bg-white/5 border border-white/5 rounded-lg p-3 text-sm font-mono focus:border-neon-red/50 focus:outline-none" />
+                                        <AnimatedInput name="price" type="number" step="0.01" required />
                                     </div>
                                     <div className="space-y-1">
                                         <label className="text-[10px] font-mono text-neutral-500 uppercase">Initial_Stock</label>
-                                        <input name="stock" type="number" required className="w-full bg-white/5 border border-white/5 rounded-lg p-3 text-sm font-mono focus:border-neon-red/50 focus:outline-none" />
+                                        <AnimatedInput name="stock" type="number" required />
                                     </div>
                                     <div className="col-span-2 space-y-1">
                                         <label className="text-[10px] font-mono text-neutral-500 uppercase">Description</label>
-                                        <textarea name="description" required rows={3} className="w-full bg-white/5 border border-white/5 rounded-lg p-3 text-sm font-mono focus:border-neon-red/50 focus:outline-none resize-none" />
+                                        <AnimatedTextarea name="description" required rows={3} />
                                     </div>
                                 </div>
 

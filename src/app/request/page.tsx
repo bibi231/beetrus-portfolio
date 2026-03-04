@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { AnimatedInput, AnimatedTextarea } from "@/components/ui-21st/animated-input";
 import { fadeInUp, ambientFade, staggerContainer } from "@/lib/animations";
 import { toast } from "sonner";
 import {
@@ -216,10 +217,9 @@ export default function RequestPage() {
                                                     <label htmlFor="name" className="text-[10px] font-mono uppercase tracking-[0.3em] text-foreground-muted pl-1">
                                                         Your_Name
                                                     </label>
-                                                    <input
+                                                    <AnimatedInput
                                                         type="text" id="name" name="name"
                                                         value={formData.name} onChange={handleChange} required
-                                                        className="h-14 w-full rounded-lg border border-white/5 bg-black/60 px-5 text-foreground placeholder:text-foreground-muted/30 focus:border-neon-red/50 focus:outline-none focus:ring-1 focus:ring-neon-red/20 transition-all font-mono text-sm"
                                                         placeholder="ENTER_NAME"
                                                     />
                                                 </div>
@@ -227,10 +227,9 @@ export default function RequestPage() {
                                                     <label htmlFor="email" className="text-[10px] font-mono uppercase tracking-[0.3em] text-foreground-muted pl-1">
                                                         Email_Address
                                                     </label>
-                                                    <input
+                                                    <AnimatedInput
                                                         type="email" id="email" name="email"
                                                         value={formData.email} onChange={handleChange} required
-                                                        className="h-14 w-full rounded-lg border border-white/5 bg-black/60 px-5 text-foreground placeholder:text-foreground-muted/30 focus:border-neon-red/50 focus:outline-none focus:ring-1 focus:ring-neon-red/20 transition-all font-mono text-sm"
                                                         placeholder="YOUR@EMAIL.COM"
                                                     />
                                                 </div>
@@ -320,11 +319,10 @@ export default function RequestPage() {
                                                     <label htmlFor="description" className="text-[10px] font-mono uppercase tracking-[0.3em] text-foreground-muted pl-1">
                                                         Project_Description
                                                     </label>
-                                                    <textarea
+                                                    <AnimatedTextarea
                                                         id="description" name="description"
                                                         value={formData.description} onChange={handleChange} required
                                                         rows={5}
-                                                        className="w-full rounded-lg border border-white/5 bg-black/60 px-5 py-4 text-foreground placeholder:text-foreground-muted/30 focus:border-neon-red/50 focus:outline-none focus:ring-1 focus:ring-neon-red/20 transition-all font-mono text-sm resize-none"
                                                         placeholder="DESCRIBE_YOUR_PROJECT..."
                                                     />
                                                 </div>
@@ -333,10 +331,9 @@ export default function RequestPage() {
                                                     <label htmlFor="referenceUrls" className="text-[10px] font-mono uppercase tracking-[0.3em] text-foreground-muted pl-1">
                                                         Reference_URLs [optional]
                                                     </label>
-                                                    <input
+                                                    <AnimatedInput
                                                         type="text" id="referenceUrls" name="referenceUrls"
                                                         value={formData.referenceUrls} onChange={handleChange}
-                                                        className="h-14 w-full rounded-lg border border-white/5 bg-black/60 px-5 text-foreground placeholder:text-foreground-muted/30 focus:border-neon-red/50 focus:outline-none focus:ring-1 focus:ring-neon-red/20 transition-all font-mono text-sm"
                                                         placeholder="HTTPS://INSPIRATION-SITE.COM"
                                                     />
                                                 </div>

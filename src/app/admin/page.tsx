@@ -1,6 +1,7 @@
 "use client";
 
 import { AdminLayout } from "@/components/admin/admin-layout";
+import { BentoCard } from "@/components/ui-21st/bento-card";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import {
@@ -66,23 +67,25 @@ export default function AdminDashboard() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: i * 0.1 }}
-                            className="bg-[#080808] border border-white/5 p-6 rounded-2xl relative overflow-hidden group hover:border-neon-red/30 transition-all duration-500"
+                            className="h-full"
                         >
-                            <div className="absolute top-0 right-0 p-4 opacity-[0.05] group-hover:opacity-10 transition-opacity">
-                                <stat.icon size={64} />
-                            </div>
-                            <div className="flex items-center gap-3 mb-4">
-                                <div className={cn("p-2 rounded-lg bg-white/[0.02]", stat.color)}>
-                                    <stat.icon size={18} />
+                            <BentoCard className="h-full p-6">
+                                <div className="absolute top-0 right-0 p-4 opacity-[0.05] group-hover:opacity-10 transition-opacity">
+                                    <stat.icon size={64} />
                                 </div>
-                                <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-foreground-muted">{stat.label}</span>
-                            </div>
-                            <div className="flex items-end justify-between">
-                                <h3 className="text-3xl font-black tabular-nums">{isLoading ? "..." : stat.value}</h3>
-                                <div className="flex items-center gap-1 text-[10px] font-mono text-green-500 pb-1">
-                                    <span>{stat.trend}</span>
+                                <div className="flex items-center gap-3 mb-4 relative z-10">
+                                    <div className={cn("p-2 rounded-lg bg-white/[0.02] border border-white/5", stat.color)}>
+                                        <stat.icon size={18} />
+                                    </div>
+                                    <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-foreground-muted">{stat.label}</span>
                                 </div>
-                            </div>
+                                <div className="flex items-end justify-between relative z-10 mt-auto">
+                                    <h3 className="text-3xl font-black tabular-nums">{isLoading ? "..." : stat.value}</h3>
+                                    <div className="flex items-center gap-1 text-[10px] font-mono text-green-500 pb-1">
+                                        <span>{stat.trend}</span>
+                                    </div>
+                                </div>
+                            </BentoCard>
                         </motion.div>
                     ))}
                 </div>
@@ -123,14 +126,14 @@ export default function AdminDashboard() {
 
                     {/* Quick Controls */}
                     <div className="space-y-6">
-                        <div className="bg-[#080808] border border-white/5 rounded-2xl p-6">
-                            <h4 className="text-xs font-black uppercase tracking-widest mb-6">Quick Directives</h4>
-                            <div className="space-y-3">
-                                <button className="w-full bg-neon-red py-3 rounded-lg font-black text-xs uppercase tracking-[0.2em] hover:shadow-glow-red transition-all">Emergency_Kill</button>
-                                <button className="w-full bg-white/5 border border-white/5 py-3 rounded-lg font-black text-xs uppercase tracking-[0.2em] hover:bg-white/10 transition-all">System_Purge</button>
-                                <button className="w-full bg-white/5 border border-white/5 py-3 rounded-lg font-black text-xs uppercase tracking-[0.2em] hover:bg-white/10 transition-all">Sync_Database</button>
+                        <BentoCard className="p-6">
+                            <h4 className="text-xs font-black uppercase tracking-widest mb-6 relative z-10">Quick Directives</h4>
+                            <div className="space-y-3 relative z-10">
+                                <button className="w-full bg-neon-red/20 text-neon-red border border-neon-red/30 py-3 rounded-lg font-black text-xs uppercase tracking-[0.2em] hover:bg-neon-red hover:text-white hover:shadow-[0_0_15px_rgba(255,45,45,0.4)] transition-all">Emergency_Kill</button>
+                                <button className="w-full bg-white/5 border border-white/5 py-3 rounded-lg font-black text-xs uppercase tracking-[0.2em] hover:bg-white/10 transition-all text-white">System_Purge</button>
+                                <button className="w-full bg-white/5 border border-white/5 py-3 rounded-lg font-black text-xs uppercase tracking-[0.2em] hover:bg-white/10 transition-all text-white">Sync_Database</button>
                             </div>
-                        </div>
+                        </BentoCard>
                     </div>
                 </div>
             </div>

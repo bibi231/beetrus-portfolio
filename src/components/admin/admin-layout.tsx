@@ -51,17 +51,25 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
                                 key={link.href}
                                 href={link.href}
                                 className={cn(
-                                    "flex items-center justify-between px-4 py-3 rounded-lg transition-all group",
+                                    "flex items-center justify-between px-4 py-3 rounded-lg transition-all group relative",
                                     isActive
-                                        ? "bg-neon-red/10 text-neon-red border border-neon-red/20 shadow-[0_0_15px_rgba(255,45,45,0.05)]"
+                                        ? "text-white"
                                         : "text-white/40 hover:text-white hover:bg-white/5 border border-transparent"
                                 )}
                             >
-                                <div className="flex items-center gap-3">
-                                    <link.icon size={18} />
+                                {isActive && (
+                                    <motion.div
+                                        layoutId="sidebar-active"
+                                        className="absolute inset-0 bg-neon-red/10 border border-neon-red/20 shadow-[0_0_15px_rgba(255,45,45,0.05)] rounded-lg"
+                                        initial={false}
+                                        transition={{ type: "spring", stiffness: 350, damping: 30 }}
+                                    />
+                                )}
+                                <div className="flex items-center gap-3 relative z-10">
+                                    <link.icon size={18} className={isActive ? "text-neon-red" : ""} />
                                     <span className="text-sm font-bold uppercase tracking-widest">{link.label}</span>
                                 </div>
-                                {isActive && <div className="h-1.5 w-1.5 rounded-full bg-neon-red shadow-[0_0_8px_rgba(255,45,45,0.6)]" />}
+                                {isActive && <div className="h-1.5 w-1.5 rounded-full bg-neon-red shadow-[0_0_8px_rgba(255,45,45,0.6)] relative z-10" />}
                             </Link>
                         );
                     })}
