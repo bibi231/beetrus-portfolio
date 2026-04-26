@@ -78,21 +78,28 @@ function BeetrusText() {
         varying vec3 vPosition;
         
         void main() {
-          // Animated gradient
-          float t = vUv.x + sin(uTime * 0.3) * 0.2;
+          // Animated base gradient based on horizontal position
+          float t = vUv.x + sin(uTime * 0.4) * 0.1;
           
-          vec3 color;
+          vec3 baseColor;
           if (t < 0.5) {
-            color = mix(uColor1, uColor2, t * 2.0);
+            baseColor = mix(uColor1, uColor2, t * 2.0);
           } else {
-            color = mix(uColor2, uColor3, (t - 0.5) * 2.0);
+            baseColor = mix(uColor2, uColor3, (t - 0.5) * 2.0);
           }
           
-          // Add glow
-          float glow = 0.5 + 0.5 * sin(uTime * 2.0);
-          color += glow * 0.1;
+          // Edge detection using Z position and normal
+          // This makes the beveled edges and sides pop with a secondary gradient
+          float edgeFactor = smoothstep(0.0, 0.05, abs(vPosition.z - 0.1));
+          vec3 edgeColor = mix(uColor3, uColor1, sin(uTime * 1.5 + vPosition.x) * 0.5 + 0.5);
           
-          gl_FragColor = vec4(color, 1.0);
+          vec3 finalColor = mix(edgeColor, baseColor, edgeFactor);
+          
+          // Add rhythmic pulse glow
+          float glow = 0.5 + 0.5 * sin(uTime * 3.0);
+          finalColor += glow * 0.08;
+          
+          gl_FragColor = vec4(finalColor, 1.0);
         }
       `,
         });
@@ -119,13 +126,13 @@ function BeetrusText() {
                     ref={textRef}
                     font="/fonts/inter-bold.json"
                     size={textSize}
-                    height={textSize * 0.2}
-                    curveSegments={12}
+                    height={textSize * 0.15}
+                    curveSegments={8}
                     bevelEnabled
-                    bevelThickness={0.02}
+                    bevelThickness={0.025}
                     bevelSize={0.02}
                     bevelOffset={0}
-                    bevelSegments={5}
+                    bevelSegments={3}
                     material={material}
                 >
                     BEETRUS
