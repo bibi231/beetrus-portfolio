@@ -49,9 +49,9 @@ function BeetrusText() {
         return new THREE.ShaderMaterial({
             uniforms: {
                 uTime: { value: 0 },
-                uColor1: { value: new THREE.Color("#ff003c") }, // Neon Red
-                uColor2: { value: new THREE.Color("#00e5ff") }, // Neon Cyan (Back for contrast/premium feel)
-                uColor3: { value: new THREE.Color("#7000ff") }, // Electric Purple
+                uColor1: { value: new THREE.Color("#00e5ff") }, // Neon Cyan
+                uColor2: { value: new THREE.Color("#3b82f6") }, // Blue
+                uColor3: { value: new THREE.Color("#0070ff") }, // Deep Blue
             },
             vertexShader: `
         varying vec2 vUv;
@@ -151,11 +151,11 @@ function Particles({ count = 200 }: { count?: number }) {
             positions[i * 3 + 1] = (Math.random() - 0.5) * 20;
             positions[i * 3 + 2] = (Math.random() - 0.5) * 20;
 
-            // Random colors between red and orange
+            // Random colors between cyan and blue
             const t = Math.random();
-            colors[i * 3] = 1; // R
-            colors[i * 3 + 1] = Math.random() * 0.5; // G
-            colors[i * 3 + 2] = 0; // B
+            colors[i * 3] = 0; // R
+            colors[i * 3 + 1] = 0.5 + Math.random() * 0.5; // G (Cyan-ish)
+            colors[i * 3 + 2] = 1; // B (Blue)
         }
 
         return { positions, colors };
@@ -236,8 +236,8 @@ export function Hero3DScene() {
             >
                 <Suspense fallback={null}>
                     <ambientLight intensity={0.5} />
-                    <pointLight position={[10, 10, 10]} intensity={1} color="#ff003c" />
-                    <pointLight position={[-10, -10, -10]} intensity={0.5} color="#ff6600" />
+                    <pointLight position={[10, 10, 10]} intensity={1} color="#00e5ff" />
+                    <pointLight position={[-10, -10, -10]} intensity={0.5} color="#0070ff" />
 
                     <BeetrusText />
                     <Particles count={150} />

@@ -19,7 +19,7 @@ export function MusicHeroSection() {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-void via-void/80 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-r from-void/80 via-transparent to-transparent" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,107,53,0.15),transparent_70%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,112,255,0.15),transparent_70%)]" />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 w-full">
@@ -76,7 +76,7 @@ export function ReleasesSection() {
           <div className="mb-20">
             <h3 className="font-mono text-sm uppercase tracking-widest text-ember mb-8">{ep.type} // {ep.year}</h3>
             <div className="grid md:grid-cols-2 gap-12 items-center">
-              <div className="aspect-square bg-surface border-2 border-wire rounded-2xl flex items-center justify-center text-9xl bg-gradient-to-br from-surface to-ink overflow-hidden border-ember/30 shadow-[0_0_50px_rgba(255,107,53,0.1)] hover:border-ember transition-colors">
+              <div className="aspect-square bg-surface border-2 border-wire rounded-2xl flex items-center justify-center text-9xl bg-gradient-to-br from-surface to-ink overflow-hidden border-ember/30 shadow-[0_0_50px_rgba(0,112,255,0.1)] hover:border-ember transition-colors">
                 {ep.coverEmoji}
               </div>
               <div>

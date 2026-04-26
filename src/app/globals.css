@@ -44,19 +44,19 @@
   --wire:        rgba(255,255,255,0.11);
   --edge:        rgba(255,255,255,0.18);
 
-  --pulse:       #ff003c;
-  --pulse-dim:   rgba(255, 0, 60, 0.1);
-  --pulse-glow:  rgba(255, 0, 60, 0.2);
+  --pulse:       #00e5ff;
+  --pulse-dim:   rgba(0, 229, 255, 0.1);
+  --pulse-glow:  rgba(0, 229, 255, 0.2);
 
-  --ember:       #ff6b35;
-  --ember-dim:   rgba(255,107,53,0.1);
+  --ember:       #0070ff;
+  --ember-dim:   rgba(0, 112, 255, 0.1);
 
   --lime:        #b6ff6b;
 
   --text-1:      #e8edf2;
   --text-2:      #5c6a7a;
   --text-3:      #2a3340;
-  --text-pulse:  #ff003c;
+  --text-pulse:  #00e5ff;
 }
 
 /* ============================================
