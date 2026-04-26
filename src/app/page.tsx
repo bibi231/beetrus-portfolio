@@ -1,21 +1,19 @@
 import {
   HeroSection,
-  QuickLinksSection,
-  AboutPreviewSection,
-  MusicPreviewSection,
+  CapabilitiesSection,
   WorkPreviewSection,
-  RequestCTA
+  DualIdentitySection,
+  StatsBelt
 } from "@/components/sections/home-sections";
 
 export default function HomePage() {
   return (
     <>
       <HeroSection />
-      <QuickLinksSection />
+      <CapabilitiesSection />
       <WorkPreviewSection />
-      <MusicPreviewSection />
-      <AboutPreviewSection />
-      <RequestCTA />
+      <DualIdentitySection />
+      <StatsBelt />
     </>
   );
 }

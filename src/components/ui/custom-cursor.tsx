@@ -89,9 +89,9 @@ export function CustomCursor() {
     if (isMobile) return null;
 
     const cursorVariants = {
-        default: { width: 12, height: 12, backgroundColor: "hsl(180, 100%, 50%)" },
-        hover: { width: 50, height: 50, backgroundColor: "hsla(180, 100%, 50%, 0.2)" },
-        text: { width: 4, height: 24, backgroundColor: "hsl(280, 100%, 50%)" },
+        default: { width: 12, height: 12, backgroundColor: "var(--pulse)" },
+        hover: { width: 50, height: 50, backgroundColor: "var(--pulse-dim)" },
+        text: { width: 4, height: 24, backgroundColor: "var(--pulse)" },
         hidden: { width: 0, height: 0 },
     };
 
@@ -107,7 +107,7 @@ export function CustomCursor() {
             {/* Main cursor dot */}
             <motion.div
                 className={cn(
-                    "pointer-events-none fixed left-0 top-0 z-[9999] rounded-full mix-blend-difference",
+                    "pointer-events-none fixed left-0 top-0 z-[9999] rounded-full mix-blend-screen",
                     !isVisible && "opacity-0"
                 )}
                 style={{
@@ -124,7 +124,7 @@ export function CustomCursor() {
             {/* Follower ring */}
             <motion.div
                 className={cn(
-                    "pointer-events-none fixed left-0 top-0 z-[9998] rounded-full border border-neon-cyan/50",
+                    "pointer-events-none fixed left-0 top-0 z-[9998] rounded-full border border-pulse/50 shadow-[0_0_20px_rgba(255,0,60,0.2)]",
                     !isVisible && "opacity-0"
                 )}
                 style={{

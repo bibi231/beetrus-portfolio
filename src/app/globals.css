@@ -1,110 +1,67 @@
 @import "tailwindcss";
 
 @theme {
-  --color-neon-red: var(--neon-red);
-  --color-neon-red-glow: var(--neon-red-glow);
-  --color-neon-cyan: var(--neon-cyan);
-  --color-neon-cyan-glow: var(--neon-cyan-glow);
+  --color-void: var(--void);
+  --color-ink: var(--ink);
+  --color-surface: var(--surface);
+  --color-raised: var(--raised);
+  
+  --color-pulse: var(--pulse);
+  --color-pulse-dim: var(--pulse-dim);
+  --color-pulse-glow: var(--pulse-glow);
+  
+  --color-ember: var(--ember);
+  --color-ember-dim: var(--ember-dim);
+  
+  --color-lime: var(--lime);
 
-  --font-display: var(--font-outfit), var(--font-inter), sans-serif;
-  --font-mono: var(--font-jetbrains), Menlo, monospace;
+  --font-display: 'Clash Display', sans-serif;
+  --font-body: 'General Sans', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* We keep standard foregrounds to make tailwind text- utilities work well if used */
+  --color-text-1: var(--text-1);
+  --color-text-2: var(--text-2);
+  --color-text-3: var(--text-3);
 
   --z-index-negative: -1;
   --z-index-base: 0;
   --z-index-elevated: 10;
   --z-index-sticky: 40;
-  --z-index-header: 500;
+  --z-index-header: 50;
   --z-index-overlay: 600;
   --z-index-modal: 700;
   --z-index-toast: 800;
   --z-index-cursor: 9999;
-
-  --shadow-glow-red: 0 0 30px -5px #ff3333;
-  --shadow-glow-cyan: 0 0 30px -5px #00f0ff;
 }
 
-/* ============================================
-   BEETRUS PORTFOLIO - DESIGN SYSTEM
-   Tron/Cyber-Noir Aesthetic
-   Deep blacks, red neon, premium motion
-   ============================================ */
-
-/* CSS Custom Properties (Design Tokens) */
 :root {
-  /* ======================================== */
-  /* DESIGN TOKENS - COHESIVE SYSTEM */
-  /* ======================================== */
+  --void:        #020408;
+  --ink:         #080d12;
+  --surface:     #0d1520;
+  --raised:      #141f2e;
+  --rim:         rgba(255,255,255,0.06);
+  --wire:        rgba(255,255,255,0.11);
+  --edge:        rgba(255,255,255,0.18);
 
-  /* LAYERED BLACKS */
-  --bg-deep: 0 0% 2%;
-  --bg-surface: 0 0% 4%;
-  --bg-elevated: 0 0% 7%;
+  --pulse:       #ff003c;
+  --pulse-dim:   rgba(255, 0, 60, 0.1);
+  --pulse-glow:  rgba(255, 0, 60, 0.2);
 
-  /* BASE HSL WRAPPERS */
-  --background: var(--bg-deep);
-  --background-secondary: var(--bg-surface);
-  --background-elevated: var(--bg-elevated);
+  --ember:       #ff6b35;
+  --ember-dim:   rgba(255,107,53,0.1);
 
-  --foreground: 0 0% 98%;
-  --foreground-muted: 0 0% 45%;
+  --lime:        #b6ff6b;
 
-  --header-height: 5rem;
-  /* 80px */
-  --header-offset: var(--header-height);
-  --page-top-padding: clamp(8rem, 15vw, 12rem);
-  /* Standardized breathing room for all subpages */
-
-  --card: 0 0% 5%;
-  --card-hover: 0 0% 8%;
-
-  /* PRIMARY: NEON RED (TRON) */
-  --neon-red: #ff2d2d;
-  --neon-red-glow: rgba(255, 45, 45, 0.4);
-  --neon-red-glow-strong: rgba(255, 45, 45, 0.7);
-  --neon-red-bright: #ff4d4d;
-
-  /* SECONDARY: NEON CYAN (ACCENT) */
-  --neon-cyan: #00f0ff;
-  --neon-cyan-glow: rgba(0, 240, 255, 0.4);
-  --neon-cyan-bright: #4df3ff;
-
-  /* GLOW INTENSITIES */
-  --glow-low: 0 0 15px -3px var(--neon-red-glow);
-  --glow-med: 0 0 30px -5px var(--neon-red-glow);
-  --glow-hero: 0 0 60px -10px var(--neon-red-glow);
-
-  /* UTILITY COLORS */
-  --primary: 0 100% 60%;
-  --primary-foreground: 0 0% 100%;
-  --accent: 0 100% 50%;
-  --border: 0 0% 12%;
-  --border-subtle: 0 0% 8%;
-
-  /* ANIMATION SYSTEM */
-  --duration-micro: 150ms;
-  --duration-fast: 300ms;
-  --duration-normal: 500ms;
-  --duration-slow: 800ms;
-  --duration-cinematic: 1200ms;
-
-  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
-  --ease-snap: cubic-bezier(0.68, 0, 0.27, 1.2);
-  --ease-elastic: cubic-bezier(0.68, -0.6, 0.32, 1.6);
-  --ease-cinematic: cubic-bezier(0.22, 1, 0.36, 1);
-
-  /* FLUID TYPOGRAPHY (Responsive) */
-  --text-hero: clamp(4rem, 15vw, 8rem);
-  --text-h1: clamp(2.5rem, 8vw, 4.5rem);
-  --text-h2: clamp(2rem, 6vw, 3rem);
-  --text-h3: clamp(1.5rem, 4vw, 2rem);
-  --text-body: 1.125rem;
-  --text-mono: 0.875rem;
+  --text-1:      #e8edf2;
+  --text-2:      #5c6a7a;
+  --text-3:      #2a3340;
+  --text-pulse:  #ff003c;
 }
 
 /* ============================================
    BASE STYLES
    ============================================ */
-
 * {
   box-sizing: border-box;
   padding: 0;
@@ -117,15 +74,9 @@ html {
   width: 100%;
 }
 
-/* Respect reduced motion preference */
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-
-  *,
-  *::before,
-  *::after {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
@@ -133,9 +84,9 @@ html {
 }
 
 body {
-  background: hsl(var(--background));
-  color: hsl(var(--foreground));
-  font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
+  background: var(--ink);
+  color: var(--text-1);
+  font-family: var(--font-body);
   line-height: 1.6;
   min-height: 100vh;
   width: 100%;
@@ -145,50 +96,27 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Global Noise overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+}
 
-/* ============================================
-   TYPOGRAPHY
-   ============================================ */
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: var(--font-outfit), var(--font-inter), sans-serif;
-  font-weight: 700;
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 600;
   line-height: 1.1;
-  letter-spacing: -0.03em;
-  color: hsl(var(--foreground));
-}
-
-h1 {
-  font-family: var(--font-display);
-  font-size: var(--text-h1);
-  font-weight: 900;
-  line-height: 0.9;
-  letter-spacing: -0.05em;
-}
-
-h2 {
-  font-family: var(--font-display);
-  font-size: var(--text-h2);
-  font-weight: 800;
-  line-height: 1;
-}
-
-h3 {
-  font-size: clamp(1.5rem, 4vw, 2.5rem);
-}
-
-h4 {
-  font-size: clamp(1.25rem, 2vw, 1.75rem);
+  color: var(--text-1);
 }
 
 p {
-  color: hsl(var(--foreground-muted));
-  max-width: 60ch;
+  color: var(--text-2);
 }
 
 a {
@@ -197,447 +125,117 @@ a {
 }
 
 /* ============================================
-   SELECTION & FOCUS STATES
+   UI PATTERNS & EFFECTS 
    ============================================ */
 
-::selection {
-  background: var(--neon-red-glow);
-  color: hsl(var(--foreground));
+/* Glow Button */
+.btn-glow {
+  background: transparent;
+  color: var(--pulse);
+  border: 1px solid var(--pulse);
+  padding: 12px 28px;
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.btn-glow:hover {
+  background: var(--pulse-dim);
+  box-shadow: 0 0 0 1px var(--pulse), 0 0 28px var(--pulse-glow);
+}
+.btn-glow:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
-:focus-visible {
-  outline: 2px solid var(--neon-red);
-  outline-offset: 3px;
+/* Status dots */
+.status-live { color: var(--lime); font-family: var(--font-mono); font-size: 12px; margin-left: 6px; }
+.status-building { color: var(--ember); font-family: var(--font-mono); font-size: 12px; margin-left: 6px; }
+.status-concept { color: var(--text-2); font-family: var(--font-mono); font-size: 12px; margin-left: 6px; }
+
+.status-live::before, .status-building::before {
+  content: '◉ ';
+  animation: pulse-dot 2s ease infinite;
+}
+.status-concept::before {
+  content: '○ ';
 }
 
-/* ============================================
-   SCROLLBAR STYLING
-   ============================================ */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
 
+/* Terminal Cursor */
+.cursor::after {
+  content: '|';
+  animation: blink 1s step-end infinite;
+  color: var(--pulse);
+  margin-left: 2px;
+}
+@keyframes blink { 0%,100% { opacity: 1 } 50% { opacity: 0 } }
+
+/* Cards */
+.card-premium {
+  background: linear-gradient(180deg, var(--surface) 0%, var(--ink) 100%);
+  border: 1px solid var(--wire);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+.card-premium:hover {
+  border-color: var(--pulse);
+  box-shadow: 0 0 0 1px var(--pulse), 0 0 24px var(--pulse-glow);
+}
+
+/* Grid overlay for hero/sections */
+.grid-bg {
+  background-image: 
+    linear-gradient(to right, var(--wire) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--wire) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+}
+
+.scanline-bg {
+  background: linear-gradient(
+    to bottom,
+    transparent 50%,
+    rgba(0, 0, 0, 0.4) 51%
+  );
+  background-size: 100% 4px;
+}
+
+/* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
-
 ::-webkit-scrollbar-track {
-  background: hsl(var(--background));
+  background: var(--void);
 }
-
 ::-webkit-scrollbar-thumb {
-  background: hsl(var(--border));
+  background: var(--surface);
+  border: 1px solid var(--wire);
   border-radius: 4px;
 }
-
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--neon-red);
+  background: var(--raised);
 }
 
-/* Firefox */
-* {
-  scrollbar-width: thin;
-  scrollbar-color: hsl(var(--border)) hsl(var(--background));
-}
-
-/* ============================================
-   GRADIENT TEXT UTILITIES
-   ============================================ */
-
-.gradient-text {
-  background: linear-gradient(135deg,
-      var(--neon-red) 0%,
-      var(--neon-crimson) 50%,
-      var(--neon-orange) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-size: 200% 200%;
-}
-
-.gradient-text-fire {
-  background: linear-gradient(135deg,
-      #ff1744 0%,
-      #ff4444 30%,
-      #ff6622 70%,
-      #ffaa00 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.gradient-text-animated {
-  animation: gradientShift 6s ease infinite;
-}
-
-@keyframes gradientShift {
-
-  0%,
-  100% {
-    background-position: 0% 50%;
-  }
-
-  50% {
-    background-position: 100% 50%;
-  }
-}
-
-/* ============================================
-   GLASS MORPHISM
-   ============================================ */
-
-.glass {
-  background: rgba(10, 10, 10, 0.7);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.glass-strong {
-  background: rgba(10, 10, 10, 0.85);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.glass-red {
-  background: rgba(255, 45, 45, 0.05);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 45, 45, 0.15);
-}
-
-/* ============================================
-   GLOW EFFECTS
-   ============================================ */
-
-.glow {
-  box-shadow: 0 0 30px -5px var(--neon-red-glow);
-}
-
-.glow-sm {
-  box-shadow: 0 0 15px -3px var(--neon-red-glow);
-}
-
-.glow-lg {
-  box-shadow: 0 0 50px -10px var(--neon-red-glow);
-}
-
-.glow-red {
-  box-shadow: 0 0 30px -5px var(--neon-red);
-}
-
-.glow-crimson {
-  box-shadow: 0 0 40px -5px var(--neon-crimson);
-}
-
-.glow-text {
-  text-shadow: 0 0 30px var(--neon-red-glow);
-}
-
-.glow-text-red {
-  text-shadow:
-    0 0 10px var(--neon-red),
-    0 0 30px var(--neon-red-glow),
-    0 0 60px var(--neon-red-glow);
-}
-
-/* Edge glow for cards */
-.edge-glow {
+/* Utility to ensure z-index stays above noise */
+.z-content {
   position: relative;
-}
-
-.edge-glow::before {
-  content: "";
-  position: absolute;
-  inset: -1px;
-  background: linear-gradient(135deg,
-      var(--neon-red) 0%,
-      transparent 50%,
-      var(--neon-red) 100%);
-  border-radius: inherit;
-  z-index: -1;
-  opacity: 0;
-  transition: opacity var(--duration-fast) var(--ease-smooth);
-}
-
-.edge-glow:hover::before {
-  opacity: 0.5;
-}
-
-/* ============================================
-   INTERACTIVE UTILITIES
-   ============================================ */
-
-/* Magnetic hover base */
-.magnetic {
-  transition: transform var(--duration-fast) var(--ease-elastic);
-}
-
-/* Stretch on hover */
-.stretch-hover {
-  transition: transform var(--duration-fast) var(--ease-snap);
-}
-
-.stretch-hover:hover {
-  transform: scaleX(1.02);
-}
-
-/* Depth effect */
-.depth {
-  transition:
-    transform var(--duration-fast) var(--ease-smooth),
-    box-shadow var(--duration-fast) var(--ease-smooth);
-}
-
-.depth:hover {
-  transform: translateY(-4px) scale(1.01);
-  box-shadow:
-    0 20px 40px -15px rgba(0, 0, 0, 0.5),
-    0 0 30px -10px var(--neon-red-glow);
-}
-
-/* ============================================
-   LAYOUT UTILITIES
-   ============================================ */
-
-.container-custom {
-  width: 100%;
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 1.5rem;
-}
-
-@media (min-width: 768px) {
-  .container-custom {
-    padding: 0 3rem;
-  }
-}
-
-@media (min-width: 1024px) {
-  .container-custom {
-    padding: 0 4rem;
-  }
-}
-
-/* Section spacing */
-.section {
-  padding: clamp(8rem, 15vw, 14rem) 0;
-}
-
-@media (min-width: 768px) {
-  .section {
-    padding: clamp(10rem, 20vw, 16rem) 0;
-  }
-}
-
-/* Hide scrollbar utility */
-.hide-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-.hide-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-
-/* ============================================
-   DECORATIVE EFFECTS
-   ============================================ */
-
-/* Ambient gradient drift */
-.gradient-drift {
-  background: linear-gradient(-45deg,
-      hsl(var(--background)),
-      hsl(var(--background-secondary)),
-      rgba(255, 45, 45, 0.05),
-      hsl(var(--background)));
-  background-size: 400% 400%;
-  animation: gradientDrift 20s ease infinite;
-}
-
-@keyframes gradientDrift {
-
-  0%,
-  100% {
-    background-position: 0% 50%;
-  }
-
-  50% {
-    background-position: 100% 50%;
-  }
-}
-
-/* Flicker effect */
-.flicker {
-  animation: flicker 4s linear infinite;
-}
-
-@keyframes flicker {
-
-  0%,
-  100% {
-    opacity: 1;
-  }
-
-  41% {
-    opacity: 1;
-  }
-
-  42% {
-    opacity: 0.8;
-  }
-
-  43% {
-    opacity: 1;
-  }
-
-  45% {
-    opacity: 0.9;
-  }
-
-  46% {
-    opacity: 1;
-  }
-}
-
-/* Pulse glow */
-.pulse-glow {
-  animation: pulseGlow 3s ease-in-out infinite;
-}
-
-@keyframes pulseGlow {
-
-  0%,
-  100% {
-    box-shadow: 0 0 20px -5px var(--neon-red-glow);
-  }
-
-  50% {
-    box-shadow: 0 0 40px -5px var(--neon-red);
-  }
-}
-
-/* Terminal cursor blink */
-.cursor-blink::after {
-  content: "_";
-  animation: blink 1s step-end infinite;
-}
-
-@keyframes blink {
-
-  0%,
-  50% {
-    opacity: 1;
-  }
-
-  51%,
-  100% {
-    opacity: 0;
-  }
-}
-
-/* ============================================
-   LENIS SMOOTH SCROLL
-   ============================================ */
-
-html.lenis,
-html.lenis body {
-  height: auto;
-}
-
-.lenis.lenis-smooth {
-  scroll-behavior: auto !important;
-}
-
-.lenis.lenis-smooth [data-lenis-prevent] {
-  overscroll-behavior: contain;
-}
-
-.lenis.lenis-stopped {
-  overflow: hidden;
-}
-
-.lenis.lenis-smooth iframe {
-  pointer-events: none;
-}
-
-/* ============================================
-   MONOSPACE / TERMINAL STYLES
-   ============================================ */
-
-.mono {
-  font-family: var(--font-jetbrains), "JetBrains Mono", "Fira Code", monospace;
-}
-
-.terminal-text {
-  font-family: var(--font-jetbrains), monospace;
-  font-size: 0.875rem;
-  letter-spacing: 0.02em;
-  color: var(--neon-red);
-}
-
-/* ============================================
-   CHROMATIC ABERRATION (SUBTLE)
-   ============================================ */
-
-.chromatic {
-  position: relative;
-}
-
-.chromatic::before,
-.chromatic::after {
-  content: attr(data-text);
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0.8;
-}
-
-.chromatic::before {
-  color: #ff0000;
-  transform: translateX(-1px);
-  mix-blend-mode: multiply;
-}
-
-.chromatic::after {
-  color: #00ffff;
-  transform: translateX(1px);
-  mix-blend-mode: multiply;
-}
-
-/* ============================================
-   TRACK ROW STYLES (MUSIC PAGE)
-   ============================================ */
-
-.track-row {
-  position: relative;
-  transition:
-    transform var(--duration-fast) var(--ease-snap),
-    background-color var(--duration-fast) var(--ease-smooth);
-}
-
-.track-row::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 3px;
-  height: 0;
-  background: var(--neon-red);
-  transition: height var(--duration-fast) var(--ease-snap);
-}
-
-.track-row:hover {
-  background-color: rgba(255, 45, 45, 0.03);
-  transform: scaleX(1.01);
-}
-
-.track-row:hover::before {
-  height: 60%;
-}
-
-.track-row:focus-within {
-  box-shadow: 0 0 0 1px var(--neon-red), 0 0 20px -5px var(--neon-red-glow);
+  z-index: 10;
 }

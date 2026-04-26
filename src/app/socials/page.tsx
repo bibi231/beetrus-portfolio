@@ -1,186 +1,156 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { fadeInUp, ambientFade, staggerContainer } from "@/lib/animations";
-import {
-    Instagram,
-    Twitter,
-    Youtube,
-    Github,
-    Music,
-    ArrowUpRight,
-    MessageCircle,
-    Zap,
-    Linkedin,
-    Share2
-} from "lucide-react";
 import Link from "next/link";
-
-const mainSocials = [
-    {
-        name: "Instagram",
-        handle: "beetrus_gg",
-        url: "https://instagram.com/beetrus_gg",
-        icon: Instagram,
-        color: "#E4405F",
-        description: "Studio logs, aesthetic captures, and lifestyle signals.",
-        count: "792"
-    },
-    {
-        name: "TikTok",
-        handle: "beetrus_gg",
-        url: "https://www.tiktok.com/@beetrus_gg",
-        icon: Music,
-        color: "#00F2EA",
-        description: "Gritty snippets and viral frequency modulations.",
-        count: "203"
-    },
-    {
-        name: "YouTube",
-        handle: "Beetrus",
-        url: "https://youtube.com/@beetrus",
-        icon: Youtube,
-        color: "#FF0000",
-        description: "Box Sessions, Music Videos, and high-fidelity VODs.",
-        count: "50"
-    },
-];
-
-const subSocials = [
-    { name: "GitHub", url: "https://github.com/bibi231", icon: Github, color: "#FFFFFF" },
-    { name: "SoundCloud", url: "https://soundcloud.com/beetrus", icon: Music, color: "#FF3300" },
-    { name: "Audiomack", url: "https://audiomack.com/beetrus", icon: Share2, color: "#FFA200" },
-    { name: "LinkedIn", url: "https://linkedin.com/in/bitrus-gadzama", icon: Linkedin, color: "#0077B5" },
-];
+import { motion } from "framer-motion";
+import { Instagram, Youtube, Github, Mail, Music2, Code2, ArrowRight } from "lucide-react";
+import { MUSIC_IDS } from "@/data/musicIds";
+import { musicData } from "@/data/music";
 
 export default function SocialsPage() {
-    return (
-        <div className="relative min-h-screen pt-[var(--page-top-padding)] pb-24 overflow-hidden">
-            {/* Explicit Spacer for vertical hierarchy consistency */}
-            <div className="h-24 w-full" />
-            {/* Background Narrative */}
-            <div className="pointer-events-none absolute inset-0 -z-10">
-                <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-neon-red/50 to-transparent" />
-                <div className="absolute right-0 top-0 h-full w-px bg-gradient-to-b from-transparent via-neon-red/20 to-transparent" />
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-neon-red/5 rounded-full blur-[120px]" />
-            </div>
+  const latestRelease = musicData.releases[0];
 
-            <div className="container-custom relative px-6">
-                {/* Section Title */}
-                <motion.div
-                    className="mb-20"
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.8 }}
-                >
-                    <span className="text-neon-red font-mono text-xs uppercase tracking-[0.5em] mb-4 block animate-pulse">
-                        UPLINK.ESTABLISH()
-                    </span>
-                    <h1 className="text-7xl md:text-9xl font-black tracking-tighter uppercase leading-[0.8]">
-                        Digital <br />
-                        <span className="gradient-text">Pulse</span>
-                    </h1>
-                </motion.div>
-
-                {/* Primary Social Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-                    {mainSocials.map((social, index) => (
-                        <motion.a
-                            key={social.name}
-                            href={social.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="group relative h-[400px] overflow-hidden rounded-3xl border border-white/10 bg-white/[0.02] p-8 transition-all hover:border-white/30"
-                            initial={{ opacity: 0, y: 30 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: index * 0.1 + 0.5 }}
-                        >
-                            {/* Hover Reveal Cover */}
-                            <div className="absolute inset-0 z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
-                                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
-                            </div>
-
-                            <div className="relative z-10 flex h-full flex-col justify-between">
-                                <div className="flex items-start justify-between">
-                                    <div
-                                        className="p-4 rounded-2xl bg-white/5 border border-white/10 group-hover:border-opacity-100 transition-colors"
-                                        style={{ borderColor: social.color + '40' }}
-                                    >
-                                        <social.icon
-                                            size={28}
-                                            className="text-white transition-all"
-                                            style={{ color: social.color }}
-                                        />
-                                    </div>
-                                    <div className="text-right">
-                                        <div className="text-2xl font-black text-white">{social.count}</div>
-                                        <div className="text-[10px] font-mono text-foreground-muted uppercase tracking-widest">Global_Reach</div>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <h3 className="text-3xl font-black uppercase tracking-tight text-white mb-1">
-                                        {social.name}
-                                    </h3>
-                                    <p className="text-foreground-muted text-sm font-mono mb-6 group-hover:text-white transition-colors">
-                                        @{social.handle}
-                                    </p>
-                                    <p className="text-foreground-muted text-xs uppercase tracking-widest opacity-60 group-hover:opacity-100 transition-opacity leading-loose">
-                                        {social.description}
-                                    </p>
-                                </div>
-                            </div>
-
-                            {/* Corner Scan Line */}
-                            <div className="absolute top-0 right-0 h-32 w-px bg-gradient-to-b from-neon-red/50 to-transparent opacity-0 group-hover:opacity-100 transition-all" />
-                        </motion.a>
-                    ))}
-                </div>
-
-                {/* Secondary Network Hub */}
-                <motion.div
-                    className="rounded-3xl border border-white/5 bg-white/[0.01] p-12 mb-32"
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true }}
-                >
-                    <div className="flex flex-col md:flex-row items-center justify-between gap-12">
-                        <div className="max-w-md">
-                            <h2 className="text-3xl font-black tracking-tight mb-4 uppercase text-white">
-                                Extended <span className="text-neon-red">Network</span>
-                            </h2>
-                            <p className="text-foreground-muted text-sm leading-relaxed mb-8">
-                                Connect across developer tools, streaming platforms, and professional networks to see the full scope of my work.
-                            </p>
-                            <Button variant="neon" size="lg" className="w-full md:w-auto" rightIcon={<Share2 size={16} />}>
-                                COPY_UNIVERSAL_LINK
-                            </Button>
-                        </div>
-
-                        <div className="grid grid-cols-2 gap-4 w-full md:w-auto">
-                            {subSocials.map((sub) => (
-                                <a
-                                    key={sub.name}
-                                    href={sub.url}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/5 p-6 hover:bg-white/10 transition-all group"
-                                >
-                                    <sub.icon
-                                        size={20}
-                                        className="transition-colors"
-                                        style={{ color: sub.color }}
-                                    />
-                                    <span className="font-mono text-xs uppercase tracking-widest font-bold">
-                                        {sub.name}
-                                    </span>
-                                </a>
-                            ))}
-                        </div>
-                    </div>
-                </motion.div>
-            </div>
+  return (
+    <div className="min-h-screen bg-ink pt-12 pb-24">
+      <div className="max-w-4xl mx-auto px-6 lg:px-8">
+        
+        <div className="text-center mb-16">
+          <div className="inline-flex items-center justify-center w-24 h-24 rounded-full bg-surface border border-wire mb-6 overflow-hidden">
+            {/* Ideally replace with real avatar */}
+            <span className="font-display text-4xl text-pulse font-bold">B</span>
+          </div>
+          <h1 className="font-display text-4xl font-bold tracking-tight mb-2">@beetrus_gg</h1>
+          <p className="font-mono text-sm text-text-2">Engineer ◦ Artist ◦ Founder</p>
         </div>
-    );
+
+        {/* Bento Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[200px]">
+          
+          {/* Main Socials: Instagram */}
+          <motion.a 
+            href={`https://instagram.com/${MUSIC_IDS.instagramHandle}`}
+            target="_blank" rel="noopener noreferrer"
+            className="md:col-span-2 group card-premium p-8 flex flex-col justify-between overflow-hidden relative"
+            whileHover={{ y: -4 }}
+            transition={{ type: "spring", stiffness: 300, damping: 20 }}
+          >
+            <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity">
+              <Instagram size={120} />
+            </div>
+            <div>
+              <div className="w-12 h-12 bg-[#E4405F]/10 rounded-xl flex items-center justify-center mb-4">
+                <Instagram className="text-[#E4405F]" size={24} />
+              </div>
+              <h3 className="font-display text-2xl font-bold">Instagram</h3>
+              <p className="font-mono text-xs text-text-2 mt-2">Latest lifestyle & updates</p>
+            </div>
+            <div className="flex items-center gap-2 font-mono text-sm text-pulse opacity-0 group-hover:opacity-100 transition-opacity translate-y-4 group-hover:translate-y-0">
+              Follow <ArrowRight size={16} />
+            </div>
+          </motion.a>
+
+          {/* YouTube */}
+          <motion.a 
+            href={`https://youtube.com/@${MUSIC_IDS.youtubeChannelId}`}
+            target="_blank" rel="noopener noreferrer"
+            className="group card-premium p-8 flex flex-col justify-between"
+            whileHover={{ y: -4 }}
+            transition={{ type: "spring", stiffness: 300, damping: 20 }}
+          >
+            <div>
+              <div className="w-12 h-12 bg-[#FF0000]/10 rounded-xl flex items-center justify-center mb-4">
+                <Youtube className="text-[#FF0000]" size={24} />
+              </div>
+              <h3 className="font-display text-xl font-bold">YouTube</h3>
+              <p className="font-mono text-xs text-text-2 mt-2">Music videos & vlogs</p>
+            </div>
+          </motion.a>
+
+          {/* Latest Release */}
+          <motion.a 
+            href={latestRelease?.spotifyUrl || "#"}
+            target="_blank" rel="noopener noreferrer"
+            className="group card-premium p-8 flex flex-col justify-between border-ember/30 hover:border-ember"
+            whileHover={{ y: -4 }}
+            transition={{ type: "spring", stiffness: 300, damping: 20 }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-br from-ember/5 to-transparent pointer-events-none" />
+            <div>
+              <div className="flex justify-between items-start mb-4">
+                <div className="w-12 h-12 bg-ember/10 rounded-xl flex items-center justify-center text-2xl">
+                  {latestRelease?.coverEmoji}
+                </div>
+                <span className="font-mono text-[10px] uppercase tracking-widest text-ember border border-ember/30 px-2 py-1 rounded-sm">Latest</span>
+              </div>
+              <h3 className="font-display text-lg font-bold">{latestRelease?.title}</h3>
+              <p className="font-mono text-xs text-text-2 mt-1">Stream now</p>
+            </div>
+          </motion.a>
+
+          {/* GitHub */}
+          <motion.a 
+            href="https://github.com/bibi231"
+            target="_blank" rel="noopener noreferrer"
+            className="group card-premium p-8 flex flex-col justify-between"
+            whileHover={{ y: -4 }}
+            transition={{ type: "spring", stiffness: 300, damping: 20 }}
+          >
+            <div>
+              <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center mb-4">
+                <Github className="text-white" size={24} />
+              </div>
+              <h3 className="font-display text-lg font-bold">GitHub</h3>
+              <p className="font-mono text-xs text-text-2 mt-1">Open source & projects</p>
+            </div>
+          </motion.a>
+
+          {/* Business / Services */}
+          <motion.div 
+            className="group card-premium p-8 flex flex-col justify-between md:row-span-2 relative overflow-hidden"
+            whileHover={{ y: -4 }}
+            transition={{ type: "spring", stiffness: 300, damping: 20 }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-br from-pulse/5 to-transparent pointer-events-none" />
+            <div>
+              <div className="w-12 h-12 bg-pulse/10 rounded-xl flex items-center justify-center mb-4">
+                <Code2 className="text-pulse" size={24} />
+              </div>
+              <h3 className="font-display text-2xl font-bold">Hire TrueWeb</h3>
+              <p className="font-mono text-sm text-text-2 mt-2 font-medium">Have a SaaS idea? Need a full-stack developer?</p>
+              <ul className="mt-6 space-y-2 font-mono text-xs text-text-3">
+                <li>◦ MVP Development</li>
+                <li>◦ UI/UX Design</li>
+                <li>◦ Technical Consulting</li>
+              </ul>
+            </div>
+            
+            <Link href="/contact" className="mt-8 btn-glow justify-center text-center">
+              Let's Talk
+            </Link>
+          </motion.div>
+
+          {/* Email */}
+          <motion.div 
+            className="md:col-span-2 group card-premium p-8 flex flex-col justify-between border-wire hover:border-pulse"
+            whileHover={{ y: -4 }}
+            transition={{ type: "spring", stiffness: 300, damping: 20 }}
+          >
+            <div className="flex flex-col md:flex-row items-start md:items-center justify-between h-full w-full">
+              <div>
+                <div className="w-12 h-12 bg-surface border border-wire rounded-xl flex items-center justify-center mb-4">
+                  <Mail className="text-text-1" size={24} />
+                </div>
+                <h3 className="font-display text-2xl font-bold">General Contact</h3>
+                <p className="font-mono text-xs text-text-2 mt-2">Bookings, press, or saying hi.</p>
+              </div>
+              
+              <Link href="/contact" className="mt-6 md:mt-0 px-6 py-3 border border-wire hover:border-text-1 rounded-md font-mono text-xs uppercase tracking-widest transition-colors flex items-center gap-2">
+                Send a Signal <ArrowRight size={14} />
+              </Link>
+            </div>
+          </motion.div>
+
+        </div>
+      </div>
+    </div>
+  );
 }

@@ -1,331 +1,360 @@
 "use client";
 
-import { useState } from "react";
-import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { fadeInUp, ambientFade, staggerContainer } from "@/lib/animations";
-import { toast } from "sonner";
-import {
-    CheckCircle,
-    Link2,
-    Music,
-    Video,
-    Share2,
-    Database,
-    Mail,
-    Send,
-    MapPin,
-    Phone,
-    Instagram,
-    Twitter,
-    Youtube,
-    Github,
+import { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+import { 
+    Mail, 
+    MessageSquare, 
+    Send, 
+    Terminal, 
+    Activity, 
+    Zap, 
+    Lock, 
+    Wifi, 
+    Cpu,
+    ShieldCheck
 } from "lucide-react";
+import { toast } from "sonner";
+import { MUSIC_IDS } from "@/data/musicIds";
+import { cn } from "@/lib/utils";
 
-const socials = [
-    { name: "Instagram", handle: "@beetrus_gg", url: "https://instagram.com/beetrus_gg", icon: Instagram },
-    { name: "Twitter", handle: "@beetrus_g", url: "https://twitter.com/beetrus_g", icon: Twitter },
-    { name: "YouTube", handle: "@beetrus", url: "https://youtube.com/@beetrus", icon: Youtube },
-    { name: "GitHub", handle: "@beetrus", url: "https://github.com/beetrus", icon: Github },
-    { name: "Audiomack", handle: "@beetrus", url: "https://audiomack.com/beetrus", icon: Music },
-];
+// --- Components ---
+
+/**
+ * Animated terminal feed simulating live signals 
+ */
+function SignalFeed() {
+    const [logs, setLogs] = useState<{ id: number; text: string; type: 'info' | 'warn' | 'success' }[]>([]);
+    const [counter, setCounter] = useState(0);
+
+    const logMessages = [
+        { text: "ESTABLISHING_ENCRYPTED_CHANNEL...", type: 'info' as const },
+        { text: "SIGNAL_STRENGTH: 88%", type: 'info' as const },
+        { text: "UPLINK_SECURE", type: 'success' as const },
+        { text: "POLLING_DATA_PACKETS...", type: 'info' as const },
+        { text: "INCOMING_ENQUIRY_STREAM_ACTIVE", type: 'info' as const },
+        { text: "FIREWALL_BYPASS_AUTHORIZED", type: 'warn' as const },
+        { text: "SESSION_TOKEN_SYNCED", type: 'success' as const },
+        { text: "PULSE_RHYTHM_LOCKED", type: 'success' as const },
+    ];
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setLogs(prev => {
+                const newLog = {
+                    id: Date.now(),
+                    text: logMessages[Math.floor(Math.random() * logMessages.length)].text,
+                    type: logMessages[Math.floor(Math.random() * logMessages.length)].type
+                };
+                return [newLog, ...prev.slice(0, 10)];
+            });
+            setCounter(c => c + 1);
+        }, 2000);
+        return () => clearInterval(interval);
+    }, []);
+
+    return (
+        <div className="bg-ink/50 border border-wire rounded-xl p-6 font-mono text-[10px] h-[300px] overflow-hidden relative shadow-2xl">
+            <div className="absolute top-0 right-0 p-4 opacity-10">
+                <Wifi className="animate-pulse text-pulse" size={48} />
+            </div>
+            <div className="space-y-2">
+                <div className="flex items-center gap-2 text-text-3 border-b border-wire pb-2 mb-4">
+                    <Terminal size={12} /> <span>TRANSMISSION_FEED.log</span>
+                </div>
+                <AnimatePresence initial={false}>
+                    {logs.map((log) => (
+                        <motion.div
+                            key={log.id}
+                            initial={{ opacity: 0, x: -10 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            exit={{ opacity: 0, height: 0 }}
+                            className={cn(
+                                "flex gap-2",
+                                log.type === 'success' ? "text-lime" : 
+                                log.type === 'warn' ? "text-pulse" : "text-text-2"
+                            )}
+                        >
+                            <span className="opacity-30">[{new Date(log.id).toLocaleTimeString([], { hour12: false })}]</span>
+                            <span className="font-bold">{log.text}</span>
+                        </motion.div>
+                    ))}
+                </AnimatePresence>
+            </div>
+            
+            {/* Visual scan line */}
+            <div className="absolute inset-x-0 top-0 h-1 bg-pulse/20 blur-sm animate-[scan_4s_linear_infinite]" />
+        </div>
+    );
+}
+
+/**
+ * Signal Strength Meter based on form completeness
+ */
+function SignalMeter({ percent }: { percent: number }) {
+    return (
+        <div className="space-y-2">
+            <div className="flex justify-between font-mono text-[10px] text-text-3 uppercase tracking-tighter">
+                <span>Signal Reliability</span>
+                <span>{percent}%</span>
+            </div>
+            <div className="h-1 w-full bg-raised rounded-full overflow-hidden flex gap-0.5">
+                {[...Array(20)].map((_, i) => (
+                    <div 
+                        key={i}
+                        className={cn(
+                            "flex-1 transition-all duration-500",
+                            (i / 20) * 100 < percent 
+                                ? (percent > 80 ? "bg-lime" : percent > 40 ? "bg-pulse" : "bg-pulse/40") 
+                                : "bg-transparent"
+                        )}
+                    />
+                ))}
+            </div>
+        </div>
+    );
+}
 
 export default function ContactPage() {
-    const [formData, setFormData] = useState({
-        name: "",
-        email: "",
-        subject: "",
-        message: "",
-        link: "", // Music/Video/Drive link
-    });
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    const [isSubmitted, setIsSubmitted] = useState(false);
+    const [formData, setFormData] = useState({ email: "", subject: "", message: "" });
+    const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
+    const [completeness, setCompleteness] = useState(0);
+
+    useEffect(() => {
+        let count = 0;
+        if (formData.email.includes("@")) count += 30;
+        if (formData.subject.length > 5) count += 20;
+        if (formData.message.length > 10) count += 50;
+        setCompleteness(count);
+    }, [formData]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        setIsSubmitting(true);
+        if (!formData.email || !formData.message) {
+            toast.error("MISSING_DATA_PACKETS");
+            return;
+        }
 
-        // Simulate form submission
-        await new Promise((resolve) => setTimeout(resolve, 1500));
+        setStatus("sending");
+        try {
+            const res = await fetch("/api/contact", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(formData),
+            });
 
-        setIsSubmitting(false);
-        setIsSubmitted(true);
-        toast.success("Message sent successfully! I'll get back to you soon.");
-
-        // Reset form
-        setFormData({ name: "", email: "", subject: "", message: "", link: "" });
-    };
-
-    const handleChange = (
-        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-    ) => {
-        setFormData((prev) => ({
-            ...prev,
-            [e.target.name]: e.target.value,
-        }));
+            if (res.ok) {
+                setStatus("success");
+                setFormData({ email: "", subject: "", message: "" });
+                toast.success("TRANSMISSION_COMPLETE");
+            } else {
+                setStatus("error");
+                toast.error("TRANSMISSION_FAILED_UPLINK_DOWN");
+            }
+        } catch (err) {
+            setStatus("error");
+            toast.error("CARRIER_SIGNAL_LOST");
+        }
     };
 
     return (
-        <div className="relative">
-            {/* Hero Section */}
-            <section className="min-h-[calc(100vh-var(--header-height))] relative flex flex-col justify-center pt-[var(--page-top-padding)]">
-                <div className="container-custom">
-                    <motion.div
-                        className="mx-auto max-w-4xl text-center"
-                        variants={fadeInUp}
-                        initial="hidden"
-                        animate="visible"
+        <div className="min-h-screen bg-void relative overflow-hidden flex flex-col items-center">
+            
+            {/* Background Atmosphere - Page Specific */}
+            <div className="absolute inset-0 z-0 pointer-events-none">
+                <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-pulse/5 blur-[120px] rounded-full -translate-y-1/2 translate-x-1/3" />
+                <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-ember/5 blur-[100px] rounded-full translate-y-1/2 -translate-x-1/3" />
+                
+                {/* Grid Overlay */}
+                <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-[0.03] bg-repeat" />
+            </div>
+
+            {/* Main Interactive Hub */}
+            <div className="relative z-10 w-full max-w-7xl mx-auto px-6 pt-12 pb-32">
+                
+                {/* Header: Signal Status */}
+                <div className="mb-20">
+                    <motion.div 
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        className="flex items-center gap-3 font-mono text-[10px] text-pulse mb-8 uppercase tracking-[0.3em]"
                     >
-                        <span className="mb-4 inline-block text-xs font-mono uppercase tracking-[0.4em] text-neon-red animate-pulse">
-                            INITIATE.CONNECTION()
-                        </span>
-                        <h1 className="mb-6 text-6xl md:text-7xl font-black tracking-tighter">
-                            Let&apos;s <span className="text-neon-red drop-shadow-[0_0_15px_rgba(255,45,45,0.5)]">Sync</span>
-                        </h1>
-                        <motion.p className="text-body text-foreground-muted max-w-2xl mx-auto font-light leading-relaxed" variants={ambientFade}>
-                            Share your vision, send your links, or initiate a collaboration.
-                            <br />
-                            The grid is open.
-                        </motion.p>
+                        <Activity size={14} className="animate-pulse" />
+                        <span>Establish_Communication_Link // 00:44:22</span>
                     </motion.div>
+                    
+                    <h1 className="font-display text-7xl md:text-[9rem] font-black leading-[0.8] tracking-tighter uppercase mb-2">
+                        Send a <br />
+                        <span className="text-pulse drop-shadow-[0_0_30px_rgba(255,0,60,0.3)]">Signal.</span>
+                    </h1>
                 </div>
-            </section>
 
-            {/* Main Content */}
-            {/* Main Content */}
-            <section className="py-24 pt-0">
-                <div className="container-custom">
-                    <div className="mx-auto max-w-3xl space-y-24">
-                        {/* Contact Form */}
-                        <motion.div
-                            variants={fadeInUp}
-                            initial="hidden"
-                            whileInView="visible"
-                            viewport={{ once: true }}
-                        >
-                            <div className="rounded-2xl border border-white/5 bg-black/60 p-8 md:p-12 shadow-2xl relative overflow-hidden group">
-                                <div className="absolute inset-0 bg-gradient-to-br from-neon-red/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                                <div className="absolute top-0 right-0 h-24 w-px bg-gradient-to-b from-neon-red/50 to-transparent" />
-                                <div className="absolute top-0 right-0 w-24 h-px bg-gradient-to-l from-neon-red/50 to-transparent" />
-
-                                <h2 className="mb-10 text-3xl font-bold text-center">Send a Message</h2>
-
-                                {isSubmitted ? (
-                                    <motion.div
-                                        className="flex flex-col items-center py-12 text-center"
-                                        initial={{ opacity: 0, scale: 0.9 }}
-                                        animate={{ opacity: 1, scale: 1 }}
-                                    >
-                                        <CheckCircle className="h-16 w-16 text-neon-green" />
-                                        <h3 className="mt-4 text-xl font-semibold">Message Sent!</h3>
-                                        <p className="mt-2 text-foreground-muted">
-                                            Thanks for reaching out. I&apos;ll get back to you as soon as possible.
-                                        </p>
-                                        <Button
-                                            variant="secondary"
-                                            className="mt-6"
-                                            onClick={() => setIsSubmitted(false)}
-                                        >
-                                            Send Another Message
-                                        </Button>
-                                    </motion.div>
-                                ) : (
-                                    <form onSubmit={handleSubmit} className="space-y-8">
-                                        <div className="grid gap-8 sm:grid-cols-2">
-                                            <div className="space-y-3">
-                                                <label htmlFor="name" className="text-[10px] font-mono uppercase tracking-[0.3em] text-foreground-muted pl-1">
-                                                    User_Name
-                                                </label>
-                                                <input
-                                                    type="text"
-                                                    id="name"
-                                                    name="name"
-                                                    value={formData.name}
-                                                    onChange={handleChange}
-                                                    required
-                                                    className="h-14 w-full rounded-lg border border-white/5 bg-black/60 px-5 text-foreground placeholder:text-foreground-muted/30 focus:border-neon-red/50 focus:outline-none focus:ring-1 focus:ring-neon-red/20 focus:shadow-glow-sm transition-all font-mono text-sm"
-                                                    placeholder="ENTER_NAME"
-                                                />
-                                            </div>
-                                            <div className="space-y-3">
-                                                <label htmlFor="email" className="text-[10px] font-mono uppercase tracking-[0.3em] text-foreground-muted pl-1">
-                                                    Access_Point
-                                                </label>
-                                                <input
-                                                    type="email"
-                                                    id="email"
-                                                    name="email"
-                                                    value={formData.email}
-                                                    onChange={handleChange}
-                                                    required
-                                                    className="h-14 w-full rounded-lg border border-white/5 bg-black/60 px-5 text-foreground placeholder:text-foreground-muted/30 focus:border-neon-red/50 focus:outline-none focus:ring-1 focus:ring-neon-red/20 focus:shadow-[0_0_15px_rgba(255,45,45,0.1)] transition-all font-mono text-sm"
-                                                    placeholder="YOUR@EMAIL.COM"
-                                                />
-                                            </div>
-                                        </div>
-
-                                        <div className="space-y-3">
-                                            <label htmlFor="subject" className="text-[10px] font-mono uppercase tracking-[0.3em] text-foreground-muted pl-1">
-                                                Request_Protocol
-                                            </label>
-                                            <select
-                                                id="subject"
-                                                name="subject"
-                                                value={formData.subject}
-                                                onChange={handleChange}
-                                                required
-                                                className="h-14 w-full rounded-lg border border-white/5 bg-black/60 px-5 text-foreground focus:border-neon-red/50 focus:outline-none focus:ring-1 focus:ring-neon-red/20 focus:shadow-[0_0_15px_rgba(255,45,45,0.1)] transition-all font-mono text-sm appearance-none"
-                                            >
-                                                <option value="" disabled className="bg-black">SELECT_PROTOCOL</option>
-                                                <option value="collaboration" className="bg-black">MUSIC_COLLAB</option>
-                                                <option value="project" className="bg-black">DEV_PROJECT</option>
-                                                <option value="booking" className="bg-black">BOOKING</option>
-                                                <option value="press" className="bg-black">MEDIA_INQUIRY</option>
-                                                <option value="other" className="bg-black">OTHER.SYS</option>
-                                            </select>
-                                        </div>
-
-                                        <div className="space-y-3">
-                                            <label htmlFor="link" className="text-[10px] font-mono uppercase tracking-[0.3em] text-foreground-muted pl-1">
-                                                Media_Transmission [Drive / Video / Audio]
-                                            </label>
-                                            <div className="relative">
-                                                <Link2 className="absolute left-5 top-1/2 -translate-y-1/2 text-neon-red/30" size={18} />
-                                                <input
-                                                    type="url"
-                                                    id="link"
-                                                    name="link"
-                                                    value={formData.link}
-                                                    onChange={handleChange}
-                                                    className="h-14 w-full rounded-lg border border-white/5 bg-black/60 pl-14 pr-5 text-foreground placeholder:text-foreground-muted/30 focus:border-neon-red/50 focus:outline-none focus:ring-1 focus:ring-neon-red/20 focus:shadow-[0_0_15px_rgba(255,45,45,0.1)] transition-all font-mono text-sm"
-                                                    placeholder="HTTPS://LINK..."
-                                                />
-                                            </div>
-                                        </div>
-
-                                        <div className="space-y-3">
-                                            <label htmlFor="message" className="text-[10px] font-mono uppercase tracking-[0.3em] text-foreground-muted pl-1">
-                                                Data_Payload
-                                            </label>
-                                            <textarea
-                                                id="message"
-                                                name="message"
-                                                value={formData.message}
-                                                onChange={handleChange}
-                                                required
-                                                rows={6}
-                                                className="w-full rounded-lg border border-white/5 bg-black/60 px-5 py-4 text-foreground placeholder:text-foreground-muted/30 focus:border-neon-red/50 focus:outline-none focus:ring-1 focus:ring-neon-red/20 focus:shadow-[0_0_15px_rgba(255,45,45,0.1)] transition-all font-mono text-sm resize-none"
-                                                placeholder="DESCRIBE_COLLAB..."
-                                            />
-                                        </div>
-
-                                        <Button
-                                            type="submit"
-                                            size="lg"
-                                            className="w-full h-16 bg-black border border-neon-red/50 text-white shadow-[0_0_20px_-10px_rgba(255,45,45,0.4)] hover:bg-neon-red hover:shadow-[0_0_30px_rgba(255,45,45,0.3)] transition-all duration-500 font-bold uppercase tracking-widest"
-                                            isLoading={isSubmitting}
-                                            rightIcon={<Send size={20} />}
-                                        >
-                                            SEND_PACKET
-                                        </Button>
-                                    </form>
-                                )}
+                <div className="grid lg:grid-cols-[1fr,400px] gap-12 items-start">
+                    
+                    {/* Left: THE CONSOLE (The Form) */}
+                    <motion.div 
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="relative"
+                    >
+                        {/* Interactive HUD Layer */}
+                        <div className="absolute -inset-8 pointer-events-none border border-wire/20 rounded-[2rem] hidden xl:block">
+                            <div className="absolute top-0 left-10 -translate-y-1/2 bg-ink px-4 py-1 text-[10px] font-mono text-text-3 uppercase tracking-widest border border-wire">
+                                SYSTEM_NODE_01
                             </div>
-                        </motion.div>
+                            <div className="absolute bottom-0 right-10 translate-y-1/2 bg-ink px-4 py-1 text-[10px] font-mono text-text-3 uppercase tracking-widest border border-wire">
+                                SEC_PROTOCOL_V4
+                            </div>
+                        </div>
 
-                        {/* Contact Info & Socials */}
-                        <motion.div
-                            className="space-y-12"
-                            variants={staggerContainer}
-                            initial="hidden"
-                            whileInView="visible"
-                            viewport={{ once: true }}
-                        >
-                            {/* Direct Contact */}
-                            <motion.div
-                                variants={ambientFade}
-                                className="rounded-2xl border border-white/5 bg-black/60 p-8 shadow-2xl"
-                            >
-                                <h2 className="mb-6 text-xl font-mono uppercase tracking-widest text-neon-red">Direct_Access</h2>
-                                <div className="space-y-6">
-                                    <div className="flex items-center gap-4">
-                                        <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-neon-red/10 border border-neon-red/20 shadow-[0_0_10px_rgba(255,45,45,0.1)]">
-                                            <Mail className="h-5 w-5 text-neon-red" />
-                                        </div>
-                                        <div>
-                                            <p className="text-[10px] font-mono text-foreground-muted uppercase">Endpoint</p>
-                                            <a
-                                                href="mailto:bitrusgadzama02@gmail.com"
-                                                className="font-medium hover:text-neon-red transition-colors"
-                                            >
-                                                bitrusgadzama02@gmail.com
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div className="flex items-center gap-4">
-                                        <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-white/5 border border-white/10">
-                                            <MapPin className="h-5 w-5 text-foreground-muted" />
-                                        </div>
-                                        <div>
-                                            <p className="text-[10px] font-mono text-foreground-muted uppercase">Physical_Node</p>
-                                            <p className="font-medium">Abuja, Nigeria</p>
-                                        </div>
-                                    </div>
+                        <div className="bg-ink/80 backdrop-blur-md border border-wire rounded-2xl overflow-hidden shadow-2xl relative z-10">
+                            {/* Form Header */}
+                            <div className="px-8 py-4 border-b border-wire flex items-center justify-between bg-surface/30">
+                                <div className="flex gap-1.5">
+                                    <div className="w-2.5 h-2.5 rounded-full bg-pulse shadow-[0_0_8px_rgba(255,0,60,0.5)]" />
+                                    <div className="w-2.5 h-2.5 rounded-full bg-ember/30" />
+                                    <div className="w-2.5 h-2.5 rounded-full bg-lime/30" />
                                 </div>
-                            </motion.div>
+                                <div className="font-mono text-[10px] uppercase tracking-widest text-text-3">
+                                    Packet_Inbound_Stream
+                                </div>
+                            </div>
 
-                            {/* Social Links */}
-                            <motion.div
-                                variants={ambientFade}
-                                className="rounded-3xl border border-border bg-card p-8"
-                            >
-                                <h2 className="mb-6 text-2xl font-bold">Follow Me</h2>
+                            <form onSubmit={handleSubmit} className="p-8 md:p-12 space-y-10">
+                                {/* Field: Sender Hash */}
                                 <div className="space-y-3">
-                                    {socials.map((social) => (
-                                        <a
-                                            key={social.name}
-                                            href={social.url}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="group flex items-center gap-4 rounded-xl p-3 transition-colors hover:bg-background"
-                                        >
-                                            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-background transition-colors group-hover:bg-primary/10">
-                                                <social.icon
-                                                    size={20}
-                                                    className="text-foreground-muted transition-colors group-hover:text-primary"
-                                                />
-                                            </div>
-                                            <div>
-                                                <p className="font-medium">{social.name}</p>
-                                                <p className="text-sm text-foreground-muted">
-                                                    {social.handle}
-                                                </p>
-                                            </div>
-                                        </a>
-                                    ))}
+                                    <label className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-text-2">
+                                        <Lock size={10} /> <span>Sender_Identifier (Email)</span>
+                                    </label>
+                                    <input 
+                                        type="email"
+                                        required
+                                        value={formData.email}
+                                        onChange={e => setFormData({ ...formData, email: e.target.value })}
+                                        className="w-full bg-void/50 border-b border-wire px-0 py-4 font-mono text-lg focus:outline-none focus:border-pulse text-text-1 placeholder:text-text-3 transition-all"
+                                        placeholder="INPUT_IDENTITY_HERE..."
+                                    />
                                 </div>
-                            </motion.div>
 
-                            {/* Availability */}
-                            <motion.div
-                                variants={ambientFade}
-                                className="rounded-3xl border border-neon-green/30 bg-neon-green/5 p-6"
-                            >
-                                <div className="flex items-center gap-3">
-                                    <div className="h-3 w-3 animate-pulse rounded-full bg-neon-green" />
-                                    <span className="font-medium">
-                                        Available for freelance projects
-                                    </span>
+                                {/* Field: Directive */}
+                                <div className="space-y-3">
+                                    <label className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-text-2">
+                                        <Zap size={10} /> <span>Signal_Subject</span>
+                                    </label>
+                                    <input 
+                                        type="text"
+                                        value={formData.subject}
+                                        onChange={e => setFormData({ ...formData, subject: e.target.value })}
+                                        className="w-full bg-void/50 border-b border-wire px-0 py-4 font-mono text-lg focus:outline-none focus:border-pulse text-text-1 placeholder:text-text-3 transition-all"
+                                        placeholder="WHAT_IS_THE_GOAL??"
+                                    />
                                 </div>
-                                <p className="mt-2 text-sm text-foreground-muted">
-                                    Currently accepting new projects and collaborations.
-                                    Let&apos;s create something amazing together.
-                                </p>
-                            </motion.div>
-                        </motion.div>
+
+                                {/* Field: Payload */}
+                                <div className="space-y-3">
+                                    <label className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-text-2">
+                                        <Cpu size={10} /> <span>Message_Payload</span>
+                                    </label>
+                                    <textarea 
+                                        required
+                                        rows={4}
+                                        value={formData.message}
+                                        onChange={e => setFormData({ ...formData, message: e.target.value })}
+                                        className="w-full bg-void/50 border-wire border p-6 rounded-lg font-mono text-sm focus:outline-none focus:border-pulse text-text-1 placeholder:text-text-3 transition-all resize-none leading-relaxed"
+                                        placeholder="DESCRIBE_YOUR_VIBE_IN_DETAIL..."
+                                    />
+                                </div>
+
+                                {/* Meter & Submit */}
+                                <div className="space-y-8 pt-4">
+                                    <SignalMeter percent={completeness} />
+                                    
+                                    <button 
+                                        type="submit"
+                                        disabled={status === "sending"}
+                                        className={cn(
+                                            "w-full py-6 rounded-xl font-black uppercase tracking-[0.4em] transition-all relative overflow-hidden group",
+                                            status === "sending" ? "bg-raised text-text-3" : "bg-pulse text-white shadow-[0_10px_40px_rgba(255,0,60,0.3)] hover:-translate-y-1 active:translate-y-0"
+                                        )}
+                                    >
+                                        <span className="relative z-10 flex items-center justify-center gap-3">
+                                            {status === "sending" ? "TRANSMITTING..." : "BroadCast_Signal"}
+                                            <Send size={18} />
+                                        </span>
+                                        <div className="absolute inset-0 bg-white/10 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500" />
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </motion.div>
+
+                    {/* Right: SYSTEM METRICS & CONTACTS */}
+                    <div className="space-y-8">
+                        
+                        {/* Module 1: Live Feed */}
+                        <SignalFeed />
+
+                        {/* Module 2: Direct Uplinks */}
+                        <div className="space-y-4">
+                            <h3 className="font-mono text-[10px] uppercase tracking-[0.2em] text-text-3 flex items-center gap-2">
+                                <ShieldCheck size={12} /> Direct_Uplinks
+                            </h3>
+                            
+                            <a 
+                                href="mailto:bitrusgadzama02@gmail.com"
+                                className="group block bg-ink/30 border border-wire p-6 rounded-xl hover:bg-pulse/5 hover:border-pulse transition-all"
+                            >
+                                <div className="flex justify-between items-start mb-4">
+                                    <div className="p-3 bg-raised rounded-lg text-text-3 group-hover:text-pulse transition-colors">
+                                        <Mail size={20} />
+                                    </div>
+                                    <div className="font-mono text-[10px] text-lime">ONLINE</div>
+                                </div>
+                                <div className="font-display text-xl font-bold mb-1">Direct Email</div>
+                                <div className="font-mono text-[10px] text-text-3 uppercase">EST_RESPONSE: 24_HOURS</div>
+                            </a>
+
+                            <a 
+                                href={`https://instagram.com/${MUSIC_IDS.instagramHandle}`}
+                                target="_blank" rel="noopener noreferrer"
+                                className="group block bg-ink/30 border border-wire p-6 rounded-xl hover:bg-ember/5 hover:border-ember transition-all"
+                            >
+                                <div className="flex justify-between items-start mb-4">
+                                    <div className="p-3 bg-raised rounded-lg text-text-3 group-hover:text-ember transition-colors">
+                                        <MessageSquare size={20} />
+                                    </div>
+                                    <div className="font-mono text-[10px] text-lime">ONLINE</div>
+                                </div>
+                                <div className="font-display text-xl font-bold mb-1">Instagram DM</div>
+                                <div className="font-mono text-[10px] text-text-3 uppercase">EST_RESPONSE: 4_HOURS</div>
+                            </a>
+                        </div>
+
                     </div>
+
                 </div>
-            </section>
+            </div>
+
+            {/* Bottom Visualizer */}
+            <div className="absolute bottom-0 inset-x-0 h-32 pointer-events-none opacity-20">
+                <div className="absolute inset-0 bg-gradient-to-t from-pulse/20 to-transparent" />
+                <svg className="w-full h-full" preserveAspectRatio="none">
+                    <path 
+                        d="M0,100 C150,100 350,50 500,50 C650,50 850,150 1000,150 L1000,200 L0,200 Z" 
+                        fill="currentColor"
+                        className="text-pulse animate-[pulse_3s_ease-in-out_infinite]"
+                    />
+                </svg>
+            </div>
+
+            <style jsx>{`
+                @keyframes scan {
+                    0% { top: 0; opacity: 0; }
+                    5% { opacity: 1; }
+                    95% { opacity: 1; }
+                    100% { top: 100%; opacity: 0; }
+                }
+            `}</style>
         </div>
     );
 }

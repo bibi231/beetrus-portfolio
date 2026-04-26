@@ -49,9 +49,9 @@ function BeetrusText() {
         return new THREE.ShaderMaterial({
             uniforms: {
                 uTime: { value: 0 },
-                uColor1: { value: new THREE.Color("#ff3333") }, // Red
-                uColor2: { value: new THREE.Color("#00f0ff") }, // Cyan
-                uColor3: { value: new THREE.Color("#ff6622") }, // Orange
+                uColor1: { value: new THREE.Color("#ff003c") }, // Neon Red
+                uColor2: { value: new THREE.Color("#00e5ff") }, // Neon Cyan (Back for contrast/premium feel)
+                uColor3: { value: new THREE.Color("#7000ff") }, // Electric Purple
             },
             vertexShader: `
         varying vec2 vUv;
@@ -151,11 +151,11 @@ function Particles({ count = 200 }: { count?: number }) {
             positions[i * 3 + 1] = (Math.random() - 0.5) * 20;
             positions[i * 3 + 2] = (Math.random() - 0.5) * 20;
 
-            // Random colors between cyan and purple
+            // Random colors between red and orange
             const t = Math.random();
-            colors[i * 3] = t * 0 + (1 - t) * 0.75; // R
-            colors[i * 3 + 1] = t * 0.94 + (1 - t) * 0; // G
-            colors[i * 3 + 2] = t * 1 + (1 - t) * 1; // B
+            colors[i * 3] = 1; // R
+            colors[i * 3 + 1] = Math.random() * 0.5; // G
+            colors[i * 3 + 2] = 0; // B
         }
 
         return { positions, colors };
@@ -236,8 +236,8 @@ export function Hero3DScene() {
             >
                 <Suspense fallback={null}>
                     <ambientLight intensity={0.5} />
-                    <pointLight position={[10, 10, 10]} intensity={1} color="#00f0ff" />
-                    <pointLight position={[-10, -10, -10]} intensity={0.5} color="#bf00ff" />
+                    <pointLight position={[10, 10, 10]} intensity={1} color="#ff003c" />
+                    <pointLight position={[-10, -10, -10]} intensity={0.5} color="#ff6600" />
 
                     <BeetrusText />
                     <Particles count={150} />
@@ -259,11 +259,11 @@ export function HeroFallback() {
     return (
         <div className="absolute inset-0 -z-10 flex items-center justify-center overflow-hidden">
             {/* Glow effect behind text */}
-            <div className="absolute inset-0 flex items-center justify-center">
-                <div className="h-40 w-[80%] bg-neon-red/20 blur-[100px] rounded-full" />
+            <div className="absolute inset-0 flex items-center justify-center text-center">
+                <div className="h-40 w-[80%] bg-pulse/20 blur-[100px] rounded-full" />
             </div>
             {/* Main text - responsive sizing */}
-            <h1 className="font-display text-[18vw] md:text-[15vw] font-black gradient-text text-center leading-none tracking-tight">
+            <h1 className="font-display text-[18vw] md:text-[15vw] font-black text-pulse/20 text-center leading-none tracking-tight">
                 BEETRUS
             </h1>
         </div>

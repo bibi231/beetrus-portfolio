@@ -1,97 +1,62 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Outfit, JetBrains_Mono } from "next/font/google";
-import "./globals.css";
 import { Providers } from "@/components/providers";
 import { Toaster } from "sonner";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
-import { CustomCursor } from "@/components/ui/custom-cursor";
-import { MouseGlow } from "@/components/ui/mouse-glow";
 import { cn } from "@/lib/utils";
 
-// Primary sans-serif font
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-});
-
-// Display font for headings
-const outfit = Outfit({
-  subsets: ["latin"],
-  variable: "--font-outfit",
-  display: "swap",
-});
-
-// Monospace for code snippets
-const jetbrains = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-jetbrains",
-  display: "swap",
-});
+import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
   title: {
-    default: "Beetrus | Artist & Software Engineer",
-    template: "%s | Beetrus",
+    default: "Bitrus Sariki — Engineer & Artist",
+    template: "%s | Bitrus Sariki",
   },
-  description:
-    "Bitrus Joe-Kyari Gadzama — Afrosounds artist, software engineer, and creative technologist based in Abuja, Nigeria. Music, code, and everything in between.",
+  description: "Fullstack software engineer and SaaS founder based in Abuja, Nigeria. Building AI-powered products. Also records as Beetrus — Afrosounds, R&B, Drill.",
   keywords: [
-    "Beetrus",
-    "Bitrus Gadzama",
-    "Afrosounds",
-    "Nigerian artist",
-    "software engineer",
-    "web developer",
-    "music producer",
+    "fullstack engineer",
+    "Nigerian developer",
+    "SaaS founder",
     "Abuja",
-    "Nile University",
+    "React",
+    "Next.js",
+    "TrueWeb Solutions",
+    "Beetrus"
   ],
-  authors: [{ name: "Bitrus Joe-Kyari Gadzama", url: "https://beetrus.com" }],
-  creator: "Beetrus",
+  authors: [{ name: "Bitrus Sariki" }],
+  creator: "Bitrus Sariki",
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "/",
-    siteName: "Beetrus",
-    title: "Beetrus | Artist & Software Engineer",
-    description:
-      "Afrosounds artist, software engineer, and creative technologist based in Abuja, Nigeria.",
+    url: "https://beetrus-portfolio.vercel.app",
+    siteName: "Bitrus Sariki Portfolio",
+    title: "Bitrus Sariki — Engineer & Artist",
+    description: "Fullstack engineer building AI-powered SaaS. Music artist Beetrus — Afro State Of Mind EP.",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Beetrus - Artist & Software Engineer",
+        alt: "Bitrus Sariki - Engineer & Artist",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Beetrus | Artist & Software Engineer",
-    description: "Afrosounds artist, software engineer, and creative technologist.",
+    title: "Bitrus Sariki — Engineer & Artist",
+    description: "Fullstack engineer · SaaS founder · Recording artist. Based in Abuja, Nigeria.",
     images: ["/og-image.png"],
-    creator: "@beetrus_gg",
   },
   robots: {
     index: true,
     follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
   },
 };
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#0a0a0c" },
+    { media: "(prefers-color-scheme: dark)", color: "#080d12" }, // var(--ink)
   ],
   width: "device-width",
   initialScale: 1,
@@ -104,23 +69,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
-      <body
-        className={cn(
-          "min-h-screen bg-background font-sans antialiased selection:bg-neon-red selection:text-white flex flex-col",
-          inter.variable,
-          outfit.variable,
-          jetbrains.variable
-        )}
-      >
+      <head>
+        <link rel="preconnect" href="https://api.fontshare.com" />
+        <link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&f[]=general-sans@400,500,600&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+      </head>
+      <body className={cn("min-h-screen bg-ink text-text-1 font-body antialiased selection:bg-pulse selection:text-ink flex flex-col")}>
         <Providers>
           <Header />
-          <main className="relative z-base flex-1">
+          <main className="relative z-content flex-1 pt-20">
             {children}
           </main>
           <Footer />
-
-          <CustomCursor />
-          <MouseGlow />
 
           <Toaster
             position="top-right"
@@ -128,9 +88,9 @@ export default function RootLayout({
             closeButton
             toastOptions={{
               style: {
-                background: "var(--bg-surface)",
-                border: "1px solid var(--border)",
-                color: "var(--foreground)",
+                background: "var(--surface)",
+                border: "1px solid var(--wire)",
+                color: "var(--text-1)",
               },
             }}
           />

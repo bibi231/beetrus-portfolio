@@ -38,7 +38,7 @@ export function GlitchText({ text, className, interval = 3000 }: GlitchTextProps
                         {text}
                     </motion.span>
                     <motion.span
-                        className="absolute inset-0 z-0 text-cyan-400 opacity-70"
+                        className="absolute inset-0 z-0 text-white opacity-70"
                         initial={{ x: 0 }}
                         animate={{ x: [2, -2, 1, 0] }}
                         transition={{ duration: 0.2 }}

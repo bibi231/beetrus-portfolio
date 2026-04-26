@@ -3,383 +3,141 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { useScrollPosition } from "@/hooks/use-animations";
-import { spring, ease } from "@/lib/animations";
-import { Menu, X, Music, Code2, User, ShoppingBag, Mail, Home, Users, ShoppingCart, FileText } from "lucide-react";
-import { useCart } from "@/context/cart-context";
+import { Menu, X } from "lucide-react";
 
 const navItems = [
-    { href: "/", label: "Home", icon: Home },
-    { href: "/about", label: "About", icon: User },
-    { href: "/work", label: "Work", icon: Code2 },
-    { href: "/music", label: "Music", icon: Music },
-    { href: "/store", label: "Store", icon: ShoppingBag },
-    { href: "/socials", label: "Socials", icon: Users },
-    { href: "/request", label: "Request", icon: FileText },
-    { href: "/contact", label: "Contact", icon: Mail },
+  { href: "/work", label: "Work" },
+  { href: "/about", label: "About" },
+  { href: "/skills", label: "Skills" },
+  { href: "/music", label: "Music" },
+  { href: "/store", label: "Store" },
+  { href: "/contact", label: "Contact" },
 ];
 
-/**
- * Main navigation header - Floating glass with scroll collapse
- * Features animated red underline tracker and smooth transitions
- */
 export function Header() {
-    const pathname = usePathname();
-    const scrollY = useScrollPosition();
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-    const [isVisible, setIsVisible] = useState(true);
-    const [lastScrollY, setLastScrollY] = useState(0);
+  const pathname = usePathname();
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-    // Scroll direction detection for Hide-on-Scroll
-    useEffect(() => {
-        const handleScroll = () => {
-            const currentScrollY = window.scrollY;
-            if (currentScrollY > lastScrollY && currentScrollY > 100) {
-                // Scrolling down & not at the very top
-                setIsVisible(false);
-            } else {
-                // Scrolling up
-                setIsVisible(true);
-            }
-            setLastScrollY(currentScrollY);
-        };
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
-        window.addEventListener("scroll", handleScroll, { passive: true });
-        return () => window.removeEventListener("scroll", handleScroll);
-    }, [lastScrollY]);
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [pathname]);
 
-    // Find active nav index
-    const activeIndex = navItems.findIndex((item) => item.href === pathname);
+  return (
+    <>
+      <header
+        className={cn(
+          "fixed left-0 top-0 z-header w-full transition-all duration-300",
+          isScrolled || pathname !== "/"
+            ? "bg-[rgba(8,13,18,0.88)] backdrop-blur-[16px] border-b border-wire py-3"
+            : "bg-transparent py-5"
+        )}
+      >
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between">
+          
+          {/* Logo */}
+          <Link href="/" className="relative z-50 flex items-baseline">
+            <span className="font-display font-bold text-2xl tracking-wide text-text-1">
+              beetrus<span className="text-pulse">.</span>
+            </span>
+          </Link>
 
-    // Close mobile menu and reset visibility on route change
-    useEffect(() => {
-        setIsMobileMenuOpen(false);
-        setIsVisible(true);
-        setLastScrollY(0);
-    }, [pathname]);
-
-    // Header states based on scroll
-    const isScrolled = scrollY > 50;
-    const isCompact = scrollY > 150;
-
-    return (
-        <>
-            <motion.header
-                className={cn(
-                    "fixed left-0 top-0 z-[500] w-full transition-all duration-500 pointer-events-auto",
-                    isScrolled
-                        ? "bg-black/90 backdrop-blur-xl border-b border-white/10 h-[var(--header-height)]"
-                        : "bg-transparent h-[calc(var(--header-height)+2rem)]",
-                    // Mobile overlay style
-                    isMobileMenuOpen && "md:bg-transparent bg-black"
-                )}
-                initial={{ y: 0, opacity: 1 }}
-                animate={{
-                    y: isVisible || isMobileMenuOpen ? 0 : -100,
-                    opacity: isVisible || isMobileMenuOpen ? 1 : 0,
-                }}
-                transition={{
-                    y: { duration: 0.4, ease: ease.smooth },
-                    opacity: { duration: 0.3 }
-                }}
-            >
-                <motion.div
-                    className="flex items-center justify-between px-6"
-                    animate={{
-                        paddingTop: isCompact ? 8 : 12,
-                        paddingBottom: isCompact ? 8 : 12,
-                    }}
-                    transition={{ duration: 0.3, ease: ease.smooth }}
+          {/* Desktop Nav */}
+          <nav className="hidden md:flex items-center gap-8">
+            {navItems.map((item) => {
+              const isActive = pathname === item.href || pathname.startsWith(item.href + '/');
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={cn(
+                    "relative font-mono text-sm tracking-wide transition-all duration-300 hover:tracking-[0.05em]",
+                    isActive ? "text-text-1" : "text-text-2 hover:text-text-1"
+                  )}
                 >
-                    {/* Red Home Button / Logo */}
-                    <div className="flex items-center gap-4">
-                        <Link href="/" className="group relative z-50">
-                            <motion.div
-                                className="flex h-10 w-10 items-center justify-center rounded-xl bg-white shadow-lg transition-all group-hover:scale-110"
-                                whileHover={{ scale: 1.1 }}
-                                whileTap={{ scale: 0.9 }}
-                            >
-                                <Home size={20} className="text-black" />
-                            </motion.div>
-                        </Link>
-                        <Link href="/" className="group relative z-10 hidden sm:block">
-                            <motion.span
-                                className="font-display text-xl font-bold tracking-tight md:text-2xl"
-                                whileHover={{ scale: 1.05 }}
-                                transition={spring.magnetic}
-                            >
-                                <span className="text-neon-red drop-shadow-[0_0_10px_rgba(255,45,45,0.8)]">BEETRUS</span>
-                            </motion.span>
-                        </Link>
-                    </div>
-
-                    <nav
-                        className={cn(
-                            "items-center gap-2 rounded-full bg-white/5 p-1 px-4",
-                            pathname === "/about" ? "hidden" : "hidden md:flex"
-                        )}
-                        onMouseLeave={() => setHoveredIndex(null)}
-                    >
-                        {navItems.map((item, index) => (
-                            <NavLink
-                                key={item.href}
-                                href={item.href}
-                                isActive={pathname === item.href}
-                                isHovered={hoveredIndex === index}
-                                onHover={() => setHoveredIndex(index)}
-                            >
-                                {item.label}
-                            </NavLink>
-                        ))}
-                    </nav>
-
+                  {item.label}
+                  {isActive && (
                     <motion.div
-                        className={cn("mr-2", pathname === "/about" ? "hidden" : "hidden md:block")}
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                    >
-                        <Link href="/cart" className="relative flex h-10 w-10 items-center justify-center rounded-full bg-white/5 text-foreground-muted hover:bg-neon-red hover:text-white transition-colors">
-                            <ShoppingCart size={18} />
-                            <CartBadge />
-                        </Link>
-                    </motion.div>
+                      layoutId="nav-indicator"
+                      className="absolute -bottom-2 left-0 right-0 h-0.5 bg-pulse"
+                      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                    />
+                  )}
+                </Link>
+              );
+            })}
+          </nav>
 
-                    <motion.div
-                        className={pathname === "/about" ? "hidden" : "hidden md:block"}
-                        whileHover={{ scale: 1.03 }}
-                        whileTap={{ scale: 0.97 }}
-                        transition={spring.magnetic}
-                    >
-                        <Link
-                            href="/contact"
-                            className="inline-flex h-10 items-center gap-2 rounded-full bg-white px-5 text-sm font-medium text-black transition-all hover:bg-white/90 hover:shadow-lg"
-                        >
-                            <Mail size={14} />
-                            <span>Contact</span>
-                        </Link>
-                    </motion.div>
+          {/* CTA & Mobile Toggle */}
+          <div className="flex items-center gap-4 relative z-50">
+            <Link 
+              href="/contact" 
+              className="hidden sm:inline-flex items-center rounded-full border border-wire bg-surface px-4 py-1.5 transition-colors hover:border-pulse"
+            >
+              <div className="w-2 h-2 rounded-full bg-lime mr-2 animate-pulse" />
+              <span className="font-mono text-xs uppercase tracking-widest text-text-1">
+                Available for hire
+              </span>
+            </Link>
 
-                    <motion.button
-                        className={cn(
-                            "relative flex h-10 w-10 items-center justify-center rounded-xl border border-border/50 bg-card/50 backdrop-blur-sm",
-                            pathname === "/about" ? "flex" : "md:hidden",
-                            isMobileMenuOpen ? "z-[210]" : "z-50"
-                        )}
-                        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                        whileTap={{ scale: 0.95 }}
-                        aria-label="Toggle menu"
-                    >
-                        <AnimatePresence mode="wait">
-                            {isMobileMenuOpen ? (
-                                <motion.div
-                                    key="close"
-                                    initial={{ opacity: 0, rotate: -90 }}
-                                    animate={{ opacity: 1, rotate: 0 }}
-                                    exit={{ opacity: 0, rotate: 90 }}
-                                    transition={{ duration: 0.2 }}
-                                >
-                                    <X size={18} className="text-neon-red" />
-                                </motion.div>
-                            ) : (
-                                <motion.div
-                                    key="menu"
-                                    initial={{ opacity: 0, rotate: 90 }}
-                                    animate={{ opacity: 1, rotate: 0 }}
-                                    exit={{ opacity: 0, rotate: -90 }}
-                                    transition={{ duration: 0.2 }}
-                                >
-                                    <Menu size={18} />
-                                </motion.div>
-                            )}
-                        </AnimatePresence>
-                    </motion.button>
-                </motion.div>
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="md:hidden p-2 text-text-2 hover:text-text-1 transition-colors"
+            >
+              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
+        </div>
+      </header>
 
-                {/* Red glow accent line */}
-                <motion.div
-                    className="absolute bottom-0 left-6 right-6 h-px"
-                    style={{
-                        background: isScrolled
-                            ? "linear-gradient(90deg, transparent, var(--neon-red-glow), transparent)"
-                            : "transparent"
-                    }}
-                />
-            </motion.header>
+      {/* Header Clearance Spacer for Subpages */}
+      {pathname !== "/" && <div className="h-24 md:h-28" />}
 
-            {/* Mobile Menu Overlay */}
-            <AnimatePresence>
-                {isMobileMenuOpen && (
-                    <>
-                        <motion.div
-                            className={cn(
-                                "fixed inset-0 z-overlay bg-background/80 backdrop-blur-md",
-                                pathname === "/about" ? "block" : "md:hidden"
-                            )}
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            onClick={() => setIsMobileMenuOpen(false)}
-                        />
-
-                        <motion.div
-                            className={cn(
-                                "fixed inset-y-0 right-0 z-modal w-full max-w-[280px] border-l border-white/10 bg-black/95 p-6 backdrop-blur-3xl shadow-[-10px_0_40px_rgba(0,0,0,0.8)]",
-                                pathname === "/about" ? "block" : "md:hidden"
-                            )}
-                            initial={{ x: "100%" }}
-                            animate={{ x: 0 }}
-                            exit={{ x: "100%" }}
-                            transition={{ type: "spring", damping: 30, stiffness: 250 }}
-                        >
-                            <nav className="mt-20 flex flex-col gap-2">
-                                {navItems.map((item, index) => (
-                                    <motion.div
-                                        key={item.href}
-                                        initial={{ opacity: 0, x: 20 }}
-                                        animate={{ opacity: 1, x: 0 }}
-                                        transition={{ delay: index * 0.05 }}
-                                    >
-                                        <Link
-                                            href={item.href}
-                                            className={cn(
-                                                "flex items-center gap-4 rounded-xl p-4 text-lg font-medium transition-all active:scale-95",
-                                                pathname === item.href
-                                                    ? "bg-neon-red/10 text-neon-red"
-                                                    : "text-foreground-muted hover:bg-white/5 hover:text-white"
-                                            )}
-                                            onClick={() => setIsMobileMenuOpen(false)}
-                                        >
-                                            <item.icon size={20} className={pathname === item.href ? "text-neon-red" : "text-foreground-muted"} />
-                                            {item.label}
-                                            {pathname === item.href && (
-                                                <motion.span
-                                                    className="ml-auto h-2 w-2 rounded-full bg-neon-red"
-                                                    layoutId="mobile-active-dot"
-                                                />
-                                            )}
-                                        </Link>
-                                    </motion.div>
-                                ))}
-                                <motion.div
-                                    initial={{ opacity: 0, x: 20 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    transition={{ delay: navItems.length * 0.05 }}
-                                >
-                                    <Link
-                                        href="/cart"
-                                        className={cn(
-                                            "flex items-center gap-4 rounded-xl p-4 text-lg font-medium transition-all active:scale-95",
-                                            pathname === "/cart"
-                                                ? "bg-neon-red/10 text-neon-red"
-                                                : "text-foreground-muted hover:bg-white/5 hover:text-white"
-                                        )}
-                                        onClick={() => setIsMobileMenuOpen(false)}
-                                    >
-                                        <ShoppingCart size={20} className={pathname === "/cart" ? "text-neon-red" : "text-foreground-muted"} />
-                                        Cart
-                                        <div className="ml-auto">
-                                            <CartBadgeMobile />
-                                        </div>
-                                    </Link>
-                                </motion.div>
-                            </nav>
-
-                            {/* CTA in Mobile Menu */}
-                            <motion.div
-                                className="absolute bottom-8 left-6 right-6"
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.4 }}
-                            >
-                                <Link
-                                    href="/contact"
-                                    className="flex w-full items-center justify-center gap-2 rounded-xl bg-white py-4 font-bold text-black shadow-lg transition-transform active:scale-95"
-                                    onClick={() => setIsMobileMenuOpen(false)}
-                                >
-                                    <Mail size={18} />
-                                    <span>Get In Touch</span>
-                                </Link>
-                            </motion.div>
-                        </motion.div>
-                    </>
-                )}
-            </AnimatePresence>
-        </>
-    );
-}
-
-/**
- * Individual nav link with animated underline and hover state
- */
-function NavLink({
-    href,
-    children,
-    isActive,
-    isHovered,
-    onHover,
-}: {
-    href: string;
-    children: React.ReactNode;
-    isActive: boolean;
-    isHovered: boolean;
-    onHover: () => void;
-}) {
-    return (
-        <Link
-            href={href}
-            className={cn(
-                "relative flex h-10 items-center px-4 text-sm font-medium transition-colors",
-                isActive
-                    ? "text-white [text-shadow:0_0_10px_rgba(255,45,45,0.4)]"
-                    : "text-foreground-muted hover:text-neon-red transition-all duration-300"
-            )}
-            onMouseEnter={onHover}
-        >
-            {/* Text */}
-            <span className="relative z-10">{children}</span>
-
-            {/* Hover/Active Underline Indicator */}
-            {(isActive || isHovered) && (
-                <motion.span
-                    className="absolute -bottom-1 left-4 right-4 h-0.5 bg-neon-red shadow-[0_0_8px_rgba(255,45,45,0.5)]"
-                    layoutId="nav-underline"
-                    initial={{ opacity: 0, scaleX: 0 }}
-                    animate={{ opacity: 1, scaleX: 1 }}
-                    exit={{ opacity: 0, scaleX: 0 }}
-                    transition={spring.magnetic}
-                />
-            )}
-        </Link>
-    );
-}
-
-function CartBadge() {
-    const { itemCount } = useCart();
-
-    if (itemCount === 0) return null;
-
-    return (
-        <motion.span
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-neon-red text-[10px] font-bold text-white shadow-[0_0_8px_rgba(255,45,45,0.6)]"
-        >
-            {itemCount}
-        </motion.span>
-    );
-}
-
-function CartBadgeMobile() {
-    const { itemCount } = useCart();
-
-    if (itemCount === 0) return null;
-
-    return (
-        <span className="flex h-5 w-5 items-center justify-center rounded-full bg-neon-red text-xs font-bold text-white">
-            {itemCount}
-        </span>
-    );
+      {/* Full-screen Mobile Menu */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="fixed inset-0 z-sticky bg-ink pt-28 px-6 pb-6 flex flex-col"
+          >
+            <nav className="flex flex-col gap-6 items-center mt-10">
+              {navItems.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={cn(
+                    "font-display text-3xl font-semibold tracking-wide",
+                    pathname === item.href ? "text-pulse" : "text-text-1"
+                  )}
+                >
+                  {item.label}
+                </Link>
+              ))}
+              <Link 
+                href="/contact" 
+                className="mt-8 inline-flex items-center rounded-full border border-pulse bg-pulse-dim px-6 py-3 transition-colors"
+              >
+                <div className="w-2.5 h-2.5 rounded-full bg-lime mr-3 animate-pulse" />
+                <span className="font-mono text-sm uppercase tracking-widest text-text-1">
+                  Available for hire
+                </span>
+              </Link>
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  );
 }

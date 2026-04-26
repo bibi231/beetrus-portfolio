@@ -1,344 +1,219 @@
 "use client";
 
-import { useCart } from "@/context/cart-context";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ShoppingBag, X, Ticket, Terminal, ArrowUpRight, Box, ShieldCheck, Truck, Clock } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { useState, useEffect } from "react";
-import { cn } from "@/lib/utils";
-import { fadeInUp, staggerContainer } from "@/lib/animations";
+import { storeProducts } from "@/data/store";
+import { X, ArrowRight, Bell } from "lucide-react";
+import { toast } from "sonner";
 
-const products = [
-    {
-        id: "DROP_26_001",
-        name: "GOJO_ULTRA_HOODIE",
-        price: 120,
-        description: "500GSM HEAVYWEIGHT COTTON. FEATURES THE 'GOJO' (2026) COLLAB COVER ART. ARCHIVAL QUALITY SCREEN PRINT.",
-        category: "01_APPAREL",
-        sizes: ["S", "M", "L", "XL"],
-        status: "SOLD_OUT",
-        stock: 0,
-        image: "/images/store/gojo-hoodie.jpg",
-        color: "PHANTOM_BLACK",
-        details: ["Pre-shrunk organic cotton", "Ribbed cuffs and hem", "Limited to 100 units"]
-    },
-    {
-        id: "DROP_25_002",
-        name: "LIGHTS_NEON_TEE",
-        price: 55,
-        description: "OVERSIZED LUXURY FIT. FEATURING THE 'LIGHTS' (2025) CINEMATIC ARTWORK. NEON RED ACCENT STITCHING.",
-        category: "01_APPAREL",
-        sizes: ["S", "M", "L", "XL"],
-        status: "SOLD_OUT",
-        stock: 0,
-        image: "/images/store/lights-tee.jpg",
-        color: "OBSIDIAN",
-        details: ["Heavyweight jersey", "Screen printed artwork", "Relaxed fit"]
-    },
-    {
-        id: "DROP_25_003",
-        name: "BLUETOOTH_TECH_CAP",
-        price: 45,
-        description: "5-PANEL TECH NYLON. EMBROIDERED 'BLUETOOTH' LOGISTICS SYMBOL. ADJUSTABLE PARACORD.",
-        category: "03_ACCESSORIES",
-        status: "SOLD_OUT",
-        stock: 0,
-        image: "/images/store/bluetooth-cap.jpg",
-        color: "CYBER_RED",
-        details: ["Water-resistant nylon", "Custom embroidery", "Adjustable strap"]
-    },
-    {
-        id: "DROP_20_004",
-        name: "AFRO_STATE_VINYL",
-        price: 85,
-        description: "LIMITED EDITION 12\" TRANSPARENT RED VINYL. INCLUDES TRACKS 'DO ME' & 'YOUR LOVIN'. SIGNED BY BEETRUS.",
-        category: "02_OBJECTS",
-        status: "SOLD_OUT",
-        stock: 0,
-        image: "/images/store/vinyl-red.jpg",
-        color: "CRIMSON",
-        details: ["180g heavyweight vinyl", "Gatefold sleeve", "Exclusive liner notes"]
-    },
-    {
-        id: "DROP_24_005",
-        name: "KINFXLK_ESSENTIAL_TEE",
-        price: 50,
-        description: "OFFICIAL KINFXLK COLLECTIVE APPAREL. EMBROIDERED CHEST LOGO. PREMIUM CARDED COTTON.",
-        category: "01_APPAREL",
-        sizes: ["S", "M", "L", "XL"],
-        status: "SOLD_OUT",
-        stock: 0,
-        image: "/images/store/kinfxlk-tee.jpg",
-        color: "CORE_WHITE",
-        details: ["Premium carded cotton", "Reinforced seams", "Standard fit"]
-    },
-    {
-        id: "DROP_25_006",
-        name: "STEADY_GRAPED_HOODIE",
-        price: 110,
-        description: "RELAXED FIT. 'STEADY' ARTWORK SCREEN PRINTED ON BACK. DISTRESSED EDGES.",
-        category: "01_APPAREL",
-        sizes: ["S", "M", "L", "XL", "XXL"],
-        status: "SOLD_OUT",
-        stock: 0,
-        image: "/images/store/steady-hoodie.jpg",
-        color: "DEEP_GRAPE",
-        details: ["Acid wash finish", "Hand-distressed detailing", "Soft fleece lining"]
-    },
-];
+type Currency = 'NGN' | 'USD';
 
 export default function StorePage() {
-    const { addToCart } = useCart();
-    const [selectedSize, setSelectedSize] = useState<{ [key: string]: string }>({});
-    const [activeTab, setActiveTab] = useState("ALL");
+  const [currency, setCurrency] = useState<Currency>('NGN');
+  const [selectedProduct, setSelectedProduct] = useState<typeof storeProducts[0] | null>(null);
+  const [email, setEmail] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const handleAddToCart = (product: typeof products[0]) => {
-        const size = selectedSize[product.id];
-        if (!size && product.sizes) {
-            alert("PROTOCOL_ERROR: SELECT_SIZE_REQUIRED");
-            return;
-        }
+  const formatPrice = (price: { ngn: number, usd: number }) => {
+    if (currency === 'NGN') {
+      return new Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN', minimumFractionDigits: 0 }).format(price.ngn);
+    }
+    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 }).format(price.usd);
+  };
 
-        addToCart({
-            productId: product.id,
-            name: product.name,
-            price: product.price,
-            quantity: 1,
-            size: size || undefined,
-            image: product.image
-        });
-    };
+  const handleWaitlist = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email || !selectedProduct) return;
+    
+    setIsSubmitting(true);
+    try {
+      const res = await fetch("/api/store-waitlist", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, productId: selectedProduct.id, productName: selectedProduct.name })
+      });
+      
+      if (res.ok) {
+        toast.success("You're on the list. We'll notify you when it's back.");
+        setEmail("");
+        setSelectedProduct(null);
+      } else {
+        toast.error("Failed to join waitlist. Try again later.");
+      }
+    } catch (err) {
+      toast.error("Something went wrong.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
-    const categories = ["ALL", "01_APPAREL", "02_OBJECTS", "03_ACCESSORIES"];
-    const filteredProducts = activeTab === "ALL"
-        ? products
-        : products.filter(p => p.category === activeTab);
-
-    return (
-        <div className="min-h-screen bg-black text-white pb-32 pt-[var(--page-top-padding)]">
-            <div className="h-24 w-full" />
-
-            {/* Header / Intro */}
-            <div className="container-custom px-6 mb-32">
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-white/10 pb-12"
-                >
-                    <div>
-                        <div className="flex items-center gap-3 mb-6 font-mono text-xs text-neon-red">
-                            <Box size={14} />
-                            <span className="tracking-[0.4em] uppercase">Logistics_System_v4.2</span>
-                        </div>
-                        <h1 className="text-6xl md:text-9xl font-black tracking-tighter uppercase leading-[0.8]">
-                            Merch <br />
-                            <span className="text-neon-red drop-shadow-[0_0_15px_rgba(255,45,45,0.4)]">Registry</span>
-                        </h1>
-                    </div>
-                    <div className="max-w-xs text-right">
-                        <p className="font-mono text-[10px] text-neutral-500 uppercase tracking-widest leading-loose">
-                            // All assets are archival grade. <br />
-                            // Limited run deployment. <br />
-                            // Abuja // Global Distribution.
-                        </p>
-                    </div>
-                </motion.div>
-
-                {/* Category Navigation */}
-                <div className="flex flex-wrap gap-4 mt-12">
-                    {categories.map((cat) => (
-                        <button
-                            key={cat}
-                            onClick={() => setActiveTab(cat)}
-                            className={cn(
-                                "px-6 py-2 rounded-full border font-mono text-[10px] tracking-[0.2em] uppercase transition-all",
-                                activeTab === cat
-                                    ? "bg-neon-red border-neon-red text-white shadow-glow-sm"
-                                    : "border-white/10 text-neutral-500 hover:border-white/30 hover:text-white"
-                            )}
-                        >
-                            {cat}
-                        </button>
-                    ))}
-                </div>
+  return (
+    <div className="min-h-screen bg-ink">
+      {/* Header */}
+      <section className="pt-12 pb-16 border-b border-wire bg-surface/30">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-8">
+            <div>
+              <h1 className="font-display text-5xl md:text-7xl font-bold tracking-tight mb-4">
+                Store<span className="text-pulse">.</span>
+              </h1>
+              <p className="text-text-2 font-mono max-w-xl">
+                Official merchandise, digital assets, and consulting services.
+              </p>
             </div>
-
-            {/* Product Grid - Premium Cards */}
-            <div className="container-custom px-6">
-                <motion.div
-                    className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-32"
-                    variants={staggerContainer}
-                    initial="initial"
-                    animate="animate"
-                >
-                    {filteredProducts.map((product) => (
-                        <motion.div
-                            key={product.id}
-                            variants={fadeInUp}
-                            className="group flex flex-col"
-                        >
-                            {/* Visual Engine */}
-                            <div className="relative aspect-square mb-8 overflow-hidden rounded-[2rem] border border-white/5 bg-[#080808] p-12 transition-all duration-700 group-hover:border-neon-red/30">
-                                {/* HUD Corner Accents */}
-                                <div className="absolute top-8 left-8 h-4 w-4 border-l border-t border-neon-red/30" />
-                                <div className="absolute bottom-8 right-8 h-4 w-4 border-r border-b border-neon-red/30" />
-
-                                <div className="absolute top-8 right-8 font-mono text-[9px] text-neutral-600 tracking-widest">
-                                    {product.id}
-                                </div>
-
-                                <div className="relative h-full w-full flex items-center justify-center">
-                                    <ShoppingBag size={120} strokeWidth={0.5} className="text-neutral-900 group-hover:text-neon-red/10 transition-colors duration-700" />
-                                    <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex items-center justify-center overflow-hidden pointer-events-none">
-                                        <span className="text-[10rem] md:text-[14rem] font-black text-white/[0.015] tracking-tighter uppercase group-hover:text-white/[0.03] transition-colors">
-                                            {product.id.split('_')[2]}
-                                        </span>
-                                    </div>
-                                </div>
-
-                                {product.status === "SOLD_OUT" && (
-                                    <div className="absolute inset-0 bg-black/90 backdrop-blur-md flex items-center justify-center z-20">
-                                        <span className="text-2xl font-black text-neon-red uppercase tracking-[0.4em] border border-neon-red px-8 py-3 rotate-[-12deg]">
-                                            ARCHIVE_ONLY
-                                        </span>
-                                    </div>
-                                )}
-
-                                {product.status === "LOW_STOCK" && (
-                                    <div className="absolute bottom-12 left-1/2 -translate-x-1/2 px-6 py-2 bg-neon-red text-white font-mono text-[10px] font-black uppercase tracking-widest shadow-glow-red animate-pulse">
-                                        CRITICAL_STOCK: {product.stock}
-                                    </div>
-                                )}
-                            </div>
-
-                            {/* Label System */}
-                            <div className="flex flex-col gap-6 px-4">
-                                <div className="flex justify-between items-start">
-                                    <div>
-                                        <h3 className="text-3xl font-black tracking-tighter uppercase mb-2 group-hover:text-neon-red transition-colors">
-                                            {product.name}
-                                        </h3>
-                                        <div className="text-[10px] font-mono text-neutral-500 tracking-[0.3em] uppercase">
-                                            {product.category} // {product.color}
-                                        </div>
-                                    </div>
-                                    <div className="text-3xl font-black font-mono">${product.price}</div>
-                                </div>
-
-                                <p className="text-sm text-neutral-400 leading-relaxed max-w-md">
-                                    {product.description}
-                                </p>
-
-                                {/* Size Matrix */}
-                                {product.sizes && product.status !== "SOLD_OUT" && (
-                                    <div className="flex gap-4">
-                                        {product.sizes.map(size => (
-                                            <button
-                                                key={size}
-                                                onClick={() => setSelectedSize(prev => ({ ...prev, [product.id]: size }))}
-                                                className={cn(
-                                                    "h-12 w-12 flex items-center justify-center border font-mono text-xs transition-all",
-                                                    selectedSize[product.id] === size
-                                                        ? "bg-white text-black border-white shadow-glow-white"
-                                                        : "border-white/10 text-neutral-500 hover:border-white hover:text-white"
-                                                )}
-                                            >
-                                                {size}
-                                            </button>
-                                        ))}
-                                    </div>
-                                )}
-
-                                {/* Technical Specs */}
-                                <ul className="grid grid-cols-1 gap-2 border-t border-white/5 pt-6">
-                                    {product.details.map((detail, idx) => (
-                                        <li key={idx} className="flex items-center gap-3 text-[10px] font-mono text-neutral-600 uppercase tracking-widest">
-                                            <div className="h-1 w-1 rounded-full bg-neon-red/40" />
-                                            {detail}
-                                        </li>
-                                    ))}
-                                </ul>
-
-                                <button
-                                    onClick={() => handleAddToCart(product)}
-                                    disabled={product.status === "SOLD_OUT"}
-                                    className="w-full mt-4 h-16 bg-white text-black font-black uppercase tracking-[0.4em] hover:bg-neon-red hover:text-white hover:shadow-glow-red transition-all active:scale-[0.98] disabled:opacity-5 disabled:grayscale"
-                                >
-                                    {product.status === "SOLD_OUT" ? "SYSTEM_OFFLINE" : "INITIATE_ORDER"}
-                                </button>
-                            </div>
-                        </motion.div>
-                    ))}
-                </motion.div>
+            
+            {/* Currency Toggle */}
+            <div className="flex items-center bg-surface border border-wire rounded-full p-1 shadow-inner">
+              <button
+                onClick={() => setCurrency('NGN')}
+                className={`px-4 py-1.5 rounded-full font-mono text-xs transition-colors ${currency === 'NGN' ? 'bg-pulse text-ink font-bold' : 'text-text-2 hover:text-text-1'}`}
+              >
+                ₦ NGN
+              </button>
+              <button
+                onClick={() => setCurrency('USD')}
+                className={`px-4 py-1.5 rounded-full font-mono text-xs transition-colors ${currency === 'USD' ? 'bg-pulse text-ink font-bold' : 'text-text-2 hover:text-text-1'}`}
+              >
+                $ USD
+              </button>
             </div>
-
-            {/* Logistics Infrastructure */}
-            <section className="container-custom px-6 mt-64 border-t border-white/10 pt-32">
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
-                    <div className="md:col-span-2">
-                        <h2 className="text-4xl font-black uppercase tracking-tighter mb-8">Shipping. <br /> <span className="text-neon-red">Logistics.</span></h2>
-                        <p className="text-neutral-500 font-mono text-xs leading-loose tracking-widest uppercase max-w-md">
-                            BEETRUS OS UTILIZES A DECENTRALIZED FULFILLMENT NETWORK. GLOBAL TRANSIT PROTOCOLS COMMENCE WITHIN 48 HOURS OF ORDER COMMITMENT.
-                        </p>
-                    </div>
-
-                    <div className="space-y-12">
-                        <div className="flex gap-4">
-                            <Truck className="text-neon-red mt-1" size={20} />
-                            <div>
-                                <h4 className="font-black text-sm uppercase mb-2">Global Transit</h4>
-                                <p className="text-[10px] text-neutral-600 font-mono leading-relaxed">International shipping via DHL/UPS priority protocols.</p>
-                            </div>
-                        </div>
-                        <div className="flex gap-4">
-                            <ShieldCheck className="text-neon-red mt-1" size={20} />
-                            <div>
-                                <h4 className="font-black text-sm uppercase mb-2">Authenticated</h4>
-                                <p className="text-[10px] text-neutral-600 font-mono leading-relaxed">Each item features a unique QR fingerprint for origin verification.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="space-y-12">
-                        <div className="flex gap-4">
-                            <Clock className="text-neon-red mt-1" size={20} />
-                            <div>
-                                <h4 className="font-black text-sm uppercase mb-2">Drop Cycle</h4>
-                                <p className="text-[10px] text-neutral-600 font-mono leading-relaxed">Stock is replenished on archival cycles only. No reprints.</p>
-                            </div>
-                        </div>
-                        <div className="flex gap-4">
-                            <ShoppingBag className="text-neon-red mt-1" size={20} />
-                            <div>
-                                <h4 className="font-black text-sm uppercase mb-2">Support</h4>
-                                <p className="text-[10px] text-neutral-600 font-mono leading-relaxed">Direct uplink via contact portal for order status.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* Final CTA */}
-            <motion.div
-                className="container-custom px-6 mt-64"
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-            >
-                <div className="relative rounded-[3rem] bg-neon-red p-12 md:p-32 text-center text-white overflow-hidden shadow-glow-red">
-                    <div className="absolute inset-0 bg-[url('/images/noise.png')] opacity-10 mix-blend-overlay" />
-                    <h3 className="relative z-10 text-4xl md:text-7xl font-black uppercase tracking-tighter leading-none mb-12">
-                        JOIN_THE_KINFxLK <br /> COLLECTIVE?
-                    </h3>
-                    <Link href="/socials">
-                        <Button size="lg" variant="secondary" className="relative z-10 bg-white text-black font-black uppercase tracking-[0.4em] px-16 h-20 hover:scale-105 transition-all">
-                            SYNC_FREQUENCY
-                        </Button>
-                    </Link>
-                </div>
-            </motion.div>
+          </div>
         </div>
-    );
+      </section>
+
+      {/* Grid */}
+      <section className="py-16">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {storeProducts.map((product) => (
+              <div 
+                key={product.id} 
+                className="card-premium group cursor-pointer flex flex-col"
+                onClick={() => setSelectedProduct(product)}
+              >
+                {/* Image Placeholder */}
+                <div className="aspect-square bg-surface border-b border-wire flex items-center justify-center text-7xl relative overflow-hidden group-hover:bg-ink transition-colors">
+                  <div className="absolute top-4 right-4 z-10">
+                    <span className={`font-mono text-[10px] px-2 py-1 rounded-sm uppercase tracking-widest ${product.inStock ? 'bg-lime text-ink' : 'bg-surface border border-wire text-text-2'}`}>
+                      {product.tag}
+                    </span>
+                  </div>
+                  <motion.div whileHover={{ scale: 1.1 }} transition={{ type: "spring", stiffness: 300, damping: 20 }}>
+                    {product.coverEmoji}
+                  </motion.div>
+                </div>
+                
+                {/* Details */}
+                <div className="p-6 flex flex-col flex-1">
+                  <p className="font-mono text-[10px] uppercase tracking-widest text-text-3 mb-2">{product.category}</p>
+                  <h3 className="font-display text-xl font-bold text-text-1 mb-2">{product.name}</h3>
+                  <div className="mt-auto pt-4 flex items-center justify-between">
+                    <span className="font-mono text-pulse font-bold">{formatPrice(product.price)}</span>
+                    <span className="text-text-2 group-hover:text-pulse transition-colors">
+                      <ArrowRight size={18} />
+                    </span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Product Modal */}
+      <AnimatePresence>
+        {selectedProduct && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-modal bg-ink/80 backdrop-blur-sm flex justify-center items-center p-4 md:p-6"
+            onClick={() => setSelectedProduct(null)}
+          >
+            <motion.div 
+              initial={{ opacity: 0, y: 50, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 20, scale: 0.95 }}
+              className="bg-surface border border-wire rounded-2xl w-full max-w-2xl overflow-hidden shadow-2xl"
+              onClick={e => e.stopPropagation()}
+            >
+              <div className="flex justify-between items-center p-4 md:p-6 border-b border-wire">
+                <h3 className="font-mono text-sm tracking-widest uppercase text-text-2">{selectedProduct.category}</h3>
+                <button 
+                  onClick={() => setSelectedProduct(null)}
+                  className="text-text-2 hover:text-text-1 transition-colors p-2 rounded-full hover:bg-ink"
+                >
+                  <X size={20} />
+                </button>
+              </div>
+              
+              <div className="flex flex-col md:flex-row">
+                <div className="w-full md:w-2/5 aspect-square bg-ink flex items-center justify-center text-8xl md:border-r border-b md:border-b-0 border-wire">
+                  {selectedProduct.coverEmoji}
+                </div>
+                
+                <div className="w-full md:w-3/5 p-6 md:p-8 flex flex-col">
+                  <h2 className="font-display text-3xl font-bold mb-2">{selectedProduct.name}</h2>
+                  <p className="font-mono text-xl text-pulse mb-6">{formatPrice(selectedProduct.price)}</p>
+                  
+                  <p className="text-text-2 text-sm leading-relaxed mb-8">{selectedProduct.description}</p>
+                  
+                  {selectedProduct.sizes && (
+                    <div className="mb-6">
+                      <p className="font-mono text-xs uppercase text-text-3 mb-2">Sizes</p>
+                      <div className="flex flex-wrap gap-2">
+                        {selectedProduct.sizes.map(s => (
+                          <span key={s} className="px-3 py-1 bg-ink border border-wire rounded font-mono text-xs text-text-2">{s}</span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="mt-auto pt-6 border-t border-wire">
+                    {selectedProduct.inStock ? (
+                      <a 
+                        href={selectedProduct.paymentLink !== '#' ? selectedProduct.paymentLink : undefined}
+                        onClick={(e) => {
+                          if (selectedProduct.paymentLink === '#') {
+                            e.preventDefault();
+                            toast("Payment integration loading...");
+                          }
+                        }}
+                        className="w-full btn-glow text-center block"
+                      >
+                        Purchase Now
+                      </a>
+                    ) : (
+                      <form onSubmit={handleWaitlist} className="flex flex-col gap-3">
+                        <p className="text-xs font-mono text-text-3 uppercase tracking-widest mb-2 flex items-center gap-2">
+                          <Bell size={12} /> Join the waitlist
+                        </p>
+                        <div className="flex gap-2">
+                          <input 
+                            type="email" 
+                            required
+                            placeholder="your@email.com" 
+                            className="flex-1 bg-ink border border-wire rounded-md px-4 py-2 font-mono text-sm focus:outline-none focus:border-pulse text-text-1"
+                            value={email}
+                            onChange={e => setEmail(e.target.value)}
+                          />
+                          <button 
+                            type="submit" 
+                            disabled={isSubmitting}
+                            className="btn-glow shrink-0 px-6"
+                          >
+                            {isSubmitting ? "..." : "Notify Me"}
+                          </button>
+                        </div>
+                      </form>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
 }

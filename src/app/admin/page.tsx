@@ -45,7 +45,7 @@ export default function AdminDashboard() {
 
     const dashboardStats = [
         { label: "Active Project Leads", value: stats.activeLeads, icon: Users, trend: "Live", color: "text-neon-red" },
-        { label: "Total Orders", value: stats.totalOrders, icon: ShoppingBag, trend: "Capture", color: "text-cyan-400" },
+        { label: "Total Orders", value: stats.totalOrders, icon: ShoppingBag, trend: "Capture", color: "text-pulse" },
         { label: "Inventory SKUs", value: stats.totalProducts, icon: Database, trend: "Sync", color: "text-purple-500" },
         { label: "Gross Revenue", value: `$${stats.totalRevenue.toFixed(2)}`, icon: TrendingUp, trend: "Est.", color: "text-green-500" },
     ];

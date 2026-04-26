@@ -40,10 +40,10 @@ export default function AboutPage() {
             {/* ======================================== */}
             {/* SECTION 1: High-Fidelity Hero */}
             {/* ======================================== */}
-            <section className="relative w-full flex flex-col items-center mt-[35vh] md:mt-[45vh] px-6 pb-24">
+            <section className="relative w-full flex flex-col items-center pt-12 pb-24 px-6">
                 {/* Background Atmosphere */}
                 <div className="absolute inset-0 z-0">
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-neon-red/10 blur-[150px] animate-pulse rounded-full" />
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-pulse/10 blur-[150px] animate-pulse rounded-full" />
                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,black_100%)] opacity-80" />
 
                     {/* Floating Tech Streamers */}
@@ -51,7 +51,7 @@ export default function AboutPage() {
                         {Array.from({ length: 6 }).map((_, i) => (
                             <motion.div
                                 key={i}
-                                className="absolute h-[1px] bg-gradient-to-r from-transparent via-neon-red to-transparent w-full"
+                                className="absolute h-[1px] bg-gradient-to-r from-transparent via-pulse to-transparent w-full"
                                 style={{ top: `${15 * (i + 1)}%` }}
                                 animate={{
                                     x: ["-100%", "100%"],
@@ -76,11 +76,11 @@ export default function AboutPage() {
                         animate="visible"
                     >
                         <motion.div
-                            className="mb-8 px-4 py-1.5 rounded-full border border-neon-red/30 bg-neon-red/5 flex items-center gap-2"
+                            className="mb-8 px-4 py-1.5 rounded-full border border-pulse/30 bg-pulse/5 flex items-center gap-2"
                             variants={fadeInUp}
                         >
-                            <Sparkles size={14} className="text-neon-red" />
-                            <span className="text-[10px] font-mono font-bold tracking-[0.4em] text-neon-red uppercase">Architect_Profile_v2</span>
+                            <Sparkles size={14} className="text-pulse" />
+                            <span className="text-[10px] font-mono font-bold tracking-[0.4em] text-pulse uppercase">Architect_Profile_v2</span>
                         </motion.div>
 
                         <motion.h1
@@ -94,7 +94,7 @@ export default function AboutPage() {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center w-full max-w-5xl mt-8">
                             <motion.div variants={fadeInUp} className="text-left">
                                 <p className="text-2xl md:text-3xl font-light text-foreground-muted leading-tight">
-                                    I build at the boundary where <span className="text-white font-bold">sonic vibration</span> meets <span className="text-neon-red font-bold">computational logic</span>.
+                                    I build at the boundary where <span className="text-white font-bold">sonic vibration</span> meets <span className="text-pulse font-bold">computational logic</span>.
                                 </p>
                             </motion.div>
                             <motion.div variants={fadeInUp} className="space-y-4">
@@ -135,11 +135,11 @@ export default function AboutPage() {
                                 transition={{ delay: 0.3 }}
                             >
                                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-[10px] font-mono mb-6 backdrop-blur-md">
-                                    <span className="h-1.5 w-1.5 rounded-full bg-neon-red animate-pulse" />
+                                    <span className="h-1.5 w-1.5 rounded-full bg-pulse animate-pulse" />
                                     LIVE_VOL_01: BOX_SESSIONS
                                 </div>
                                 <h2 className="text-4xl md:text-7xl font-black uppercase tracking-tighter mb-4">
-                                    At This <span className="text-neon-red">Age</span>
+                                    At This <span className="text-pulse">Age</span>
                                 </h2>
                                 <p className="text-foreground-muted max-w-lg mx-auto mb-8 font-mono text-xs uppercase tracking-widest">
                                     // raw_performance // neural_sync // abuja_vibrations
@@ -158,7 +158,7 @@ export default function AboutPage() {
 
                         {/* HUD Decoration */}
                         <div className="absolute top-8 left-8 flex gap-4 pointer-events-none">
-                            <div className="h-1 w-12 bg-neon-red animate-pulse" />
+                            <div className="h-1 w-12 bg-pulse animate-pulse" />
                             <div className="h-1 w-6 bg-white/20" />
                         </div>
                     </div>
@@ -171,7 +171,7 @@ export default function AboutPage() {
                     transition={{ duration: 2, repeat: Infinity }}
                 >
                     <span className="text-[10px] uppercase tracking-[0.4em] text-foreground-muted font-bold">Initiate_Scroll</span>
-                    <div className="w-px h-16 bg-gradient-to-b from-neon-red to-transparent" />
+                    <div className="w-px h-16 bg-gradient-to-b from-pulse to-transparent" />
                 </motion.div>
             </section>
 
@@ -187,7 +187,7 @@ export default function AboutPage() {
                         viewport={{ once: true }}
                     >
                         <h2 className="text-5xl md:text-8xl font-black uppercase tracking-tighter mb-4">
-                            DNA <span className="text-neon-red">Journey</span>
+                            DNA <span className="text-pulse">Journey</span>
                         </h2>
                         <p className="text-sm font-mono tracking-[0.5em] text-foreground-muted uppercase">Execution_History // Timeline</p>
                     </motion.div>
@@ -197,7 +197,7 @@ export default function AboutPage() {
                         <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-32 md:w-48 overflow-visible flex justify-center">
                             {/* Helix Strands */}
                             <svg className="h-full w-full overflow-visible opacity-30" viewBox="0 0 100 1000" preserveAspectRatio="none">
-                                <DNAStrand color="var(--neon-red)" offset={0} />
+                                <DNAStrand color="var(--pulse)" offset={0} />
                                 <DNAStrand color="white" offset={Math.PI} />
                             </svg>
                         </div>
@@ -229,14 +229,14 @@ export default function AboutPage() {
                                                     "flex items-center gap-4 mb-4",
                                                     index % 2 === 0 ? "md:justify-end" : "md:justify-start"
                                                 )}>
-                                                    <span className="text-3xl font-black text-neon-red font-mono">{item.year}</span>
+                                                    <span className="text-3xl font-black text-pulse font-mono">{item.year}</span>
                                                     <div className="h-px w-10 bg-white/20" />
                                                 </div>
                                                 <h4 className="text-2xl md:text-3xl font-black text-white uppercase tracking-tighter mb-2 group-hover:text-neon-red transition-colors">
                                                     {item.title}
                                                 </h4>
                                                 <div className="flex items-center gap-3 text-xs font-mono tracking-widest text-foreground-muted uppercase">
-                                                    <MapPin size={12} className="text-neon-red" />
+                                                    <MapPin size={12} className="text-pulse" />
                                                     {item.place}
                                                 </div>
                                             </div>
@@ -273,13 +273,18 @@ export default function AboutPage() {
                                     Originally interested in becoming a YouTuber, I returned to Nigeria from the UK and found my heartbeat in the rhythm of Afrobeats and the structure of Hip-Hop.
                                 </p>
                                 <p>
-                                    Characterized by a <span className="text-white font-medium">"deep and gritty voice"</span>, I experiment with versatile sounds as a core member of the creative collective <span className="text-neon-red font-bold">Kinfxlk</span>.
+                                    Characterized by a <span className="text-white font-medium">"deep and gritty voice"</span>, I experiment with versatile sounds as a core member of the creative collective <span className="text-pulse font-bold">Kinfxlk</span>.
                                 </p>
                             </div>
                         </motion.div>
 
                         <div className="grid grid-cols-2 gap-6">
-                            {[1, 2, 3, 4].map((i) => (
+                            {[
+                                "/archive/beetrus-1.jpg",
+                                "/archive/beetrus-2.jpg",
+                                "/archive/beetrus-3.jpg",
+                                "/archive/beetrus-1.jpg"
+                            ].map((img, i) => (
                                 <motion.div
                                     key={i}
                                     className="aspect-square relative rounded-3xl overflow-hidden border border-white/10 group"
@@ -288,15 +293,19 @@ export default function AboutPage() {
                                     viewport={{ once: true }}
                                     transition={{ delay: i * 0.1 }}
                                 >
+                                    <div className="absolute inset-0 z-0">
+                                        <img 
+                                            src={img} 
+                                            alt={`Archive ${i + 1}`} 
+                                            className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-110"
+                                        />
+                                    </div>
                                     <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent z-10 opacity-60" />
-                                    <div className="absolute inset-0 bg-neon-red/5 group-hover:bg-neon-red/20 transition-colors" />
-                                    <div className="absolute inset-0 flex items-center justify-center opacity-10">
-                                        <Code2 size={40} className="text-neon-red" />
-                                    </div>
+                                    <div className="absolute inset-0 bg-neon-red/5 group-hover:bg-neon-red/10 transition-colors z-10" />
                                     <div className="absolute bottom-6 left-6 z-20">
-                                        <span className="text-[10px] font-mono text-white/40 uppercase tracking-widest">Archive_00{i}</span>
+                                        <span className="text-[10px] font-mono text-white/40 group-hover:text-white uppercase tracking-widest transition-colors">Archive_00{i + 1}</span>
                                     </div>
-                                    <div className="absolute inset-0 border-2 border-neon-red/0 group-hover:border-neon-red/40 transition-colors rounded-3xl" />
+                                    <div className="absolute inset-0 border-2 border-neon-red/0 group-hover:border-neon-red/40 transition-colors rounded-3xl z-30" />
                                 </motion.div>
                             ))}
                         </div>
@@ -321,17 +330,13 @@ export default function AboutPage() {
                     <p className="text-xl text-foreground-muted mb-12 max-w-2xl mx-auto font-light leading-relaxed">
                         I am currently accepting select creative collaborations and engineering contracts for 2026. Let&apos;s build something that matters.
                     </p>
-                    <div className="flex flex-col sm:flex-row gap-6 justify-center">
-                        <Link href="/request">
-                            <Button size="lg" className="h-16 px-12 text-lg uppercase tracking-widest shadow-glow-red">
-                                Request_Site
-                            </Button>
-                        </Link>
-                        <Link href="/contact">
-                            <Button variant="outline" size="lg" className="h-16 px-12 text-lg uppercase tracking-widest border-white/10">
-                                Contact_Core
-                            </Button>
-                        </Link>
+                    <div className="flex justify-center flex-wrap gap-6">
+                        <a href="https://open.spotify.com/artist/4X9yd45w0s1lYvExD4EEDh" target="_blank" rel="noopener noreferrer">
+                            <Button size="lg" className="h-16 px-10 shadow-glow-red">SPOTIFY_PROFILE</Button>
+                        </a>
+                        <a href="https://music.apple.com/us/artist/beetrus/1536767746" target="_blank" rel="noopener noreferrer">
+                            <Button variant="outline" size="lg" className="h-16 px-10 border-white/10">APPLE_MUSIC</Button>
+                        </a>
                     </div>
                 </motion.div>
             </section>

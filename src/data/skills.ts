@@ -1,0 +1,78 @@
+export const skillDomains = [
+  {
+    id: 'frontend',
+    label: 'Frontend',
+    icon: '⚡',
+    color: '#ff003c',
+    skills: [
+      { name: 'React 19', level: 95, note: 'Primary framework' },
+      { name: 'Next.js 15', level: 90, note: 'App Router + RSC' },
+      { name: 'TypeScript', level: 88, note: 'Strict mode throughout' },
+      { name: 'Tailwind CSS', level: 92, note: 'v3 + v4' },
+      { name: 'Framer Motion', level: 85, note: 'Advanced animations' },
+      { name: 'Three.js', level: 70, note: 'GLSL shaders, 3D scenes' },
+      { name: 'Vite', level: 88, note: 'Build tooling' },
+    ],
+  },
+  {
+    id: 'backend',
+    label: 'Backend',
+    icon: '🛠',
+    color: '#ff6b35',
+    skills: [
+      { name: 'Node.js', level: 88, note: 'ESM, Express, async patterns' },
+      { name: 'Express.js', level: 90, note: 'REST APIs, middleware' },
+      { name: 'Drizzle ORM', level: 85, note: 'Type-safe queries' },
+      { name: 'Supabase', level: 80, note: 'Auth + Realtime + DB' },
+      { name: 'Firebase', level: 82, note: 'Auth + Admin SDK' },
+      { name: 'Neon Postgres', level: 78, note: 'Serverless Postgres' },
+    ],
+  },
+  {
+    id: 'ai',
+    label: 'AI & LLMs',
+    icon: '🤖',
+    color: '#b6ff6b',
+    skills: [
+      { name: 'Gemini 2.5', level: 88, note: 'Primary AI model' },
+      { name: 'Prompt Engineering', level: 85, note: 'Structured JSON outputs, chains' },
+      { name: 'Groq / Llama', level: 78, note: 'Fallback chain architecture' },
+      { name: 'ElevenLabs', level: 72, note: 'TTS + multilingual voice' },
+      { name: 'Playwright AI', level: 75, note: 'AI-powered web scraping' },
+    ],
+  },
+  {
+    id: 'payments',
+    label: 'Payments & Commerce',
+    icon: '💳',
+    color: '#ffd700',
+    skills: [
+      { name: 'Paystack', level: 90, note: 'NGN payments, webhooks, HMAC' },
+      { name: 'Stripe', level: 75, note: 'USD checkout, subscriptions' },
+      { name: 'Flutterwave', level: 68, note: 'Multi-currency' },
+    ],
+  },
+  {
+    id: 'devops',
+    label: 'DevOps & Deployment',
+    icon: '🚀',
+    color: '#a855f7',
+    skills: [
+      { name: 'Vercel', level: 92, note: 'Frontend + serverless' },
+      { name: 'Render', level: 80, note: 'Persistent backend services' },
+      { name: 'GitHub Actions', level: 70, note: 'CI/CD pipelines' },
+      { name: 'Docker', level: 62, note: 'Containerization basics' },
+    ],
+  },
+  {
+    id: 'browser',
+    label: 'Browser Extensions',
+    icon: '🔌',
+    color: '#ff003c',
+    skills: [
+      { name: 'Chrome Extension MV3', level: 82, note: 'Content scripts, service workers' },
+      { name: 'chrome.identity', level: 78, note: 'Extension OAuth' },
+      { name: 'Playwright', level: 80, note: 'Browser automation' },
+    ],
+  },
+];
