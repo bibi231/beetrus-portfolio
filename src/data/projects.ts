@@ -116,8 +116,8 @@ export const projects: Project[] = [
     id: 'naijamation',
     title: 'NaijaMation',
     tagline: 'Afro-centric streaming platform for animated content.',
-    description: 'A dedicated streaming platform for African animation, showcasing "The Fisherman's Daughter" and other local stories. Built with a cinema-first UI, categories for Anime, Series, and Music, and a robust content hub for creators.',
-    longDescription: 'NaijaMation is the first streaming platform built exclusively for African animation. It surfaces stories like The Fisherman's Daughter that would never make it onto Netflix. A cinema-first design language — cinematic headers, dark theatre mode, immersive episode pages — puts the content front and center. Creator tools let animators submit work and track viewership. The platform also includes a Music section for animated music videos.',
+    description: `A dedicated streaming platform for African animation, showcasing "The Fisherman's Daughter" and other local stories. Built with a cinema-first UI, categories for Anime, Series, and Music, and a robust content hub for creators.`,
+    longDescription: `NaijaMation is the first streaming platform built exclusively for African animation. It surfaces stories like The Fisherman's Daughter that would never make it onto Netflix. A cinema-first design language — cinematic headers, dark theatre mode, immersive episode pages — puts the content front and center. Creator tools let animators submit work and track viewership. The platform also includes a Music section for animated music videos.`,
     capabilities: [
       { icon: '🎬', label: 'Cinema-First UI', description: 'Immersive full-screen layouts inspired by modern streaming platforms' },
       { icon: '🌍', label: 'African-Only Content', description: 'Curated catalogue of African animation, series, and music videos' },
