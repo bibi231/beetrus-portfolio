@@ -87,10 +87,10 @@ export function Header() {
               href={artist ? "https://ffm.to/tenten-lost-files" : "/contact"}
               target={artist ? "_blank" : undefined}
               rel={artist ? "noopener noreferrer" : undefined}
-              className="hidden items-center rounded-full border border-wire bg-surface px-4 py-1.5 transition-colors hover:border-[color:var(--accent)] sm:inline-flex"
+              className="hidden items-center rounded-none border border-wire bg-surface px-4 py-1.5 transition-colors hover:border-[color:var(--accent)] sm:inline-flex"
               style={{ "--accent": accent } as React.CSSProperties}
             >
-              <span className="mr-2 h-2 w-2 rounded-full" style={{ background: accent, boxShadow: `0 0 6px ${accent}` }} />
+              <span className="mr-2 h-2 w-2 rounded-none" style={{ background: accent, boxShadow: `0 0 6px ${accent}` }} />
               <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-text-1">
                 {artist ? "Stream TEN/TEN" : "Available for hire"}
               </span>
@@ -145,10 +145,10 @@ export function Header() {
               href={artist ? "https://ffm.to/tenten-lost-files" : "/contact"}
               target={artist ? "_blank" : undefined}
               rel={artist ? "noopener noreferrer" : undefined}
-              className="mt-auto inline-flex items-center justify-center rounded-full border px-6 py-3.5 font-mono text-xs uppercase tracking-[0.18em] text-text-1"
+              className="mt-auto inline-flex items-center justify-center rounded-none border px-6 py-3.5 font-mono text-xs uppercase tracking-[0.18em] text-text-1"
               style={{ borderColor: accent }}
             >
-              <span className="mr-3 h-2.5 w-2.5 rounded-full" style={{ background: accent }} />
+              <span className="mr-3 h-2.5 w-2.5 rounded-none" style={{ background: accent }} />
               {artist ? "Stream TEN/TEN" : "Available for hire"}
             </Link>
           </motion.div>

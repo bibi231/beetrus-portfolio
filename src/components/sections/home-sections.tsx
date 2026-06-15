@@ -45,10 +45,10 @@ export function HeroSection() {
             One person, two worlds: <span className="text-pulse">software</span> &amp; <span className="text-gold">sound</span>.
           </p>
           <div className="mt-9 flex flex-col gap-4 sm:flex-row sm:items-center">
-            <Link href="/music" className="group inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 font-mono text-xs uppercase tracking-[0.16em] text-black transition-transform hover:-translate-y-0.5" style={{ background: "var(--gold)" }}>
+            <Link href="/music" className="group inline-flex items-center justify-center gap-2 rounded-none px-7 py-3.5 font-mono text-xs uppercase tracking-[0.16em] text-black transition-transform hover:-translate-y-0.5" style={{ background: "var(--gold)" }}>
               <Play size={15} fill="currentColor" /> Enter the Booth
             </Link>
-            <Link href="/work" className="group inline-flex items-center justify-center gap-2 rounded-full border border-wire px-7 py-3.5 font-mono text-xs uppercase tracking-[0.16em] text-text-1 transition-colors hover:border-pulse">
+            <Link href="/work" className="group inline-flex items-center justify-center gap-2 rounded-none border border-wire px-7 py-3.5 font-mono text-xs uppercase tracking-[0.16em] text-text-1 transition-colors hover:border-pulse">
               Enter the Lab <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" />
             </Link>
           </div>
@@ -101,10 +101,10 @@ export function FeaturedReleaseSection() {
     <section className="relative px-6 py-24 lg:px-8 lg:py-32">
       <div className="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-2">
         <motion.div className="relative" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.7 }}>
-          <div className="overflow-hidden rounded-2xl border border-wire shadow-2xl">
+          <div className="overflow-hidden rounded-sm border border-wire shadow-2xl">
             <img src={TENTEN_COVER} alt="TEN/TEN — The Lost Files" className="aspect-square w-full object-cover" loading="lazy" />
           </div>
-          <span className="absolute -left-3 -top-3 rounded-full bg-gold px-3 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-black">New Album</span>
+          <span className="absolute -left-3 -top-3 rounded-none bg-gold px-3 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-black">New Album</span>
         </motion.div>
 
         <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.7, delay: 0.1 }}>
@@ -117,14 +117,14 @@ export function FeaturedReleaseSection() {
             <span className="rounded border border-wire px-2 py-1">Album</span>
           </div>
           <div className="mt-7 flex flex-wrap gap-3">
-            <a href={musicLinks.tenTenSmartLink} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full bg-gold px-6 py-3 font-mono text-xs uppercase tracking-[0.16em] text-black transition-transform hover:-translate-y-0.5">
+            <a href={musicLinks.tenTenSmartLink} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-none bg-gold px-6 py-3 font-mono text-xs uppercase tracking-[0.16em] text-black transition-transform hover:-translate-y-0.5">
               <Play size={14} fill="currentColor" /> Listen Everywhere
             </a>
-            <Link href="/music" className="inline-flex items-center gap-2 rounded-full border border-wire px-6 py-3 font-mono text-xs uppercase tracking-[0.16em] text-text-1 transition-colors hover:border-gold">
+            <Link href="/music" className="inline-flex items-center gap-2 rounded-none border border-wire px-6 py-3 font-mono text-xs uppercase tracking-[0.16em] text-text-1 transition-colors hover:border-gold">
               Full Tracklist <ArrowRight size={14} />
             </Link>
           </div>
-          <div className="mt-8 overflow-hidden rounded-xl border border-wire">
+          <div className="mt-8 overflow-hidden rounded-sm border border-wire">
             <iframe title="TEN/TEN on Spotify" src="https://open.spotify.com/embed/album/4wYvePhIgMGqAiekYBIcrb?theme=0" width="100%" height="152" frameBorder="0" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" style={{ display: "block" }} />
           </div>
         </motion.div>
@@ -165,7 +165,7 @@ export function LiveProductsSection() {
                 </div>
               </>
             );
-            const cls = "group flex flex-col rounded-2xl border border-wire bg-white/[0.015] p-6 transition-colors hover:bg-white/[0.04]";
+            const cls = "group flex flex-col rounded-sm border border-wire bg-white/[0.015] p-6 transition-colors hover:bg-white/[0.04]";
             return p.liveUrl ? (
               <a key={p.id} href={p.liveUrl} target="_blank" rel="noopener noreferrer" className={cls}>{inner}</a>
             ) : (
@@ -223,7 +223,7 @@ export function StatsBelt() {
     { n: `${LIVE.length}+`, l: "Live Products" },
     { n: `${TEN_TEN.trackList?.length ?? 10}`, l: "Tracks · TEN/TEN" },
     { n: "4", l: "Languages · SupportAI" },
-    { n: "∞", l: "Late Nights" },
+    { n: "2AM", l: "Studio Hours" },
   ];
   return (
     <section className="border-t border-wire px-6 py-16 lg:px-8" style={{ background: "#0a0a0b" }}>

@@ -39,34 +39,36 @@
 }
 
 :root {
-  /* Editorial near-black base — warmer, paper-and-ink contrast */
-  --void:        #050505;
-  --ink:         #0a0a0b;
-  --surface:     #131316;
-  --raised:      #1c1c20;
-  --rim:         rgba(255,255,255,0.06);
-  --wire:        rgba(255,255,255,0.10);
-  --edge:        rgba(255,255,255,0.18);
+  /* TEN/TEN palette — warm near-black, gold, amber & cream (matches the cover).
+     One unified theme: no teal. Every accent lives in the gold/sepia family. */
+  --void:        #060504;
+  --ink:         #0b0a08;
+  --surface:     #16130d;
+  --raised:      #211c13;
+  --rim:         rgba(255,240,210,0.06);
+  --wire:        rgba(255,240,210,0.12);
+  --edge:        rgba(255,240,210,0.20);
 
-  /* Engineer accent — TrueWeb teal (primary "pulse") */
-  --pulse:       #00d4d4;
-  --pulse-dim:   rgba(0, 212, 212, 0.10);
-  --pulse-glow:  rgba(0, 212, 212, 0.22);
+  /* Primary accent — bright TEN/TEN gold (was teal) */
+  --pulse:       #d9b23e;
+  --pulse-dim:   rgba(217,178,62,0.10);
+  --pulse-glow:  rgba(217,178,62,0.24);
 
-  --ember:       #00a8a8;
-  --ember-dim:   rgba(0, 168, 168, 0.1);
+  /* Secondary — warm amber / sepia */
+  --ember:       #a8742e;
+  --ember-dim:   rgba(168,116,46,0.12);
 
-  --lime:        #b6ff6b;
+  --lime:        #c9a227;
 
-  --text-1:      #f1eee7;
-  --text-2:      #8a8a93;
-  --text-3:      #3a3a42;
-  --text-pulse:  #00d4d4;
+  --text-1:      #f2ece0;
+  --text-2:      #9a9080;
+  --text-3:      #4a4438;
+  --text-pulse:  #d9b23e;
 
-  /* Artist accent — TEN/TEN gold + cream "paper" for magazine spreads */
+  /* Deep gold + warm cream "paper" for magazine spreads */
   --gold:        #c9a227;
   --gold-dim:    rgba(201, 162, 39, 0.14);
-  --paper:       #f3efe6;
+  --paper:       #efe6d4;
 
   /* Fluid editorial type scale */
   --type-mega:   clamp(3.2rem, 16vw, 13rem);
@@ -319,13 +321,13 @@ a {
   border: 1px solid rgba(182, 255, 107, 0.25);
   background: rgba(182, 255, 107, 0.06);
   padding: 4px 10px;
-  border-radius: 999px;
+  border-radius: 2px;
 }
 .badge-live::before {
   content: '';
   width: 6px;
   height: 6px;
-  border-radius: 999px;
+  border-radius: 2px;
   background: var(--lime);
   box-shadow: 0 0 8px var(--lime);
   animation: pulse-dot 2s ease infinite;
@@ -342,13 +344,13 @@ a {
   border: 1px solid rgba(201, 162, 39, 0.32);
   background: rgba(201, 162, 39, 0.07);
   padding: 4px 10px;
-  border-radius: 999px;
+  border-radius: 2px;
 }
 .badge-building::before {
   content: '';
   width: 6px;
   height: 6px;
-  border-radius: 999px;
+  border-radius: 2px;
   background: var(--gold);
   box-shadow: 0 0 8px var(--gold);
   animation: pulse-dot 2s ease infinite;

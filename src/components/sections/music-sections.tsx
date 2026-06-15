@@ -34,11 +34,11 @@ export function MusicHeroSection() {
           <p className="mt-2 font-display text-3xl uppercase tracking-wide text-text-2 md:text-4xl">The Lost Files</p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <a href={musicLinks.tenTenSmartLink} target="_blank" rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-gold px-7 py-3.5 font-mono text-xs uppercase tracking-[0.16em] text-black transition-transform hover:-translate-y-0.5">
+              className="inline-flex items-center justify-center gap-2 rounded-none bg-gold px-7 py-3.5 font-mono text-xs uppercase tracking-[0.16em] text-black transition-transform hover:-translate-y-0.5">
               <Play size={15} fill="currentColor" /> Listen Everywhere
             </a>
             <a href={TEN_TEN.spotifyUrl} target="_blank" rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 rounded-full border border-wire px-7 py-3.5 font-mono text-xs uppercase tracking-[0.16em] text-text-1 transition-colors hover:border-gold">
+              className="inline-flex items-center justify-center gap-2 rounded-none border border-wire px-7 py-3.5 font-mono text-xs uppercase tracking-[0.16em] text-text-1 transition-colors hover:border-gold">
               Spotify <ArrowRight size={15} />
             </a>
           </div>
@@ -62,7 +62,7 @@ export function FeaturedReleaseSection() {
         {/* Sticky cover */}
         <div className="lg:sticky lg:top-24 lg:h-fit">
           <motion.div
-            className="overflow-hidden rounded-2xl border border-wire shadow-2xl"
+            className="overflow-hidden rounded-sm border border-wire shadow-2xl"
             style={reduce ? undefined : { scale, y }}
           >
             <img src={COVER} alt="TEN/TEN — The Lost Files" className="aspect-square w-full object-cover" />
@@ -73,8 +73,8 @@ export function FeaturedReleaseSection() {
             <span className="rounded border border-wire px-2 py-1">{TEN_TEN.year}</span>
           </div>
           <div className="mt-4 flex flex-wrap gap-2">
-            <a href={musicLinks.tenTenSmartLink} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full bg-gold px-5 py-2.5 font-mono text-[11px] uppercase tracking-[0.14em] text-black"><Play size={13} fill="currentColor" /> Listen</a>
-            <a href={TEN_TEN.audiomackUrl ?? "#"} target="_blank" rel="noopener noreferrer" className="inline-flex items-center rounded-full border border-wire px-5 py-2.5 font-mono text-[11px] uppercase tracking-[0.14em] text-text-1">Audiomack</a>
+            <a href={musicLinks.tenTenSmartLink} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-none bg-gold px-5 py-2.5 font-mono text-[11px] uppercase tracking-[0.14em] text-black"><Play size={13} fill="currentColor" /> Listen</a>
+            <a href={TEN_TEN.audiomackUrl ?? "#"} target="_blank" rel="noopener noreferrer" className="inline-flex items-center rounded-none border border-wire px-5 py-2.5 font-mono text-[11px] uppercase tracking-[0.14em] text-text-1">Audiomack</a>
           </div>
         </div>
 
@@ -98,7 +98,7 @@ export function FeaturedReleaseSection() {
                   </div>
                 </div>
                 {t.spotifyId && (
-                  <div className="mt-3 overflow-hidden rounded-lg">
+                  <div className="mt-3 overflow-hidden rounded-sm">
                     <SpotifyEmbed type="track" id={t.spotifyId} compact height={80} title={t.title} />
                   </div>
                 )}
@@ -107,7 +107,7 @@ export function FeaturedReleaseSection() {
           </ol>
 
           {/* Full album player */}
-          <div className="mt-8 overflow-hidden rounded-xl border border-wire">
+          <div className="mt-8 overflow-hidden rounded-sm border border-wire">
             <SpotifyEmbed type="album" id={SPOTIFY_ALBUM} height={352} title="TEN/TEN — The Lost Files" />
           </div>
         </div>
@@ -121,7 +121,7 @@ export function LostFilesStrip() {
   return (
     <section className="relative overflow-hidden border-y border-wire" style={{ background: "#050505" }}>
       <div className="mx-auto grid max-w-7xl items-center gap-10 px-6 py-20 lg:grid-cols-2 lg:px-8">
-        <div className="mx-auto w-full max-w-sm overflow-hidden rounded-2xl border border-wire">
+        <div className="mx-auto w-full max-w-sm overflow-hidden rounded-sm border border-wire">
           <LazyVideo
             src="/music/videos/ten-ten-lostfiles-intro.mp4"
             poster={COVER}
@@ -134,7 +134,7 @@ export function LostFilesStrip() {
             Tracks that<br />never made it<br /><span className="text-gold">— until now.</span>
           </h2>
           <p className="mt-5 max-w-md font-body text-text-2">Ten cuts from the vault. KVV, York, Killian Stark, Wacko, TooColdBaby. Produced by Ove6ix, Wonderlust, Kaiso, Chie &amp; JiggyYb.</p>
-          <a href={musicLinks.tenTenSmartLink} target="_blank" rel="noopener noreferrer" className="mt-7 inline-flex items-center gap-2 rounded-full bg-gold px-6 py-3 font-mono text-xs uppercase tracking-[0.16em] text-black"><Play size={14} fill="currentColor" /> Stream the Album</a>
+          <a href={musicLinks.tenTenSmartLink} target="_blank" rel="noopener noreferrer" className="mt-7 inline-flex items-center gap-2 rounded-none bg-gold px-6 py-3 font-mono text-xs uppercase tracking-[0.16em] text-black"><Play size={14} fill="currentColor" /> Stream the Album</a>
         </div>
       </div>
     </section>
@@ -144,7 +144,7 @@ export function LostFilesStrip() {
 /* ====================== DISCOGRAPHY ====================== */
 function ReleaseCard({ r }: { r: Release }) {
   return (
-    <div className="group flex flex-col overflow-hidden rounded-2xl border border-wire bg-white/[0.015] transition-colors hover:bg-white/[0.04]">
+    <div className="group flex flex-col overflow-hidden rounded-sm border border-wire bg-white/[0.015] transition-colors hover:bg-white/[0.04]">
       <div className="overflow-hidden border-b border-wire">
         {r.coverImage ? (
           <img src={r.coverImage} alt={`${r.title} cover`} className="aspect-square w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" loading="lazy" />
@@ -174,13 +174,13 @@ export function DiscographySection() {
         <h2 className="mt-2 font-display uppercase text-text-1" style={{ fontSize: "clamp(2.2rem, 5vw, 4rem)", lineHeight: 0.9 }}>The Catalogue</h2>
 
         {EP && (
-          <div className="mt-10 grid items-center gap-8 rounded-2xl border border-wire bg-white/[0.015] p-6 lg:grid-cols-2">
+          <div className="mt-10 grid items-center gap-8 rounded-sm border border-wire bg-white/[0.015] p-6 lg:grid-cols-2">
             <div>
               <span className="font-mono text-[10px] uppercase tracking-wider text-gold">{EP.type} · {EP.year}</span>
               <h3 className="mt-2 font-display text-4xl uppercase text-text-1">{EP.title}</h3>
               <p className="mt-3 font-body text-sm text-text-2">{EP.tracks?.join(" · ")}</p>
             </div>
-            <div className="overflow-hidden rounded-xl border border-wire">
+            <div className="overflow-hidden rounded-sm border border-wire">
               <iframe title="Afro State Of Mind on Apple Music" src="https://embed.music.apple.com/us/album/1521721654" height="175" frameBorder="0" loading="lazy" allow="autoplay *; encrypted-media *;" style={{ width: "100%", overflow: "hidden", background: "transparent" }} />
             </div>
           </div>
@@ -204,16 +204,16 @@ export function EventsSection() {
       <div className="mx-auto max-w-5xl">
         <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-pulse">Always Outside</p>
         <h2 className="mt-2 font-display uppercase text-text-1" style={{ fontSize: "clamp(2.2rem, 5vw, 4rem)", lineHeight: 0.9 }}>Catch Me Live</h2>
-        <div className="mt-8 flex flex-col gap-5 rounded-2xl border border-wire bg-white/[0.015] p-8 md:flex-row md:items-center md:justify-between">
+        <div className="mt-8 flex flex-col gap-5 rounded-sm border border-wire bg-white/[0.015] p-8 md:flex-row md:items-center md:justify-between">
           <div>
             <div className="flex items-center gap-3">
               <span className="font-display text-3xl uppercase text-gold">{ev.name}</span>
-              <span className="rounded-full border border-wire px-3 py-1 font-mono text-[10px] uppercase tracking-wider text-text-2">{ev.day}</span>
+              <span className="rounded-none border border-wire px-3 py-1 font-mono text-[10px] uppercase tracking-wider text-text-2">{ev.day}</span>
             </div>
             <p className="mt-2 inline-flex items-center gap-1.5 font-mono text-xs text-text-2"><MapPin size={13} /> {ev.venue}, {ev.city}</p>
             <p className="mt-3 max-w-md font-body text-sm text-text-2">{ev.description}</p>
           </div>
-          <a href="https://instagram.com/beetrus_gg" target="_blank" rel="noopener noreferrer" className="inline-flex shrink-0 items-center gap-2 rounded-full border border-pulse px-6 py-3 font-mono text-xs uppercase tracking-[0.16em] text-text-1">RSVP / Info <ArrowRight size={14} /></a>
+          <a href="https://instagram.com/beetrus_gg" target="_blank" rel="noopener noreferrer" className="inline-flex shrink-0 items-center gap-2 rounded-none border border-pulse px-6 py-3 font-mono text-xs uppercase tracking-[0.16em] text-text-1">RSVP / Info <ArrowRight size={14} /></a>
         </div>
       </div>
     </section>

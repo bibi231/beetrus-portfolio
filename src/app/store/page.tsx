@@ -63,16 +63,16 @@ export default function StorePage() {
             </div>
             
             {/* Currency Toggle */}
-            <div className="flex items-center bg-surface border border-wire rounded-full p-1 shadow-inner">
+            <div className="flex items-center bg-surface border border-wire rounded-none p-1 shadow-inner">
               <button
                 onClick={() => setCurrency('NGN')}
-                className={`px-4 py-1.5 rounded-full font-mono text-xs transition-colors ${currency === 'NGN' ? 'bg-pulse text-ink font-bold' : 'text-text-2 hover:text-text-1'}`}
+                className={`px-4 py-1.5 rounded-none font-mono text-xs transition-colors ${currency === 'NGN' ? 'bg-pulse text-ink font-bold' : 'text-text-2 hover:text-text-1'}`}
               >
                 ₦ NGN
               </button>
               <button
                 onClick={() => setCurrency('USD')}
-                className={`px-4 py-1.5 rounded-full font-mono text-xs transition-colors ${currency === 'USD' ? 'bg-pulse text-ink font-bold' : 'text-text-2 hover:text-text-1'}`}
+                className={`px-4 py-1.5 rounded-none font-mono text-xs transition-colors ${currency === 'USD' ? 'bg-pulse text-ink font-bold' : 'text-text-2 hover:text-text-1'}`}
               >
                 $ USD
               </button>
@@ -92,15 +92,16 @@ export default function StorePage() {
                 onClick={() => setSelectedProduct(product)}
               >
                 {/* Image Placeholder */}
-                <div className="aspect-square bg-surface border-b border-wire flex items-center justify-center text-7xl relative overflow-hidden group-hover:bg-ink transition-colors">
+                <div className="aspect-square bg-surface border-b border-wire flex items-center justify-center relative overflow-hidden group-hover:bg-ink transition-colors">
                   <div className="absolute top-4 right-4 z-10">
-                    <span className={`font-mono text-[10px] px-2 py-1 rounded-sm uppercase tracking-widest ${product.inStock ? 'bg-lime text-ink' : 'bg-surface border border-wire text-text-2'}`}>
+                    <span className={`font-mono text-[10px] px-2 py-1 uppercase tracking-widest ${product.inStock ? 'bg-gold text-ink' : 'bg-surface border border-wire text-text-2'}`}>
                       {product.tag}
                     </span>
                   </div>
-                  <motion.div whileHover={{ scale: 1.1 }} transition={{ type: "spring", stiffness: 300, damping: 20 }}>
-                    {product.coverEmoji}
-                  </motion.div>
+                  <motion.span whileHover={{ scale: 1.04 }} transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                    className="px-6 text-center font-display text-3xl uppercase leading-none text-text-1">
+                    {product.name}
+                  </motion.span>
                 </div>
                 
                 {/* Details */}
@@ -120,6 +121,24 @@ export default function StorePage() {
         </div>
       </section>
 
+      {/* TrueWeb feature — clicking takes you to the studio */}
+      <section className="px-6 pb-20 lg:px-8">
+        <a href="https://trueweb.com.ng" target="_blank" rel="noopener noreferrer"
+          className="group relative mx-auto block max-w-7xl overflow-hidden border border-wire bg-surface/40 p-8 transition-colors hover:border-gold/50 md:p-12">
+          <div className="absolute inset-0 opacity-40 transition-opacity group-hover:opacity-70" style={{ background: "radial-gradient(120% 100% at 100% 0%, rgba(201,162,39,0.16), transparent 60%)" }} />
+          <div className="relative flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
+            <div>
+              <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-gold">Featured · The Studio</p>
+              <h2 className="mt-2 font-display text-4xl uppercase leading-none text-text-1 md:text-6xl">Need a site or app?</h2>
+              <p className="mt-3 max-w-xl font-body text-sm text-text-2">Websites, AI products, and full builds — designed and shipped at TrueWeb Solutions, the studio behind the network.</p>
+            </div>
+            <span className="inline-flex shrink-0 items-center gap-2 bg-gold px-6 py-3.5 font-mono text-xs uppercase tracking-[0.16em] text-black transition-transform group-hover:-translate-y-0.5">
+              Visit TrueWeb <ArrowRight size={14} />
+            </span>
+          </div>
+        </a>
+      </section>
+
       {/* Product Modal */}
       <AnimatePresence>
         {selectedProduct && (
@@ -134,22 +153,22 @@ export default function StorePage() {
               initial={{ opacity: 0, y: 50, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 20, scale: 0.95 }}
-              className="bg-surface border border-wire rounded-2xl w-full max-w-2xl overflow-hidden shadow-2xl"
+              className="bg-surface border border-wire rounded-sm w-full max-w-2xl overflow-hidden shadow-2xl"
               onClick={e => e.stopPropagation()}
             >
               <div className="flex justify-between items-center p-4 md:p-6 border-b border-wire">
                 <h3 className="font-mono text-sm tracking-widest uppercase text-text-2">{selectedProduct.category}</h3>
                 <button 
                   onClick={() => setSelectedProduct(null)}
-                  className="text-text-2 hover:text-text-1 transition-colors p-2 rounded-full hover:bg-ink"
+                  className="text-text-2 hover:text-text-1 transition-colors p-2 rounded-none hover:bg-ink"
                 >
                   <X size={20} />
                 </button>
               </div>
               
               <div className="flex flex-col md:flex-row">
-                <div className="w-full md:w-2/5 aspect-square bg-ink flex items-center justify-center text-8xl md:border-r border-b md:border-b-0 border-wire">
-                  {selectedProduct.coverEmoji}
+                <div className="w-full md:w-2/5 aspect-square bg-ink flex items-center justify-center p-6 md:border-r border-b md:border-b-0 border-wire">
+                  <span className="text-center font-display text-4xl uppercase leading-none text-text-1">{selectedProduct.name}</span>
                 </div>
                 
                 <div className="w-full md:w-3/5 p-6 md:p-8 flex flex-col">
