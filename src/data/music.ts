@@ -61,7 +61,8 @@ export const musicData = {
       year: '2025',
       label: 'Kinfxlk Records',
       coverEmoji: '🔟',
-      coverImage: '/music/ten-ten.jpg',
+      // Real album cover (train photo) — self-hosted local asset.
+      coverImage: '/music/ten-ten-cover.jpg',
       coverVideo: '/music/videos/ten-ten-cover-reveal.mp4',
       featured: true,
       // Authoritative tracklist + order from the live DSP release (ffm.to smart link).
@@ -88,7 +89,8 @@ export const musicData = {
       title: 'Afro State Of Mind',
       type: 'EP',
       year: '2024',
-      coverEmoji: '🌙',  // placeholder until real artwork provided
+      coverEmoji: '🌙',
+      coverImage: '/music/covers/afro-state-of-mind.jpg',
       tracks: ['GOJO', 'Lights', 'Bluetooth (ft. Yôrkk)'],
       spotifyUrl: `https://open.spotify.com/album/${MUSIC_IDS.spotifyEpId}`,
       appleMusicUrl: `https://music.apple.com/album/${MUSIC_IDS.appleMusicId}`,
@@ -100,6 +102,7 @@ export const musicData = {
       type: 'Single',
       year: '2026',
       coverEmoji: '⚡',
+      coverImage: '/music/covers/gojo.jpg',
       spotifyUrl: `https://open.spotify.com/track/${MUSIC_IDS.spotifyGojoId}`,
       appleMusicUrl: `https://music.apple.com/us/album/gojo-single/${MUSIC_IDS.appleGojoId}`,
     },
@@ -109,6 +112,7 @@ export const musicData = {
       type: 'Single',
       year: '2025',
       coverEmoji: '🔦',
+      coverImage: '/music/covers/lights.jpg',
       spotifyUrl: `https://open.spotify.com/track/${MUSIC_IDS.spotifyLightsId}`,
       appleMusicUrl: `https://music.apple.com/us/album/lights-single/${MUSIC_IDS.appleLightsId}`,
     },
@@ -118,6 +122,7 @@ export const musicData = {
       type: 'Single',
       year: '2025',
       coverEmoji: '📡',
+      coverImage: '/music/covers/bluetooth.jpg',
       spotifyUrl: `https://open.spotify.com/track/${MUSIC_IDS.spotifyBtId}`,
       appleMusicUrl: `https://music.apple.com/us/album/bluetooth-feat-y%C3%B4rkk-single/${MUSIC_IDS.appleBtId}`,
     },

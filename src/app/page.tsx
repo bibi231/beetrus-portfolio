@@ -1,18 +1,24 @@
 import {
   HeroSection,
-  CapabilitiesSection,
-  WorkPreviewSection,
-  DualIdentitySection,
-  StatsBelt
+  MegaMarquee,
+  FeaturedReleaseSection,
+  LiveProductsSection,
+  DualWorldSection,
+  FoundersLetter,
+  StatsBelt,
+  TechMarquee,
 } from "@/components/sections/home-sections";
 
 export default function HomePage() {
   return (
     <>
       <HeroSection />
-      <CapabilitiesSection />
-      <WorkPreviewSection />
-      <DualIdentitySection />
+      <MegaMarquee />
+      <LiveProductsSection />
+      <FeaturedReleaseSection />
+      <DualWorldSection />
+      <FoundersLetter />
+      <TechMarquee />
       <StatsBelt />
     </>
   );

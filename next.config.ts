@@ -1,7 +1,15 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  images: {
+    remotePatterns: [
+      { protocol: "https", hostname: "cloudinary-cdn.ffm.to" },
+      { protocol: "https", hostname: "imagestore.ffm.to" },
+      { protocol: "https", hostname: "is1-ssl.mzstatic.com" },
+      { protocol: "https", hostname: "**.mzstatic.com" },
+      { protocol: "https", hostname: "i.scdn.co" },
+    ],
+  },
 };
 
 export default nextConfig;

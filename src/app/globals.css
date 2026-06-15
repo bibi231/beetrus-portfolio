@@ -15,8 +15,11 @@
   
   --color-lime: var(--lime);
 
-  --font-display: 'Clash Display', sans-serif;
-  --font-body: 'General Sans', sans-serif;
+  --color-gold: var(--gold);
+  --color-gold-dim: var(--gold-dim);
+
+  --font-display: 'Anton', 'Arial Narrow', sans-serif;
+  --font-body: 'Space Grotesk', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
   /* We keep standard foregrounds to make tailwind text- utilities work well if used */
@@ -36,27 +39,38 @@
 }
 
 :root {
-  --void:        #020408;
-  --ink:         #080d12;
-  --surface:     #0d1520;
-  --raised:      #141f2e;
+  /* Editorial near-black base — warmer, paper-and-ink contrast */
+  --void:        #050505;
+  --ink:         #0a0a0b;
+  --surface:     #131316;
+  --raised:      #1c1c20;
   --rim:         rgba(255,255,255,0.06);
-  --wire:        rgba(255,255,255,0.11);
+  --wire:        rgba(255,255,255,0.10);
   --edge:        rgba(255,255,255,0.18);
 
-  --pulse:       #00e5ff;
-  --pulse-dim:   rgba(0, 229, 255, 0.1);
-  --pulse-glow:  rgba(0, 229, 255, 0.2);
+  /* Engineer accent — TrueWeb teal (primary "pulse") */
+  --pulse:       #00d4d4;
+  --pulse-dim:   rgba(0, 212, 212, 0.10);
+  --pulse-glow:  rgba(0, 212, 212, 0.22);
 
-  --ember:       #0070ff;
-  --ember-dim:   rgba(0, 112, 255, 0.1);
+  --ember:       #00a8a8;
+  --ember-dim:   rgba(0, 168, 168, 0.1);
 
   --lime:        #b6ff6b;
 
-  --text-1:      #e8edf2;
-  --text-2:      #5c6a7a;
-  --text-3:      #2a3340;
-  --text-pulse:  #00e5ff;
+  --text-1:      #f1eee7;
+  --text-2:      #8a8a93;
+  --text-3:      #3a3a42;
+  --text-pulse:  #00d4d4;
+
+  /* Artist accent — TEN/TEN gold + cream "paper" for magazine spreads */
+  --gold:        #c9a227;
+  --gold-dim:    rgba(201, 162, 39, 0.14);
+  --paper:       #f3efe6;
+
+  /* Fluid editorial type scale */
+  --type-mega:   clamp(3.2rem, 16vw, 13rem);
+  --type-giant:  clamp(2.6rem, 9vw, 7rem);
 }
 
 /* ============================================
@@ -108,10 +122,19 @@ body::before {
   background-size: 200px 200px;
 }
 
+/* Anton is single-weight (400). Force it so the `font-black`/`font-bold`
+   utilities can never faux-bold (smear) it anywhere on the site.
+   TRAP: if the display face is ever swapped for a multi-weight font,
+   remove this guard or weight utilities will silently no-op. */
+.font-display {
+  font-weight: 400 !important;
+}
+
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
-  font-weight: 600;
-  line-height: 1.1;
+  font-weight: 400;          /* Anton is single-weight (400); 600 triggers ugly faux-bold */
+  line-height: 1.02;
+  letter-spacing: 0.01em;
   color: var(--text-1);
 }
 
@@ -239,3 +262,136 @@ a {
   position: relative;
   z-index: 10;
 }
+
+/* ============================================
+   REDESIGN — EDITORIAL / ARTIST-SITE LAYER
+   ============================================ */
+
+/* Oversized outline (stroke-only) display type */
+.text-stroke {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--text-1);
+  text-stroke: 1.5px var(--text-1);
+}
+.text-stroke-pulse {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--pulse);
+}
+.text-stroke-gold {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--gold);
+}
+
+/* Editorial kicker — the small "// Founder's Letter" labels */
+.editorial-kicker {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--text-2);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.editorial-kicker::before {
+  content: '';
+  width: 28px;
+  height: 1px;
+  background: var(--pulse);
+}
+
+/* Burna-style mega marquee track */
+.marquee-mask {
+  -webkit-mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+}
+
+/* LIVE product badge */
+.badge-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--lime);
+  border: 1px solid rgba(182, 255, 107, 0.25);
+  background: rgba(182, 255, 107, 0.06);
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+.badge-live::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--lime);
+  box-shadow: 0 0 8px var(--lime);
+  animation: pulse-dot 2s ease infinite;
+}
+.badge-building {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid rgba(201, 162, 39, 0.32);
+  background: rgba(201, 162, 39, 0.07);
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+.badge-building::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--gold);
+  box-shadow: 0 0 8px var(--gold);
+  animation: pulse-dot 2s ease infinite;
+}
+
+/* Solid CTA button (filled, high-contrast — artist site energy) */
+.btn-solid {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--text-1);
+  color: var(--void);
+  border: 1px solid var(--text-1);
+  padding: 14px 30px;
+  border-radius: 8px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+  cursor: pointer;
+}
+.btn-solid:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+}
+.btn-gold {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: #1a1206;
+}
+.btn-gold:hover {
+  box-shadow: 0 0 0 1px var(--gold), 0 14px 44px var(--gold-dim);
+}
+
+/* Hover-lift card */
+.lift {
+  transition: transform 0.35s cubic-bezier(0.22,1,0.36,1), border-color 0.35s ease, box-shadow 0.35s ease;
+}
+.lift:hover { transform: translateY(-6px); }
+
+/* Spinning seal text */
+@keyframes spin-seal { to { transform: rotate(360deg); } }
+.spin-seal { animation: spin-seal 18s linear infinite; }

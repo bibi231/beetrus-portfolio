@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { MusicHeroSection, FeaturedReleaseSection, DiscographySection, EventsSection } from "@/components/sections/music-sections";
+import { MusicHeroSection, FeaturedReleaseSection, LostFilesStrip, DiscographySection, EventsSection } from "@/components/sections/music-sections";
 
 export const metadata: Metadata = {
   title: "Music",
@@ -11,6 +11,7 @@ export default function MusicPage() {
     <div className="min-h-screen bg-void">
       <MusicHeroSection />
       <FeaturedReleaseSection />
+      <LostFilesStrip />
       <DiscographySection />
       <EventsSection />
     </div>

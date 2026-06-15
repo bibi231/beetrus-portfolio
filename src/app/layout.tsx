@@ -70,14 +70,16 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
       <head>
-        <link rel="preconnect" href="https://api.fontshare.com" />
-        <link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&f[]=general-sans@400,500,600&display=swap" rel="stylesheet" />
-        <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+        {/* LCP: hero cover is the most important pixel — discover it early */}
+        <link rel="preload" as="image" href="/music/ten-ten-cover.jpg" />
       </head>
       <body className={cn("min-h-screen bg-ink text-text-1 font-body antialiased selection:bg-pulse selection:text-ink flex flex-col")}>
         <Providers>
           <Header />
-          <main className="relative z-content flex-1 pt-20">
+          <main className="relative z-content flex-1">
             {children}
           </main>
           <Footer />

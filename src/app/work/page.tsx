@@ -2,7 +2,7 @@
 
 import { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, Github, X, ChevronLeft, ChevronRight, ExternalLink, Zap } from "lucide-react";
+import { ArrowRight, Github, X, ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
 import { projects, Project, ProjectScreenshot } from "@/data/projects";
 
 /* ─── Filter Bar ─────────────────────────────────────────────────── */
@@ -155,9 +155,22 @@ function ProjectCard({
                 <img
                   src={project.image}
                   alt={project.title}
+                  loading="lazy"
+                  decoding="async"
                   className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   onError={(e) => {
-                    (e.target as HTMLImageElement).style.display = "none";
+                    const t = e.currentTarget;
+                    t.style.display = "none";
+                    const parent = t.parentElement as HTMLElement;
+                    parent.style.background = `linear-gradient(135deg, ${project.accentColor}18, ${project.accentColor}38)`;
+                    if (!parent.querySelector(".img-fallback")) {
+                      const span = document.createElement("span");
+                      span.className =
+                        "img-fallback absolute inset-0 flex items-center justify-center font-display text-2xl md:text-4xl font-black tracking-tight px-4 text-center";
+                      span.style.color = project.accentColor;
+                      span.textContent = project.title;
+                      parent.appendChild(span);
+                    }
                   }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-ink/60 via-transparent to-transparent" />
@@ -214,20 +227,20 @@ function ProjectCard({
             <span className="bg-surface border border-wire px-3 py-1 rounded-full text-text-2">
               {project.year}
             </span>
-            <span
-              className={`uppercase tracking-widest px-3 py-1 rounded-full border ${
-                project.status === "live"
-                  ? "text-lime border-lime/20 bg-lime/5"
-                  : "text-pulse border-pulse/20 bg-pulse/5"
-              }`}
-            >
-              {project.status}
-            </span>
+            {project.status === "live" ? (
+              <span className="badge-live">Live</span>
+            ) : project.status === "building" ? (
+              <span className="badge-building">Building</span>
+            ) : (
+              <span className="uppercase tracking-widest px-3 py-1 rounded-full border text-text-2 border-wire">
+                Concept
+              </span>
+            )}
             <span className="text-text-3 uppercase tracking-widest">{project.category}</span>
           </div>
 
           <h2
-            className="font-display text-4xl md:text-5xl xl:text-6xl font-black tracking-tight mb-4 leading-[0.95]"
+            className="font-display text-4xl md:text-5xl xl:text-6xl uppercase tracking-tight mb-4 leading-[0.95]"
             style={{ color: project.accentColor }}
           >
             {project.title}
@@ -371,6 +384,8 @@ export default function WorkPage() {
     []
   );
 
+  const liveCount = projects.filter((p) => p.status === "live").length;
+
   const filteredProjects = projects.filter((p) => {
     if (activeFilter === "All") return true;
     if (activeFilter === "Client Work") return p.category === "portfolio";
@@ -392,31 +407,48 @@ export default function WorkPage() {
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.3em] text-text-3 mb-8"
+            className="editorial-kicker mb-8"
           >
-            <span className="w-6 h-px bg-pulse" />
-            Selected Work — {projects.length} Projects
+            Built at TrueWeb Solutions · {liveCount} live
           </motion.div>
 
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.05 }}
-            className="font-display text-6xl md:text-8xl font-black tracking-tight leading-[0.9] mb-6"
+            className="font-display uppercase tracking-[-0.01em] leading-[0.84] mb-6 text-text-1"
+            style={{ fontSize: "var(--type-mega)" }}
           >
-            Work
+            REAL
             <br />
-            <span className="text-pulse">Archive.</span>
+            <span className="text-pulse">PRODUCTS.</span>
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.1 }}
-            className="text-text-2 text-lg max-w-xl font-mono mb-12"
+            className="text-text-1 text-lg md:text-xl max-w-2xl mb-3 leading-relaxed"
           >
-            SaaS products, platforms, and client work — built to scale, designed to impress.
+            AI SaaS, platforms, and a four-product network — built solo, from ₦0 to live and billing.
+            <span className="text-lime font-mono text-sm"> {liveCount} shipped and in production.</span>
           </motion.p>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.12 }}
+            className="text-text-2 font-mono text-sm max-w-xl mb-8"
+          >
+            Not case-study mockups. Real users, real revenue, NGN + USD.
+          </motion.p>
+
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.13 }} className="mb-12">
+            <a href="https://trueweb.com.ng" target="_blank" rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full px-6 py-3 font-mono text-[11px] uppercase tracking-[0.16em] text-black transition-transform hover:-translate-y-0.5"
+              style={{ background: "var(--pulse)" }}>
+              Visit TrueWeb Solutions <ExternalLink size={13} />
+            </a>
+          </motion.div>
 
           {/* Filter chips */}
           <motion.div
