@@ -102,6 +102,12 @@ export default function StorePage() {
                     className="px-6 text-center font-display text-3xl uppercase leading-none text-text-1">
                     {product.name}
                   </motion.span>
+                  {/* Hover reveal */}
+                  <div className="absolute inset-0 z-20 flex items-end justify-center bg-gradient-to-t from-ink via-ink/40 to-transparent pb-5 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                    <span className="inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-gold">
+                      {product.inStock ? "View Details" : "Join Waitlist"} <ArrowRight size={13} />
+                    </span>
+                  </div>
                 </div>
                 
                 {/* Details */}
@@ -153,7 +159,7 @@ export default function StorePage() {
               initial={{ opacity: 0, y: 50, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 20, scale: 0.95 }}
-              className="bg-surface border border-wire rounded-sm w-full max-w-2xl overflow-hidden shadow-2xl"
+              className="bg-surface border border-wire rounded-none w-full max-w-2xl overflow-hidden shadow-2xl"
               onClick={e => e.stopPropagation()}
             >
               <div className="flex justify-between items-center p-4 md:p-6 border-b border-wire">
@@ -182,7 +188,7 @@ export default function StorePage() {
                       <p className="font-mono text-xs uppercase text-text-3 mb-2">Sizes</p>
                       <div className="flex flex-wrap gap-2">
                         {selectedProduct.sizes.map(s => (
-                          <span key={s} className="px-3 py-1 bg-ink border border-wire rounded font-mono text-xs text-text-2">{s}</span>
+                          <span key={s} className="px-3 py-1 bg-ink border border-wire rounded-none font-mono text-xs text-text-2">{s}</span>
                         ))}
                       </div>
                     </div>
@@ -212,7 +218,7 @@ export default function StorePage() {
                             type="email" 
                             required
                             placeholder="your@email.com" 
-                            className="flex-1 bg-ink border border-wire rounded-md px-4 py-2 font-mono text-sm focus:outline-none focus:border-pulse text-text-1"
+                            className="flex-1 bg-ink border border-wire rounded-none px-4 py-2 font-mono text-sm focus:outline-none focus:border-gold text-text-1"
                             value={email}
                             onChange={e => setEmail(e.target.value)}
                           />
