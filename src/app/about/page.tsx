@@ -3,12 +3,13 @@
 import { useRef } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { MapPin, ArrowUpRight, Play, Code, Music } from "lucide-react";
+import { ArrowUpRight, Play, Code, Music } from "lucide-react";
 import { musicData, musicLinks } from "@/data/music";
 import { projects } from "@/data/projects";
+import { DnaTimeline, type TimelineItem } from "@/components/sections/dna-timeline";
 
 /* Timeline — fused engineer + artist history */
-const journey = [
+const journey: TimelineItem[] = [
   { year: "2026", title: "TEN/TEN — The Lost Files", place: "10-track album · Kinfxlk Records", type: "music" },
   { year: "2025–26", title: "TrueWeb Solutions + AI Network", place: "Founder · SupportAI · ReplyAI · HarvestAI", type: "work" },
   { year: "2025", title: "Star Ranker · NaijaLingo", place: "Real-money markets + language platform", type: "work" },
@@ -183,61 +184,7 @@ export default function AboutPage() {
             </h2>
           </div>
 
-          <div className="relative">
-            {/* center rail */}
-            <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-wire md:-translate-x-1/2" />
-            <div className="space-y-10 md:space-y-16">
-              {journey.map((item, i) => {
-                const isMusic = item.type === "music";
-                const accent = isMusic ? "text-gold" : "text-pulse";
-                const dot = isMusic ? "bg-gold" : "bg-pulse";
-                return (
-                  <motion.div
-                    key={i}
-                    className={`relative pl-12 md:pl-0 md:grid md:grid-cols-2 md:gap-12 ${
-                      i % 2 === 0 ? "" : "md:[direction:rtl]"
-                    }`}
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "-80px" }}
-                    transition={{ duration: 0.5 }}
-                  >
-                    {/* dot */}
-                    <span
-                      className={`absolute left-4 md:left-1/2 top-2 w-3 h-3 rounded-full ${dot} -translate-x-1/2 ring-4 ring-ink`}
-                    />
-                    <div
-                      className={`md:[direction:ltr] ${
-                        i % 2 === 0 ? "md:text-right md:pr-12" : "md:col-start-2 md:pl-12"
-                      } p-6 rounded-2xl border border-wire bg-surface/50 hover:border-[currentColor] transition-colors group`}
-                    >
-                      <div
-                        className={`flex items-center gap-3 mb-2 font-mono ${
-                          i % 2 === 0 ? "md:justify-end" : ""
-                        }`}
-                      >
-                        <span className={`text-xl font-black ${accent}`}>{item.year}</span>
-                        <span className="font-mono text-[9px] uppercase tracking-widest text-text-3 border border-wire px-2 py-0.5 rounded">
-                          {item.type}
-                        </span>
-                      </div>
-                      <h4 className="font-display text-xl md:text-2xl font-bold text-text-1 uppercase tracking-tight mb-2">
-                        {item.title}
-                      </h4>
-                      <div
-                        className={`flex items-center gap-2 font-mono text-xs text-text-2 ${
-                          i % 2 === 0 ? "md:justify-end" : ""
-                        }`}
-                      >
-                        <MapPin size={12} className={accent} />
-                        {item.place}
-                      </div>
-                    </div>
-                  </motion.div>
-                );
-              })}
-            </div>
-          </div>
+          <DnaTimeline items={journey} />
         </div>
       </section>
 

@@ -182,19 +182,26 @@ export function LiveProductsSection() {
 export function DualWorldSection() {
   return (
     <section className="grid md:grid-cols-2">
-      <Link href="/music" className="group relative flex min-h-[60vh] flex-col justify-end overflow-hidden p-8 lg:p-12" style={{ background: "#0a0a0b" }}>
-        <div className="absolute inset-0 opacity-30 transition-opacity group-hover:opacity-50" style={{ background: "radial-gradient(100% 80% at 50% 0%, rgba(201,162,39,0.25), transparent 70%)" }} />
+      {/* THE ARTIST — durag portrait, dark + a touch opaque so the type still leads */}
+      <Link href="/music" className="group relative flex min-h-[68vh] flex-col justify-end overflow-hidden p-8 lg:p-12" style={{ background: "#0a0a0b" }}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/archive/beetrus-1.jpg" alt="Beetrus in a durag" className="absolute inset-0 h-full w-full object-cover object-top opacity-40 grayscale transition-all duration-700 ease-out group-hover:opacity-55 group-hover:scale-[1.04]" />
+        <div className="absolute inset-0" style={{ background: "linear-gradient(to top, #0a0a0b 8%, rgba(10,10,11,0.58) 46%, rgba(10,10,11,0.2) 100%)" }} />
+        <div className="absolute inset-0 opacity-30 transition-opacity group-hover:opacity-50" style={{ background: "radial-gradient(100% 80% at 50% 0%, rgba(217,178,62,0.22), transparent 70%)" }} />
         <p className="relative font-mono text-[11px] uppercase tracking-[0.28em] text-gold">The Artist</p>
         <h3 className="relative mt-3 font-display uppercase text-text-1" style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)", lineHeight: 0.9 }}>Beetrus</h3>
-        <p className="relative mt-3 max-w-sm font-body text-sm text-text-2">Afrosounds · R&amp;B · Drill. Abuja late-night music, built for the speakers.</p>
+        <p className="relative mt-3 max-w-sm font-body text-sm text-text-1/80">Afrosounds · R&amp;B · Drill. Abuja late-night music, built for the speakers.</p>
         <span className="relative mt-6 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.16em] text-gold">Hear it <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" /></span>
       </Link>
-      <Link href="/work" className="group relative flex min-h-[60vh] flex-col justify-end overflow-hidden p-8 lg:p-12" style={{ background: "var(--paper)" }}>
-        <div className="absolute inset-0 opacity-40 transition-opacity group-hover:opacity-60" style={{ background: "radial-gradient(100% 80% at 50% 0%, rgba(0,168,168,0.18), transparent 70%)" }} />
-        <p className="relative font-mono text-[11px] uppercase tracking-[0.28em]" style={{ color: "#0a7d7d" }}>The Engineer</p>
+      {/* THE ENGINEER — agbada portrait on the light side, type anchored over the fabric */}
+      <Link href="/work" className="group relative flex min-h-[68vh] flex-col justify-end overflow-hidden p-8 lg:p-12" style={{ background: "var(--paper)" }}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/archive/beetrus-2.jpg" alt="Beetrus in agbada" className="absolute inset-0 h-full w-full object-cover object-top opacity-95 transition-all duration-700 ease-out group-hover:scale-[1.04]" />
+        <div className="absolute inset-0" style={{ background: "linear-gradient(to top, var(--paper) 12%, rgba(239,230,212,0.5) 44%, transparent 100%)" }} />
+        <p className="relative font-mono text-[11px] uppercase tracking-[0.28em]" style={{ color: "#7a5212" }}>The Engineer</p>
         <h3 className="relative mt-3 font-display uppercase" style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)", lineHeight: 0.9, color: "#0a0a0b" }}>Builder</h3>
-        <p className="relative mt-3 max-w-sm font-body text-sm" style={{ color: "#3a3a40" }}>Fullstack engineer &amp; founder. AI SaaS shipped under TrueWeb Solutions.</p>
-        <span className="relative mt-6 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.16em]" style={{ color: "#0a7d7d" }}>See the work <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" /></span>
+        <p className="relative mt-3 max-w-sm font-body text-sm font-medium" style={{ color: "#2a241a" }}>Fullstack engineer &amp; founder. AI SaaS shipped under TrueWeb Solutions.</p>
+        <span className="relative mt-6 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.16em]" style={{ color: "#7a5212" }}>See the work <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" /></span>
       </Link>
     </section>
   );
@@ -205,12 +212,12 @@ export function FoundersLetter() {
   return (
     <section className="px-6 py-28 lg:px-8" style={{ background: "var(--paper)", color: "#0a0a0b", borderTop: "1px solid rgba(10,10,11,0.14)" }}>
       <div className="mx-auto max-w-3xl">
-        <p className="font-mono text-[11px] uppercase tracking-[0.28em]" style={{ color: "#0a7d7d" }}>A Word</p>
-        <h2 className="mt-4 font-display uppercase" style={{ fontSize: "clamp(2.4rem, 6vw, 4.5rem)", lineHeight: 0.92 }}>Most people pick one lane.</h2>
-        <div className="mt-7 space-y-5 font-body text-lg leading-relaxed" style={{ color: "#2a2a30" }}>
+        <p className="font-mono text-[11px] uppercase tracking-[0.28em]" style={{ color: "#7a5212" }}>A Word</p>
+        <h2 className="mt-4 font-display uppercase" style={{ fontSize: "clamp(2.4rem, 6vw, 4.5rem)", lineHeight: 0.92, color: "#0a0a0b" }}>Most people pick one lane<span style={{ color: "#a8742e" }}>.</span></h2>
+        <div className="mt-7 space-y-5 font-body text-lg leading-relaxed" style={{ color: "#181410" }}>
           <p>I never could. By day I architect AI products — support bots, scrapers, payment engines — that real Nigerian businesses pay for. By night I&apos;m Beetrus, putting Abuja&apos;s late nights into sound.</p>
-          <p>The same instinct drives both: take something messy and make it move. This site is that — two worlds, one person, no apologies. <span style={{ color: "#0a7d7d" }}>TEN/TEN: The Lost Files</span> is out now. The products are live. Look around.</p>
-          <p className="font-display text-2xl uppercase" style={{ letterSpacing: "0.02em" }}>— Beetrus</p>
+          <p>The same instinct drives both: take something messy and make it move. This site is that — two worlds, one person, no apologies. <span className="font-semibold" style={{ color: "#8a5a12" }}>TEN/TEN: The Lost Files</span> is out now. The products are live. Look around.</p>
+          <p className="font-display text-2xl uppercase" style={{ letterSpacing: "0.02em", color: "#0a0a0b" }}>— Beetrus</p>
         </div>
       </div>
     </section>

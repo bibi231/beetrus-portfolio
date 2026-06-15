@@ -60,7 +60,7 @@ export default function SkillsPage() {
                 transition={{ duration: 0.5, delay: i * 0.1 }}
               >
                 <div className="flex items-center gap-3 mb-8 pb-4 border-b border-wire">
-                  <span className="text-2xl">{domain.icon}</span>
+                  <span className="font-mono text-xs text-text-3 tabular-nums">{String(i + 1).padStart(2, "0")}</span>
                   <h3 className="font-display text-xl font-semibold tracking-wide text-text-1">
                     {domain.label}
                   </h3>

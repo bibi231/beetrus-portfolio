@@ -76,8 +76,13 @@ export default function SocialsPage() {
             <div className="absolute inset-0 bg-gradient-to-br from-ember/5 to-transparent pointer-events-none" />
             <div>
               <div className="flex justify-between items-start mb-4">
-                <div className="w-12 h-12 bg-ember/10 rounded-xl flex items-center justify-center text-2xl">
-                  {latestRelease?.coverEmoji}
+                <div className="w-12 h-12 rounded-sm overflow-hidden border border-wire bg-ink flex items-center justify-center">
+                  {latestRelease?.coverImage ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={latestRelease.coverImage} alt="" className="h-full w-full object-cover" />
+                  ) : (
+                    <span className="font-display text-sm text-gold">B</span>
+                  )}
                 </div>
                 <span className="font-mono text-[10px] uppercase tracking-widest text-ember border border-ember/30 px-2 py-1 rounded-sm">Latest</span>
               </div>
