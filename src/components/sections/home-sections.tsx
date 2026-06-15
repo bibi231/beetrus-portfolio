@@ -6,6 +6,7 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import { ArrowRight, Code, Music, Play } from "lucide-react";
 import { HeroFallback } from "@/components/three/hero-scene";
+import { LazyVideo } from "@/components/music/lazy-video";
 import { projects } from "@/data/projects";
 
 const Hero3DScene = dynamic(
@@ -31,35 +32,71 @@ export function HeroSection() {
   }, []);
 
   return (
-    <section className="relative min-h-[90vh] flex flex-col items-center justify-center pt-20 pb-12 overflow-hidden">
-      <div className="absolute inset-0 scanline-bg opacity-30 z-10 pointer-events-none" />
-      
-      {/* 3D Scene - Keeping it intact */}
-      <div className="absolute inset-0 z-0 opacity-80">
+    <section className="relative min-h-[100vh] flex flex-col items-center justify-center pt-24 pb-16 overflow-hidden">
+      {/* Layer 0 — B&W editorial portrait video as atmosphere */}
+      <div className="absolute inset-0 z-0">
+        <LazyVideo
+          src="/music/videos/beetrus-bw-editorial.mp4"
+          poster="/images/artist/beetrus-hero-bw.jpg"
+          className="absolute inset-0 h-full w-full"
+          style={{ filter: "grayscale(1) contrast(1.08) brightness(0.62)" }}
+        />
+        {/* Cinematic vignette + tints to keep type legible */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_38%,transparent_8%,rgba(2,4,8,0.62)_58%,var(--void)_100%)]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-void/70 via-void/40 to-void" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_60%,rgba(0,229,255,0.10),transparent_60%)]" />
+      </div>
+
+      {/* Layer 1 — Three.js wordmark scene, dimmed, blends with portrait */}
+      <div className="absolute inset-0 z-[1] opacity-40 mix-blend-screen pointer-events-none">
         <Hero3DScene />
       </div>
 
-      <div className="relative z-20 flex flex-col items-center text-center mt-auto">
-        <div className="mb-6 inline-flex items-center gap-3 rounded-full border border-wire bg-surface/80 backdrop-blur-md px-5 py-2 shadow-[0_0_15px_rgba(255,255,255,0.05)]">
-          <span className="h-2 w-2 rounded-full bg-pulse shadow-[0_0_8px_rgba(0,229,255,0.8)] animate-pulse" />
-          <span className="font-mono text-xs uppercase tracking-widest text-text-1">
+      {/* Layer 2 — scanlines */}
+      <div className="absolute inset-0 scanline-bg opacity-20 z-[2] pointer-events-none" />
+
+      {/* Content */}
+      <div className="relative z-20 flex flex-col items-center text-center w-full max-w-4xl px-6">
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+          className="mb-8 inline-flex items-center gap-3 rounded-full border border-wire bg-void/60 backdrop-blur-md px-5 py-2 shadow-[0_0_24px_rgba(0,0,0,0.5)]"
+        >
+          <span className="h-1.5 w-1.5 rounded-full bg-pulse shadow-[0_0_8px_rgba(0,229,255,0.8)] animate-pulse" />
+          <span className="font-mono text-[11px] uppercase tracking-[0.35em] text-text-1">
             Engineer · Artist · Founder
           </span>
-        </div>
+        </motion.div>
 
-        <p className="font-mono text-sm text-text-2 mb-8 tracking-widest uppercase">
+        {/* Editorial wordmark */}
+        <motion.h1
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.05 }}
+          className="font-display font-black uppercase leading-[0.84] tracking-tight text-text-1 text-[clamp(3.4rem,13vw,9rem)] drop-shadow-[0_8px_40px_rgba(0,0,0,0.6)]"
+        >
+          BEETRUS
+        </motion.h1>
+
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="mt-5 font-mono text-[11px] sm:text-sm text-text-2 tracking-[0.35em] uppercase"
+        >
           Abuja, Nigeria <span className="mx-2 text-pulse">◦</span> Open to Remote
-        </p>
+        </motion.p>
 
-        {/* Typewriter Taglines */}
-        <div className="h-8 mb-10 overflow-hidden relative">
+        {/* Rotating tagline */}
+        <div className="h-7 mt-7 mb-9 overflow-hidden relative">
           <AnimatePresence mode="wait">
             <motion.p
               key={taglineIndex}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.3 }}
+              transition={{ duration: 0.35 }}
               className="font-mono text-pulse text-sm md:text-base cursor"
             >
               {taglines[taglineIndex]}
@@ -67,15 +104,35 @@ export function HeroSection() {
           </AnimatePresence>
         </div>
 
-        <div className="flex flex-col sm:flex-row items-center gap-6">
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.3 }}
+          className="flex flex-col sm:flex-row items-center gap-5"
+        >
           <Link href="/work" className="btn-glow">
             View My Work <ArrowRight className="ml-2 w-4 h-4" />
           </Link>
-          <Link href="/music" className="inline-flex items-center justify-center px-7 py-3 transition-colors hover:text-pulse font-mono text-[13px] uppercase tracking-widest border border-transparent hover:border-pulse/30 rounded-md">
+          <Link href="/music" className="inline-flex items-center justify-center px-7 py-3 transition-colors text-ember border border-ember/40 hover:bg-ember/10 hover:border-ember font-mono text-[13px] uppercase tracking-widest rounded-md">
             Hear My Music <Play className="ml-2 w-4 h-4" />
           </Link>
-        </div>
+        </motion.div>
       </div>
+
+      {/* Scroll cue */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1, delay: 0.8 }}
+        className="absolute bottom-7 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2"
+      >
+        <span className="font-mono text-[9px] uppercase tracking-[0.4em] text-text-2">Scroll</span>
+        <motion.span
+          animate={{ y: [0, 6, 0] }}
+          transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+          className="h-8 w-px bg-gradient-to-b from-pulse to-transparent"
+        />
+      </motion.div>
     </section>
   );
 }
@@ -206,7 +263,7 @@ export function DualIdentitySection() {
               <li>R&B</li>
               <li>Drill</li>
               <li>Abuja's underground sound</li>
-              <li className="mt-6 pt-4 border-t border-wire border-dashed text-text-1">Latest: Afro State Of Mind EP</li>
+              <li className="mt-6 pt-4 border-t border-wire border-dashed text-text-1">Latest: TEN/TEN — The Lost Files</li>
             </ul>
             <Link href="/music" className="inline-flex items-center justify-center px-6 py-3 transition-colors text-ember border border-ember hover:bg-ember/10 rounded-md font-mono text-[13px] uppercase tracking-widest">
               Stream Now <Play className="ml-2 w-4 h-4" />
