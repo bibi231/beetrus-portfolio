@@ -8,9 +8,16 @@ const SPOTIFY_ARTIST = MUSIC_IDS.spotifyArtistId && MUSIC_IDS.spotifyArtistId !=
   : "https://open.spotify.com/search/Beetrus";
 
 export const musicLinks = {
-  tenTenSpotify: SPOTIFY_ARTIST,
-  tenTenApple: APPLE_ARTIST,
+  // Official "listen everywhere" smart link — use as the primary CTA.
+  tenTenSmartLink: "https://ffm.to/tenten-lost-files",
+  // Real per-platform album URLs (verified from the smart link, June 2026).
+  tenTenSpotify: "https://open.spotify.com/album/4wYvePhIgMGqAiekYBIcrb",
+  tenTenApple: APPLE_ARTIST, // TEN/TEN not on Apple Music yet → artist profile
   tenTenAudiomack: "https://audiomack.com/beetrus",
+  tenTenTidal: "https://tidal.com/album/530082050",
+  tenTenDeezer: "https://www.deezer.com/album/996541221",
+  tenTenAmazon: "https://music.amazon.com/albums/B0H3QBS8SG",
+  tenTenYoutube: "https://music.youtube.com/playlist?list=OLAK5uy_mDG_sYmek0Wi6jFGpW3HuqvPDxtS47omg",
 };
 
 export interface Track {
@@ -38,6 +45,7 @@ export interface Release {
   appleMusicUrl: string;
   youtubeUrl?: string;
   audiomackUrl?: string;
+  smartLink?: string;        // official "listen everywhere" link (ffm.to)
 }
 
 export const musicData = {
@@ -56,22 +64,24 @@ export const musicData = {
       coverImage: '/music/ten-ten.jpg',
       coverVideo: '/music/videos/ten-ten-cover-reveal.mp4',
       featured: true,
+      // Authoritative tracklist + order from the live DSP release (ffm.to smart link).
       trackList: [
-        { no: 1, title: 'TEN/TEN', feat: 'KVV', producer: 'Wonderlust' },
+        { no: 1, title: 'Ten', feat: 'KVV', producer: 'Wonderlust' },
         { no: 2, title: 'Nsyafarati', producer: 'Ove6ix' },
         { no: 3, title: 'Lights', spotifyId: '6aeV4YGiLomNXi5TuCMTiO' },
-        { no: 4, title: 'Ex-Stacy', feat: 'Killian Stark, Wacko' },
-        { no: 5, title: 'Dinero', feat: 'TooColdBaby', producer: 'Ove6ix' },
-        { no: 6, title: 'At This Age - Remix', feat: 'KVV', producer: 'Ove6ix' },
-        { no: 7, title: 'Bluetooth', feat: 'York', producer: 'Kaiso', spotifyId: '0tvTSRFODMacy4X3Ie4rM5' },
-        { no: 8, title: 'GOJO', producer: 'Chie', spotifyId: '2nwaxh63kZ6Bdk9dP5bYbA' },
-        { no: 9, title: 'ABJ Tour Guide', producer: 'JiggyYb' },
-        { no: 10, title: "Your Lovin'" },
+        { no: 4, title: 'Dineroo', feat: 'TooColdBaby', producer: 'Ove6ix' },
+        { no: 5, title: 'At This Age', feat: 'KVV', producer: 'Ove6ix' },
+        { no: 6, title: 'TikTok', producer: 'Ove6ix' },
+        { no: 7, title: 'ABJ Tour Guide', producer: 'JiggyYb' },
+        { no: 8, title: 'Bluetooth', feat: 'York', producer: 'Kaiso', spotifyId: '0tvTSRFODMacy4X3Ie4rM5' },
+        { no: 9, title: 'GOJO', producer: 'Chie', spotifyId: '2nwaxh63kZ6Bdk9dP5bYbA' },
+        { no: 10, title: 'Ex-Stacy', feat: 'Killian Stark, Wacko' },
       ],
-      tracks: ['TEN/TEN (ft. KVV)', 'Nsyafarati', 'Lights', 'Ex-Stacy', 'Dinero', 'At This Age - Remix', 'Bluetooth (ft. York)', 'GOJO', 'ABJ Tour Guide', "Your Lovin'"],
+      tracks: ['Ten (ft. KVV)', 'Nsyafarati', 'Lights', 'Dineroo', 'At This Age', 'TikTok', 'ABJ Tour Guide', 'Bluetooth (ft. York)', 'GOJO', 'Ex-Stacy'],
       spotifyUrl: musicLinks.tenTenSpotify,
       appleMusicUrl: musicLinks.tenTenApple,
       audiomackUrl: musicLinks.tenTenAudiomack,
+      smartLink: musicLinks.tenTenSmartLink,
     },
     {
       id: 'afro-state-of-mind',
@@ -88,28 +98,28 @@ export const musicData = {
       id: 'gojo',
       title: 'GOJO',
       type: 'Single',
-      year: '2024',
+      year: '2026',
       coverEmoji: '⚡',
-      spotifyUrl: `https://open.spotify.com/track/${MUSIC_IDS.spotifyGojoId}`, 
-      appleMusicUrl: `https://music.apple.com/album/${MUSIC_IDS.appleMusicId}`,
+      spotifyUrl: `https://open.spotify.com/track/${MUSIC_IDS.spotifyGojoId}`,
+      appleMusicUrl: `https://music.apple.com/us/album/gojo-single/${MUSIC_IDS.appleGojoId}`,
     },
     {
       id: 'lights',
       title: 'Lights',
       type: 'Single',
-      year: '2024',
+      year: '2025',
       coverEmoji: '🔦',
       spotifyUrl: `https://open.spotify.com/track/${MUSIC_IDS.spotifyLightsId}`,
-      appleMusicUrl: `https://music.apple.com/album/${MUSIC_IDS.appleMusicId}`,
+      appleMusicUrl: `https://music.apple.com/us/album/lights-single/${MUSIC_IDS.appleLightsId}`,
     },
     {
       id: 'bluetooth',
       title: 'Bluetooth (ft. Yôrkk)',
       type: 'Single',
-      year: '2024',
+      year: '2025',
       coverEmoji: '📡',
-      spotifyUrl: `https://open.spotify.com/track/${MUSIC_IDS.spotifyBtId}`, 
-      appleMusicUrl: `https://music.apple.com/album/${MUSIC_IDS.appleMusicId}`,
+      spotifyUrl: `https://open.spotify.com/track/${MUSIC_IDS.spotifyBtId}`,
+      appleMusicUrl: `https://music.apple.com/us/album/bluetooth-feat-y%C3%B4rkk-single/${MUSIC_IDS.appleBtId}`,
     },
   ],
 
@@ -126,12 +136,17 @@ export const musicData = {
     },
   ],
 
+  // All verified June 2026 from ffm.bio/beetrus.
   socials: {
-    spotify: `https://open.spotify.com/artist/${MUSIC_IDS.spotifyArtistId}`,      
+    spotify: 'https://open.spotify.com/artist/3QxHGPz8Adv32yy4SG9moG',
     appleMusic: 'https://music.apple.com/us/artist/beetrus/1486745458',
-    youtube: `https://youtube.com/@${MUSIC_IDS.youtubeChannelId}`,                    
-    instagram: `https://instagram.com/${MUSIC_IDS.instagramHandle}`,                 
-    soundcloud: '',                                              
-    audiomack: '',                                               
+    youtube: 'https://www.youtube.com/@beetrus',
+    instagram: 'https://www.instagram.com/beetrus_gg/',
+    tiktok: 'https://www.tiktok.com/@beetrus_gg',
+    twitter: 'https://x.com/Beetrus_g',
+    facebook: 'https://www.facebook.com/beetrusgg',
+    soundcloud: 'https://soundcloud.com/beetrus',
+    audiomack: 'https://audiomack.com/beetrus',
+    smartLink: 'https://ffm.bio/beetrus',
   },
 };
