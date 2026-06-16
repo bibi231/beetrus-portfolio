@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { blogPostsByDate } from "@/data/blog";
 import { BlogIndexJsonLd } from "@/components/seo/json-ld";
+import { AdSlot } from "@/components/ads/ad-slot";
 
 const title = "Journal";
 const description =
@@ -70,6 +71,9 @@ export default function BlogIndexPage() {
               </span>
             </div>
           </Link>
+
+          {/* In-feed ad (inert until an ad env var is set) */}
+          <AdSlot className="mx-auto max-w-3xl" />
 
           {/* Rest grid */}
           <div className="mt-8 grid gap-8 md:grid-cols-2 lg:grid-cols-3">

@@ -6,6 +6,7 @@ import { Footer } from "@/components/layout/footer";
 import { cn } from "@/lib/utils";
 import { SITE_URL } from "@/lib/site";
 import { SiteJsonLd } from "@/components/seo/json-ld";
+import { AdsenseScript } from "@/components/ads/adsense-script";
 
 import "./globals.css";
 
@@ -64,9 +65,13 @@ export const metadata: Metadata = {
     follow: true,
     googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 },
   },
-  verification: process.env.NEXT_PUBLIC_GSC_VERIFICATION
-    ? { google: process.env.NEXT_PUBLIC_GSC_VERIFICATION }
-    : undefined,
+  verification: {
+    ...(process.env.NEXT_PUBLIC_GSC_VERIFICATION ? { google: process.env.NEXT_PUBLIC_GSC_VERIFICATION } : {}),
+    other: {
+      ...(process.env.NEXT_PUBLIC_MONETAG_VERIFICATION ? { monetag: process.env.NEXT_PUBLIC_MONETAG_VERIFICATION } : {}),
+      ...(process.env.NEXT_PUBLIC_ADSTERRA_VERIFICATION ? { adsterra: process.env.NEXT_PUBLIC_ADSTERRA_VERIFICATION } : {}),
+    },
+  },
   category: "technology",
 };
 
@@ -92,6 +97,7 @@ export default function RootLayout({
         <SiteJsonLd />
       </head>
       <body className={cn("min-h-screen bg-ink text-text-1 font-body antialiased selection:bg-pulse selection:text-ink flex flex-col")}>
+        <AdsenseScript />
         <Providers>
           <Header />
           <main className="relative z-content flex-1">

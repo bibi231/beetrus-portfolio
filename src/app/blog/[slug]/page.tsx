@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { blogPosts, blogPostsByDate, getPost, type Block } from "@/data/blog";
 import { ArticleJsonLd, BreadcrumbJsonLd } from "@/components/seo/json-ld";
+import { AdSlot } from "@/components/ads/ad-slot";
 
 type Params = { params: Promise<{ slug: string }> };
 
@@ -132,7 +133,10 @@ export default async function BlogPostPage({ params }: Params) {
 
       {/* Body */}
       <article className="mx-auto max-w-3xl px-6 py-14 lg:px-8">
-        {post.body.map((b, i) => renderBlock(b, i))}
+        {post.body.flatMap((b, i) =>
+          // In-article ad after the intro (mid-content placement, inert until configured)
+          i === 2 ? [renderBlock(b, i), <AdSlot key="ad-mid" />] : [renderBlock(b, i)],
+        )}
 
         <div className="mt-12 flex flex-wrap gap-2 border-t border-wire pt-8">
           {post.tags.map((t) => (
