@@ -40,8 +40,14 @@ export async function POST(req: Request) {
         const { Resend } = await import("resend");
         const resend = new Resend(key);
 
-        // 1. Add to audience (automation list)
-        const audienceId = process.env.RESEND_AUDIENCE_ID;
+        // 1. Add to audience (automation list). Prefer an explicit env override,
+        //    otherwise auto-discover the account's default audience so no manual
+        //    audience ID is ever needed (Resend's new UI hides it anyway).
+        let audienceId = process.env.RESEND_AUDIENCE_ID;
+        if (!audienceId) {
+          const audiences = await resend.audiences.list().catch(() => null);
+          audienceId = audiences?.data?.data?.[0]?.id;
+        }
         if (audienceId) {
           await resend.contacts.create({ email: clean, audienceId, unsubscribed: false }).catch(() => {});
         }
