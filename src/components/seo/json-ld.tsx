@@ -105,22 +105,39 @@ export function MusicJsonLd() {
       : { "@type": "MusicAlbum", ...common, numTracks: r.trackList?.length ?? r.tracks?.length };
   });
 
-  const events = musicData.events.map((e) => ({
-    "@type": "Event",
-    name: e.name,
-    description: e.description,
-    eventStatus: "https://schema.org/EventScheduled",
-    eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
-    performer: { "@id": GROUP_ID },
-    location: {
-      "@type": "Place",
-      name: e.venue,
-      address: { "@type": "PostalAddress", addressLocality: e.city, addressCountry: "NG" },
-    },
-    ...(e.status === "recurring"
-      ? { eventSchedule: { "@type": "Schedule", byDay: "https://schema.org/Wednesday", repeatFrequency: "P1W" } }
-      : {}),
-  }));
+  const events = musicData.events.map((e) => {
+    const recurring = e.status === "recurring";
+    return {
+      "@type": "Event",
+      name: e.name,
+      description: e.description,
+      eventStatus: "https://schema.org/EventScheduled",
+      eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+      performer: { "@id": GROUP_ID },
+      organizer: { "@id": PERSON_ID },
+      location: {
+        "@type": "Place",
+        name: e.venue,
+        address: { "@type": "PostalAddress", addressLocality: e.city, addressCountry: "NG" },
+      },
+      // Recurring weekly on Wednesdays. Schedule is anchored to a known Wednesday
+      // (2026-01-07) so the series stays valid; startDate clears Google's warning.
+      ...(recurring
+        ? {
+            startDate: "2026-01-07T21:00:00+01:00",
+            eventSchedule: {
+              "@type": "Schedule",
+              repeatFrequency: "P1W",
+              byDay: "https://schema.org/Wednesday",
+              startDate: "2026-01-07",
+              startTime: "21:00:00",
+              endTime: "23:59:00",
+              scheduleTimezone: "Africa/Lagos",
+            },
+          }
+        : {}),
+    };
+  });
 
   return (
     <JsonLd
