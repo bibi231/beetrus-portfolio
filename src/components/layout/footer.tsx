@@ -14,6 +14,7 @@ const NETWORK = [
 const EXPLORE = [
   { label: "Music", href: "/music" },
   { label: "Work", href: "/work" },
+  { label: "Journal", href: "/blog" },
   { label: "About", href: "/about" },
   { label: "Store", href: "/store" },
   { label: "Contact", href: "/contact" },

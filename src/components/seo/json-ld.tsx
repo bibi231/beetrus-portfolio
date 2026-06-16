@@ -1,5 +1,6 @@
 import { SITE_URL } from "@/lib/site";
 import { musicData } from "@/data/music";
+import { blogPosts, type BlogPost } from "@/data/blog";
 
 const PERSON_ID = `${SITE_URL}/#person`;
 const ORG_ID = "https://trueweb.com.ng/#organization";
@@ -159,6 +160,77 @@ export function MusicJsonLd() {
           ...releases,
           ...events,
         ],
+      }}
+    />
+  );
+}
+
+/** BlogPosting/Article schema for a single post. Render on /blog/[slug]. */
+export function ArticleJsonLd({ post }: { post: BlogPost }) {
+  const url = `${SITE_URL}/blog/${post.slug}`;
+  return (
+    <JsonLd
+      data={{
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "@id": `${url}#article`,
+        headline: post.title,
+        description: post.excerpt,
+        image: `${SITE_URL}${post.cover}`,
+        datePublished: post.date,
+        dateModified: post.updated ?? post.date,
+        author: { "@id": PERSON_ID },
+        publisher: { "@id": ORG_ID },
+        mainEntityOfPage: { "@type": "WebPage", "@id": url },
+        articleSection: post.category,
+        keywords: post.tags.join(", "),
+        wordCount: post.readingMinutes * 200,
+        inLanguage: "en",
+        url,
+      }}
+    />
+  );
+}
+
+/** BreadcrumbList for any page. */
+export function BreadcrumbJsonLd({ items }: { items: { name: string; path: string }[] }) {
+  return (
+    <JsonLd
+      data={{
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: items.map((it, i) => ({
+          "@type": "ListItem",
+          position: i + 1,
+          name: it.name,
+          item: `${SITE_URL}${it.path}`,
+        })),
+      }}
+    />
+  );
+}
+
+/** Blog collection schema for the /blog index. */
+export function BlogIndexJsonLd() {
+  return (
+    <JsonLd
+      data={{
+        "@context": "https://schema.org",
+        "@type": "Blog",
+        "@id": `${SITE_URL}/blog#blog`,
+        name: "Beetrus — Journal",
+        description: "Writeups on AI products, web engineering, and music.",
+        url: `${SITE_URL}/blog`,
+        publisher: { "@id": PERSON_ID },
+        blogPost: blogPosts.map((p) => ({
+          "@type": "BlogPosting",
+          headline: p.title,
+          url: `${SITE_URL}/blog/${p.slug}`,
+          datePublished: p.date,
+          dateModified: p.updated ?? p.date,
+          image: `${SITE_URL}${p.cover}`,
+          author: { "@id": PERSON_ID },
+        })),
       }}
     />
   );
