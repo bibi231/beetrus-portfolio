@@ -247,4 +247,26 @@ export const projects: Project[] = [
     year: '2025',
     featured: false,
   },
+  {
+    id: 'maxims-interior',
+    title: 'Maxim\'s Interior',
+    tagline: 'A premium storefront + booking site for an Abuja interior-design brand.',
+    description: 'A client site designed and built under TrueWeb Solutions — full storefront, project portfolio, and staff admin for a luxury interior-design & home-goods brand, with payments, bookings, and email automation. Delivered, hosted, and supported by TrueWeb; an independent client site, not one of the network products.',
+    capabilities: [
+      { icon: '🛋️', label: 'Luxury Storefront', description: 'Editorial product + project showcase for a high-end interior brand' },
+      { icon: '🗓️', label: 'Bookings & Payments', description: 'Consultation booking and checkout wired to Squad (NGN)' },
+      { icon: '🛠️', label: 'Staff Admin', description: 'Back-office for catalogue, orders, and client enquiries' },
+    ],
+    screenshots: [
+      { src: '/projects/maxims.jpg', caption: 'Maxim\'s Interior — storefront & portfolio' },
+    ],
+    tags: ['Next.js', 'Squad', 'Client Work', 'TrueWeb'],
+    category: 'portfolio',
+    status: 'live',
+    liveUrl: 'https://maximsinterior.com.ng',
+    image: '/projects/maxims.jpg',
+    accentColor: '#c9a84c',
+    year: '2025',
+    featured: false,
+  },
 ];
