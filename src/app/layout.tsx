@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import { SITE_URL } from "@/lib/site";
 import { SiteJsonLd } from "@/components/seo/json-ld";
 import { AdsenseScript } from "@/components/ads/adsense-script";
+import { AskAI } from "@/components/AskAI";
 
 import "./globals.css";
 
@@ -104,6 +105,7 @@ export default function RootLayout({
             {children}
           </main>
           <Footer />
+          <AskAI />
 
           <Toaster
             position="top-right"
