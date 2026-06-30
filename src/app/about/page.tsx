@@ -7,6 +7,7 @@ import { ArrowUpRight, Play, Code, Music } from "lucide-react";
 import { musicData, musicLinks } from "@/data/music";
 import { projects } from "@/data/projects";
 import { DnaTimeline, type TimelineItem } from "@/components/sections/dna-timeline";
+import { BentoCard } from "@/components/ui-21st/bento-card";
 
 /* Timeline — fused engineer + artist history */
 const journey: TimelineItem[] = [
@@ -125,48 +126,40 @@ export default function AboutPage() {
         </motion.div>
       </section>
 
-      {/* ════════ TWO DISCIPLINES ════════ */}
-      <section className="border-y border-wire bg-surface">
-        <div className="grid md:grid-cols-2">
-          <div className="p-10 md:p-16 border-b md:border-b-0 md:border-r border-wire">
-            <div className="flex items-center gap-3 mb-6">
-              <Code className="text-pulse" size={20} />
-              <h3 className="font-mono text-xs uppercase tracking-[0.3em] text-pulse">The Engineer</h3>
-            </div>
-            <p className="text-text-2 leading-relaxed mb-8 max-w-md">
-              I ship full products solo — frontend, backend, auth, payments, infra. The TrueWeb
-              network runs on Next.js, Postgres and NextAuth with NGN + USD billing, auto-provisioning
-              and real-time client messaging. Real users, real revenue.
-            </p>
-            <div className="flex flex-wrap gap-2">
-              {techStack.map((t) => (
-                <span
-                  key={t}
-                  className="font-mono text-[10px] uppercase bg-ink border border-wire px-3 py-1.5 rounded-full text-text-2"
-                >
-                  {t}
-                </span>
-              ))}
-            </div>
-          </div>
-          <div className="p-10 md:p-16">
-            <div className="flex items-center gap-3 mb-6">
-              <Music className="text-gold" size={20} />
-              <h3 className="font-mono text-xs uppercase tracking-[0.3em] text-gold">The Artist</h3>
-            </div>
-            <p className="text-text-2 leading-relaxed mb-8 max-w-md">
-              {musicData.bio}
-            </p>
-            <div className="flex flex-wrap gap-2">
-              {creativeTools.map((t) => (
-                <span
-                  key={t}
-                  className="font-mono text-[10px] uppercase bg-ink border border-wire px-3 py-1.5 rounded-full text-text-2"
-                >
-                  {t}
-                </span>
-              ))}
-            </div>
+      {/* ════════ TWO DISCIPLINES — 21st.dev bento cards ════════ */}
+      <section className="px-6 py-20 md:py-28">
+        <div className="max-w-[1200px] mx-auto">
+          <div className="editorial-kicker mb-10">Two disciplines, one operator</div>
+          <div className="grid md:grid-cols-2 gap-5">
+            <BentoCard glowColor="rgba(122,92,255,0.16)" borderAccent="rgba(122,92,255,0.45)" className="p-9 md:p-12">
+              <div className="flex items-center gap-3 mb-6">
+                <Code className="text-pulse" size={20} />
+                <h3 className="font-mono text-xs uppercase tracking-[0.3em] text-pulse">The Engineer</h3>
+              </div>
+              <p className="text-text-2 leading-relaxed mb-8">
+                I ship full products solo — frontend, backend, auth, payments, infra. The TrueWeb
+                network runs on Next.js, Postgres and NextAuth with NGN + USD billing,
+                auto-provisioning and real-time client messaging. Real users, real revenue.
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {techStack.map((t) => (
+                  <span key={t} className="font-mono text-[10px] uppercase bg-ink border border-wire px-3 py-1.5 rounded-full text-text-2">{t}</span>
+                ))}
+              </div>
+            </BentoCard>
+
+            <BentoCard glowColor="rgba(217,178,62,0.16)" borderAccent="rgba(217,178,62,0.5)" className="p-9 md:p-12">
+              <div className="flex items-center gap-3 mb-6">
+                <Music className="text-gold" size={20} />
+                <h3 className="font-mono text-xs uppercase tracking-[0.3em] text-gold">The Artist</h3>
+              </div>
+              <p className="text-text-2 leading-relaxed mb-8">{musicData.bio}</p>
+              <div className="flex flex-wrap gap-2">
+                {creativeTools.map((t) => (
+                  <span key={t} className="font-mono text-[10px] uppercase bg-ink border border-wire px-3 py-1.5 rounded-full text-text-2">{t}</span>
+                ))}
+              </div>
+            </BentoCard>
           </div>
         </div>
       </section>
