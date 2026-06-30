@@ -45,7 +45,7 @@ export function SiteFooter() {
   const a: React.CSSProperties = { color: "rgba(244,241,234,0.62)", textDecoration: "none", fontSize: 13.5 };
 
   return (
-    <footer style={{ background: "linear-gradient(180deg,#0a0a0f,#050507)", borderTop: "1px solid rgba(255,255,255,0.07)", color: "#f4f1ea", fontFamily: "system-ui, sans-serif" }}>
+    <footer style={{ background: "radial-gradient(120% 65% at 50% 0%, rgba(217,178,62,0.12), transparent 62%), linear-gradient(180deg,#0a0a08,#050403)", borderTop: "1px solid rgba(217,178,62,0.16)", color: "#f4f1ea", fontFamily: "system-ui, sans-serif" }}>
       <div style={{ maxWidth: 1100, margin: "0 auto", padding: "56px 24px 28px" }}>
         <div style={{ display: "grid", gridTemplateColumns: "1.4fr 1fr 1fr 1fr", gap: 32 }} className="bf-grid">
           <div>
