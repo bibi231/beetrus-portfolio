@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, ArrowUpRight, Play } from "lucide-react";
 import { musicData, musicLinks } from "@/data/music";
 import { projects } from "@/data/projects";
+import { HeroFx } from "./HeroFx";
 
 const TEN_TEN = musicData.releases.find((r) => r.featured) ?? musicData.releases[0];
 const LIVE = projects.filter((p) => p.status === "live");
@@ -26,6 +27,7 @@ export function HeroSection() {
         />
         <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(10,10,11,0.5) 0%, rgba(10,10,11,0.32) 38%, rgba(10,10,11,0.92) 86%, #0a0a0b 100%)" }} />
         <div className="absolute inset-0 opacity-50" style={{ background: "radial-gradient(120% 80% at 50% 100%, rgba(201,162,39,0.12), transparent 60%)" }} />
+        <HeroFx />
       </div>
 
       <div className="absolute left-6 top-28 z-10 lg:left-8">
