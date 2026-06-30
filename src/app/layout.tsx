@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Providers } from "@/components/providers";
 import { Toaster } from "sonner";
 import { Header } from "@/components/layout/header";
-import { Footer } from "@/components/layout/footer";
+import { SiteFooter } from "@/components/SiteFooter";
 import { cn } from "@/lib/utils";
 import { SITE_URL } from "@/lib/site";
 import { SiteJsonLd } from "@/components/seo/json-ld";
@@ -104,7 +104,7 @@ export default function RootLayout({
           <main className="relative z-content flex-1">
             {children}
           </main>
-          <Footer />
+          <SiteFooter />
           <AskAI />
 
           <Toaster
