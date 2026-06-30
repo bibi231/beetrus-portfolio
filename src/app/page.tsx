@@ -1,25 +1,5 @@
-import {
-  HeroSection,
-  MegaMarquee,
-  FeaturedReleaseSection,
-  LiveProductsSection,
-  DualWorldSection,
-  FoundersLetter,
-  StatsBelt,
-  TechMarquee,
-} from "@/components/sections/home-sections";
+import { HomeV2 } from "@/components/sections/home-v2";
 
 export default function HomePage() {
-  return (
-    <>
-      <HeroSection />
-      <MegaMarquee />
-      <LiveProductsSection />
-      <FeaturedReleaseSection />
-      <DualWorldSection />
-      <FoundersLetter />
-      <TechMarquee />
-      <StatsBelt />
-    </>
-  );
+  return <HomeV2 />;
 }
