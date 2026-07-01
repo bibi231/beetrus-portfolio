@@ -78,37 +78,12 @@ export function FeaturedReleaseSection() {
           </div>
         </div>
 
-        {/* Tracklist */}
+        {/* Album — full Spotify player (the tracklist lives inside the embed) */}
         <div>
-          <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-gold">Tracklist</p>
+          <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-gold">The Album</p>
           <h2 className="mt-2 font-display uppercase text-text-1" style={{ fontSize: "clamp(2.4rem, 6vw, 4.5rem)", lineHeight: 0.9 }}>10 Tracks · No Skips</h2>
-
-          <ol className="mt-8 divide-y divide-wire border-y border-wire">
-            {TEN_TEN.trackList?.map((t) => (
-              <li key={t.no} className="py-4">
-                <div className="flex items-baseline gap-4">
-                  <span className="font-mono text-xs text-text-3 w-6 shrink-0">{String(t.no).padStart(2, "0")}</span>
-                  <div className="min-w-0 flex-1">
-                    <span className="font-display text-2xl uppercase leading-none text-text-1">{t.title}</span>
-                    {(t.feat || t.producer) && (
-                      <span className="mt-1 block font-mono text-[10px] uppercase tracking-wider text-text-2">
-                        {t.feat ? `feat. ${t.feat}` : ""}{t.feat && t.producer ? " · " : ""}{t.producer ? `prod. ${t.producer}` : ""}
-                      </span>
-                    )}
-                  </div>
-                </div>
-                {t.spotifyId && (
-                  <div className="mt-3 overflow-hidden rounded-sm">
-                    <SpotifyEmbed type="track" id={t.spotifyId} compact height={80} title={t.title} />
-                  </div>
-                )}
-              </li>
-            ))}
-          </ol>
-
-          {/* Full album player */}
           <div className="mt-8 overflow-hidden rounded-sm border border-wire">
-            <SpotifyEmbed type="album" id={SPOTIFY_ALBUM} height={352} title="TEN/TEN — The Lost Files" />
+            <SpotifyEmbed type="album" id={SPOTIFY_ALBUM} height={520} title="TEN/TEN — The Lost Files" />
           </div>
         </div>
       </div>
