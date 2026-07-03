@@ -1,0 +1,28 @@
+# Beetrus — Bitrus Sariki
+
+> Abuja, Nigeria based fullstack software engineer, SaaS founder, and recording
+> artist (Afrosounds / R&B / Drill). Founder of TrueWeb Solutions.
+
+## Who
+Bitrus Sariki, known as Beetrus. Fullstack engineer and music artist based in
+Abuja, Nigeria.
+
+## Engineering
+- Founder of TrueWeb Solutions (Nigerian web + software agency, CAC BN 3818821).
+- Builder of the AI product network:
+  - SupportAI — AI customer-support chatbot (https://supportai.com.ng)
+  - ReplyAI — AI reply + meeting assistant (https://replyai.com.ng)
+  - HarvestAI — AI lead generation (https://harvestai.com.ng)
+  - Beetrus Studio — AI lyric-video + clip studio (https://beetrus-studio.vercel.app)
+- Stack: Next.js, React, Node, TypeScript, Postgres/Mongo.
+
+## Music
+- Releases under the Beetrus name, including the TEN/TEN project.
+- Genres: Afrosounds, R&B, Drill.
+
+## Links
+- Portfolio: https://beetrus.com.ng
+- Agency: https://trueweb.com.ng
+
+## Contact
+hello@trueweb.com.ng

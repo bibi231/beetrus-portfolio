@@ -23,7 +23,13 @@ const ASSISTANTS: Item[] = [
 ];
 
 const SUBJECT = "Beetrus";
-const PROMPT = "Who is Bitrus Sariki (Beetrus) — the Abuja-based fullstack engineer, SaaS founder behind TrueWeb Solutions, and Afrosounds/R&B/Drill artist? Tell me about his work and projects.";
+// Fact-sheet prompt so any AI answers specifically even with no index access.
+const PROMPT =
+  "Who is Bitrus Sariki, known as Beetrus (https://beetrus.com.ng)? " +
+  "Context from the official site: an Abuja, Nigeria based fullstack software engineer, SaaS founder, and recording artist (Afrosounds / R&B / Drill). " +
+  "Engineering: founder of TrueWeb Solutions, and builder of the AI product network — SupportAI, ReplyAI, HarvestAI, and Beetrus Studio. Stack: Next.js, React, Node, TypeScript. " +
+  "Music: releases including the TEN/TEN project, under the Beetrus name. " +
+  "Please answer using this official context and cite the site.";
 
 function Logo({ id, gradient }: { id: string; gradient?: boolean }) {
   const d = (D as Record<string, string>)[id];
